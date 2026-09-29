@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A focused GCSE revision flashcard workspace for English Literature, History and Geography." />
+    <meta name="theme-color" content="#101936" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101936'/%3E%3Cpath d='M15 17h24a8 8 0 0 1 8 8v25H23a8 8 0 0 1-8-8V17Z' fill='%23f4c95d'/%3E%3Cpath d='M23 17v33M29 27h11M29 35h11' stroke='%23101936' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
+    <title>Revision Desk — GCSE Flashcards</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="theme.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#study-card">Skip to current card</a>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="Revision Desk home">
+        <span class="brand-mark" aria-hidden="true">RD</span>
+        <span><strong>Revision Desk</strong><small>GCSE flashcards</small></span>
+      </a>
+      <div class="header-actions"><div class="streak" aria-label="Study progress"><span id="mastered-total">0</span> mastered</div><button id="theme-toggle" class="button button-quiet" type="button" aria-label="Switch to light mode">Light mode</button></div>
+    </header>
+
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="Subject and topic selection">
+        <div class="sidebar-heading">
+          <p class="eyebrow">Your library</p>
+          <h1>Choose a deck</h1>
+        </div>
+        <nav id="deck-nav" class="deck-nav"></nav>
+      </aside>
+
+      <section class="workspace" aria-labelledby="deck-title">
+        <header class="workspace-header">
+          <div>
+            <p id="subject-label" class="eyebrow">English Literature · AQA</p>
+            <h2 id="deck-title">Macbeth</h2>
+            <p id="deck-description" class="deck-description"></p>
+          </div>
+          <button id="reset-button" class="button button-quiet" type="button">Reset deck</button>
+        </header>
+
+        <div class="toolbar">
+          <div class="search-box">
+            <span aria-hidden="true">⌕</span>
+            <label class="sr-only" for="search-input">Search this deck</label>
+            <input id="search-input" type="search" placeholder="Search quotes, themes, characters…" autocomplete="off" />
+            <button id="clear-search" class="clear-search" type="button" aria-label="Clear search" hidden>×</button>
+          </div>
+          <label class="filter-wrap" for="status-filter">
+            <span class="sr-only">Filter by learning status</span>
+            <select id="status-filter">
+              <option value="all">All cards</option>
+              <option value="unseen">Not studied</option>
+              <option value="know">Know</option>
+              <option value="unsure">Unsure</option>
+              <option value="learn">Learn</option>
+            </select>
+          </label>
+          <button id="shuffle-button" class="button button-quiet" type="button">Shuffle</button>
+        </div>
+        <label class="topic-control" for="topic-filter">Topic <select id="topic-filter"><option value="all">All topics</option></select></label>
+
+        <section class="progress-panel" aria-label="Deck progress">
+          <div class="progress-copy"><strong id="progress-count">0 of 0 reviewed</strong><span id="progress-percent">0%</span></div>
+          <div class="progress-track" role="progressbar" aria-label="Cards reviewed" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-bar"></span></div>
+          <div class="status-key" aria-label="Card status totals">
+            <span><i class="dot know"></i><b id="know-count">0</b> know</span>
+            <span><i class="dot unsure"></i><b id="unsure-count">0</b> unsure</span>
+            <span><i class="dot learn"></i><b id="learn-count">0</b> learn</span>
+          </div>
+        </section>
+
+        <details class="history-panel" id="history-panel">
+          <summary>Progress over time <span id="history-current">0% know</span></summary>
+          <p class="history-help">Each dot is your latest saved position on a day you study or reset this deck. “Know” ÷ all cards — not an exam score.</p>
+          <p id="history-warning" role="status" hidden></p>
+          <p id="history-empty">Rate a card to start your graph. Earlier ratings are kept, but their dates weren't recorded.</p>
+          <div id="history-results" hidden>
+            <svg id="history-chart" viewBox="0 0 680 250" role="img" aria-labelledby="chart-title chart-description"></svg>
+            <p id="history-latest" class="history-help"></p>
+            <details class="history-values"><summary>Read graph values</summary><ol id="history-values"></ol></details>
+          </div>
+        </details>
+
+        <section id="study-area" class="study-area">
+          <div class="card-position"><span id="card-number">Card 1 of 1</span><span id="current-status" class="status-pill">Not studied</span></div>
+          <button id="study-card" class="flashcard" type="button" aria-live="polite" aria-label="Flashcard. Press Enter or Space to reveal the answer.">
+            <span class="card-face card-front">
+              <span class="card-kicker">Question</span>
+              <span id="card-question" class="card-question">Loading your deck…</span>
+              <span id="card-tags-front" class="tag-row"></span>
+              <span class="flip-hint">Click or press Space to reveal</span>
+            </span>
+            <span class="card-face card-back" aria-hidden="true">
+              <span class="card-kicker">Answer</span>
+              <span id="card-quote" class="card-quote"></span>
+              <span id="card-answer" class="card-answer"></span>
+              <span id="card-exam" class="exam-tip"></span>
+              <span id="card-tags-back" class="tag-row"></span>
+              <span class="flip-hint">Click or press Space to see the question</span>
+            </span>
+          </button>
+
+          <div class="rating-group" aria-label="Rate this card">
+            <button class="rating learn" type="button" data-rating="learn"><span>Learn</span><kbd>1</kbd></button>
+            <button class="rating unsure" type="button" data-rating="unsure"><span>Unsure</span><kbd>2</kbd></button>
+            <button class="rating know" type="button" data-rating="know"><span>Know</span><kbd>3</kbd></button>
+          </div>
+          <div class="navigation-row">
+            <button id="prev-button" class="button button-quiet" type="button">Previous</button>
+            <p><kbd>←</kbd><kbd>→</kbd> to move</p>
+            <button id="next-button" class="button button-primary" type="button">Next card</button>
+          </div>
+        </section>
+
+        <section id="empty-state" class="empty-state" hidden>
+          <p id="empty-eyebrow" class="eyebrow">No cards found</p>
+          <h3 id="empty-title">Try a broader search or filter.</h3>
+          <p id="empty-copy"></p>
+          <button id="clear-filters" class="button button-primary" type="button">Show all cards</button>
+        </section>
+      </section>
+    </main>
+
+    <dialog id="reset-dialog" aria-labelledby="reset-title" aria-describedby="reset-copy">
+      <h2 id="reset-title">Reset deck ratings?</h2>
+      <p id="reset-copy"></p>
+      <div class="dialog-actions"><button id="cancel-reset" class="button button-quiet" type="button" autofocus>Keep ratings</button><button id="confirm-reset" class="button button-primary" type="button">Reset ratings</button></div>
+    </dialog>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="data.js"></script>
+    <script src="extra-cards.js"></script>
+    <script src="henry-cards.js"></script>
+    <script src="history.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
