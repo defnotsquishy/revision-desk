@@ -1,0 +1,60 @@
+---
+version: alpha
+name: Revision Desk
+description: A matte-black, compact GCSE study desk with quiet daily progress plotting.
+colors:
+  ink: '#f2f2f3'
+  muted: '#ababaf'
+  paper: '#0c0c0d'
+  surface: '#19191b'
+  line: '#38383c'
+  accent: '#e4e4e7'
+typography:
+  body:
+    fontFamily: 'Inter, ui-sans-serif, system-ui, Segoe UI, sans-serif'
+  question:
+    fontFamily: 'Georgia, Times New Roman, serif'
+  chart:
+    fontFamily: 'ui-monospace, Consolas, monospace'
+rounded:
+  panel: '0.75rem'
+  card: '0.9rem'
+spacing:
+  compact: '0.75rem'
+  panel: '1rem'
+components:
+  primary-button:
+    backgroundColor: '{colors.accent}'
+    textColor: '{colors.paper}'
+---
+
+## Overview
+Product tool for a GCSE student practising recall on Windows. User-requested matte black replaces the earlier blue-purple dark palette. A compact library and serif flashcard are the signature; avoid dashboard decoration, gradients in dark mode, and spinning cards.
+
+## Colors
+Runtime CSS is canonical (Model B): colors.* map directly to same-name --* properties in styles.css under :root[data-theme="dark"]. The app owner maintains both together. White denotes primary actions; semantic green, amber and red distinguish named ratings. Light theme retains the existing palette and hierarchy.
+
+## Typography
+System sans for controls and explanations, Georgia for recall prompts and quotations, monospace for chart axes. English (UK) is the current locale. No network fonts or runtime dependencies.
+
+## Layout
+244px library; workspace max 980px. Below 780px the library becomes a horizontal rail and the page uses one document scroll owner. Controls remain at least 44px. Collapsed Progress over time keeps card practice compact. No fixed content height; long answers grow naturally. Graph values have a bounded secondary scroller.
+
+## Elevation & Depth
+Flat dark surfaces with borders. Dark --shadow is none. Modal backdrop isolates reset; no decorative glow.
+
+## Shapes
+Panels use 0.75rem, cards 0.9rem, controls follow established rounded shapes. Status chips remain pills.
+
+## Components
+index.html owns shared markup; app.js owns deck, filter, ratings and reset behavior. history.js owns local daily snapshots and SVG chart rendering. styles.css owns all themes, scrollbars and control states. Native selects deliberately retain OS-owned option geometry and keyboard support. Native HTML dialog owns focus trapping and Escape; app controls naming, contents, initial cancel focus and confirmation. No browser confirm prompts.
+
+Scatter dots are actual daily snapshots, percentage Know of the entire deck at recording time. Date axis uses actual date spacing; a single day is centred. No fabricated history or exam-score claims. Text values accompany the graph. Prior-day history remains after reset, today's entry updates. Ratings keep their existing storage key. No cloud sync; storage errors are visible. Theme is saved separately. UI has a 100ms opacity reveal and respects reduced motion.
+
+## Do's and Don'ts
+- Multiple choice is the default, with 270 authored four-option questions (30 per deck); Flashcards contains 326, at least 30 per deck. quiz-data.js and quiz-more.js map authored options to stable card IDs; deeper-content.js adds cards and English close-reading notes. English reveals separate quotation, meaning, technique and essay use with quiet labels. Choices shuffle on each question visit. One answer locks the question and shows correctness in text plus the explanation; confidence ratings remain explicit and share the existing progress store. Switching mode resets topic and position but preserves search/status. Quiz counts clearly distinguish the subset from the complete deck. Existing palette, serif prompts and control focus styles are reused; no new design tokens.
+- Keep ratings text-labelled; never rely on colour alone.
+- Keep app and graph usable without a network or chart library.
+- Preserve stable card IDs and existing user ratings.
+- Do not imply reviewed percentage means mastery.
+- Do not backfill historical dates for old undated ratings.

@@ -228,6 +228,9 @@ kbd { min-width: 1.45rem; padding: .12rem .32rem; border: 1px solid #c8cdd9; bor
 .quiz-feedback.incorrect { color: var(--learn); }
 #quiz-explanation { margin-top: .85rem; line-height: 1.65; }
 #quiz-explanation .history-help { margin-bottom: 0; }
+.analysis-heading { display: block; margin: 1.2rem 0 .4rem; color: var(--muted); font: 700 .78rem system-ui, sans-serif; letter-spacing: .04em; text-transform: uppercase; }
+#quiz-quote { margin: 1rem 0; }
+#quiz-explanation p { margin-top: .4rem; }
 @media (max-width: 460px) { .quiz-area { padding: 1rem; } }
 .history-panel { border: 1px solid var(--line); border-radius: .75rem; background: var(--surface); margin-bottom: 1rem; padding: 0 1rem; }
 summary { cursor: pointer; min-height: 44px; padding: .75rem 0; font-size: .85rem; font-weight: 700; }

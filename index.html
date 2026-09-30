@@ -94,7 +94,14 @@
             <h3 id="quiz-question" tabindex="-1"></h3>
             <div id="quiz-options" class="quiz-options" role="group" aria-label="Answer choices"></div>
             <p id="quiz-feedback" class="quiz-feedback" role="status" aria-live="polite"></p>
-            <div id="quiz-explanation" hidden><p id="quiz-answer"></p><p id="quiz-exam" class="exam-tip"></p><p class="history-help">Rate your confidence below to save progress and continue, or choose Next question to skip rating.</p></div>
+            <div id="quiz-explanation" hidden>
+              <blockquote id="quiz-quote" class="card-quote"></blockquote>
+              <h4 class="analysis-heading">What it means</h4>
+              <p id="quiz-answer"></p>
+              <div id="quiz-method-block"><h4 class="analysis-heading">How to analyse it</h4><p id="quiz-method"></p></div>
+              <p id="quiz-exam" class="exam-tip"></p>
+              <p class="history-help">Rate your confidence below to save progress and continue, or choose Next question to skip rating.</p>
+            </div>
           </section>
           <button id="study-card" class="flashcard" type="button" aria-live="polite" aria-label="Flashcard. Press Enter or Space to reveal the answer.">
             <span class="card-face card-front">
@@ -106,7 +113,9 @@
             <span class="card-face card-back" aria-hidden="true">
               <span class="card-kicker">Answer</span>
               <span id="card-quote" class="card-quote"></span>
+              <span class="analysis-heading">What it means</span>
               <span id="card-answer" class="card-answer"></span>
+              <span id="card-method-block"><span class="analysis-heading">How to analyse it</span><span id="card-method" class="card-answer"></span></span>
               <span id="card-exam" class="exam-tip"></span>
               <span id="card-tags-back" class="tag-row"></span>
               <span class="flip-hint">Click or press Space to see the question</span>
@@ -144,6 +153,8 @@
     <script src="extra-cards.js"></script>
     <script src="henry-cards.js"></script>
     <script src="quiz-data.js"></script>
+    <script src="deeper-content.js"></script>
+    <script src="quiz-more.js"></script>
     <script src="history.js"></script>
     <script src="app.js"></script>
   </body>

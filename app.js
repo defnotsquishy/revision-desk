@@ -20,7 +20,7 @@
     const ordered = state.order ? state.order.map((id) => cards.find((card) => card.id === id)).filter(Boolean) : cards;
     const query = state.query.trim().toLowerCase();
     return ordered.filter((card) => {
-      const haystack = [card.question, card.quote, card.answer, card.exam, ...(card.tags || [])].join(" ").toLowerCase();
+      const haystack = [card.question, card.quiz?.question, card.quote, card.answer, card.method, card.exam, ...(card.tags || [])].join(" ").toLowerCase();
       return (!query || haystack.includes(query)) && (state.filter === "all" || statusFor(card.id) === state.filter) && (state.topic === 'all' || (card.tags || []).includes(state.topic));
     });
   };
@@ -78,7 +78,9 @@
     $("card-question").textContent = card.question;
     $("card-quote").textContent = card.quote || "";
     $("card-answer").textContent = card.answer;
-    $("card-exam").textContent = card.exam ? `Exam use: ${card.exam}` : "";
+    $("card-method").textContent = card.method || '';
+    $("card-method-block").hidden = !card.method;
+    $("card-exam").textContent = card.exam ? `${card.method ? 'Use it in an essay' : 'Exam use'}: ${card.exam}` : "";
     ['card-tags-front', 'card-tags-back'].forEach(id => $(id).replaceChildren(...(card.tags || []).map(tag => {
       const span = document.createElement('span'); span.className = 'tag'; span.textContent = tag; return span;
     })));
@@ -124,7 +126,11 @@
     $("quiz-feedback").textContent = correct ? 'Correct — nice work.' : `Not quite. Correct answer: ${card.quiz.options[0]}`;
     $("quiz-feedback").classList.add(correct ? 'correct' : 'incorrect');
     $("quiz-answer").textContent = card.answer;
-    $("quiz-exam").textContent = card.exam ? `Exam use: ${card.exam}` : '';
+    $("quiz-quote").textContent = card.quote || '';
+    $("quiz-quote").hidden = !card.quote;
+    $("quiz-method").textContent = card.method || '';
+    $("quiz-method-block").hidden = !card.method;
+    $("quiz-exam").textContent = card.exam ? `${card.method ? 'Use it in an essay' : 'Exam use'}: ${card.exam}` : '';
     $("quiz-exam").hidden = !card.exam;
     $("quiz-explanation").hidden = false;
     $("rating-group").hidden = false;
