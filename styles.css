@@ -211,6 +211,24 @@ kbd { min-width: 1.45rem; padding: .12rem .32rem; border: 1px solid #c8cdd9; bor
 .search-box input::-webkit-search-cancel-button { display: none; }
 .clear-search { min-width: 44px; min-height: 44px; border: 0; background: transparent; color: var(--muted); cursor: pointer; font-size: 1.5rem; }
 .clear-search:hover { color: var(--ink); }
+.mode-control { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-top: .9rem; }
+.mode-control [aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.mode-control > span { color: var(--muted); font-size: .8rem; flex-basis: 100%; }
+.quiz-area { background: var(--surface); border: 1px solid var(--line); border-radius: .9rem; padding: 1.5rem; }
+#quiz-question { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1.3rem, 2.5vw, 1.8rem); line-height: 1.35; }
+.quiz-options { display: grid; gap: .65rem; }
+.quiz-option { display: flex; align-items: center; gap: .85rem; width: 100%; min-height: 52px; padding: .85rem; border: 1px solid var(--line); border-radius: .65rem; background: var(--paper); color: var(--ink); text-align: left; line-height: 1.45; cursor: pointer; }
+.quiz-option:hover:not([aria-disabled="true"]) { border-color: var(--ink); }
+.option-letter { flex-shrink: 0; font: 700 .85rem ui-monospace, Consolas, monospace; color: var(--muted); }
+.quiz-option[aria-disabled="true"] { cursor: default; }
+.quiz-option.is-correct { border: 2px solid var(--know); }
+.quiz-option.is-wrong { border: 2px solid var(--learn); }
+.quiz-feedback { min-height: 1.5em; margin: 1rem 0 0; font-weight: 700; line-height: 1.5; }
+.quiz-feedback.correct { color: var(--know); }
+.quiz-feedback.incorrect { color: var(--learn); }
+#quiz-explanation { margin-top: .85rem; line-height: 1.65; }
+#quiz-explanation .history-help { margin-bottom: 0; }
+@media (max-width: 460px) { .quiz-area { padding: 1rem; } }
 .history-panel { border: 1px solid var(--line); border-radius: .75rem; background: var(--surface); margin-bottom: 1rem; padding: 0 1rem; }
 summary { cursor: pointer; min-height: 44px; padding: .75rem 0; font-size: .85rem; font-weight: 700; }
 summary:hover { color: var(--accent-dark); }

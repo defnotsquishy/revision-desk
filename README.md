@@ -6,6 +6,8 @@ English Literature: Macbeth, A Christmas Carol and An Inspector Calls. Edexcel H
 
 ## Use
 
+Multiple choice is the default: 90 authored four-option questions (10 per deck). Options shuffle, and choosing one reveals feedback and an explanation. Rate Learn, Unsure or Know afterwards to save confidence and advance; Next question skips rating. All 308 original cards remain under Flashcards. The mode selector shows quiz coverage; topic filters follow the selected mode. Existing ratings and graph history are preserved.
+
 Select a deck, reveal a card, then rate it Learn, Unsure or Know. Keyboard: arrows move; 1/2/3 rate; Enter or Space reveals a focused card. Open Progress over time to see daily Know percentages (not predicted exam marks).
 
 Ratings, graph history and theme are stored in this browser on this device. They are not sent to a database and do not sync between devices or with the desktop version. Clearing website data removes saved progress. The initial graph is empty until a card is rated.

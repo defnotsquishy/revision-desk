@@ -11,7 +11,7 @@
     <script src="theme.js"></script>
   </head>
   <body>
-    <a class="skip-link" href="#study-card">Skip to current card</a>
+    <a class="skip-link" href="#study-area">Skip to current question</a>
     <header class="topbar">
       <a class="brand" href="./" aria-label="Revision Desk home">
         <span class="brand-mark" aria-hidden="true">RD</span>
@@ -59,6 +59,11 @@
           <button id="shuffle-button" class="button button-quiet" type="button">Shuffle</button>
         </div>
         <label class="topic-control" for="topic-filter">Topic <select id="topic-filter"><option value="all">All topics</option></select></label>
+        <div class="mode-control" role="group" aria-label="Study mode">
+          <button id="quiz-mode" class="button button-quiet" type="button" aria-pressed="true">Multiple choice</button>
+          <button id="flashcard-mode" class="button button-quiet" type="button" aria-pressed="false">Flashcards</button>
+          <span id="mode-description"></span>
+        </div>
 
         <section class="progress-panel" aria-label="Deck progress">
           <div class="progress-copy"><strong id="progress-count">0 of 0 reviewed</strong><span id="progress-percent">0%</span></div>
@@ -82,8 +87,15 @@
           </div>
         </details>
 
-        <section id="study-area" class="study-area">
+        <section id="study-area" class="study-area" tabindex="-1">
           <div class="card-position"><span id="card-number">Card 1 of 1</span><span id="current-status" class="status-pill">Not studied</span></div>
+          <section id="quiz-area" class="quiz-area" aria-labelledby="quiz-question">
+            <p class="card-kicker">Choose one answer</p>
+            <h3 id="quiz-question" tabindex="-1"></h3>
+            <div id="quiz-options" class="quiz-options" role="group" aria-label="Answer choices"></div>
+            <p id="quiz-feedback" class="quiz-feedback" role="status" aria-live="polite"></p>
+            <div id="quiz-explanation" hidden><p id="quiz-answer"></p><p id="quiz-exam" class="exam-tip"></p><p class="history-help">Rate your confidence below to save progress and continue, or choose Next question to skip rating.</p></div>
+          </section>
           <button id="study-card" class="flashcard" type="button" aria-live="polite" aria-label="Flashcard. Press Enter or Space to reveal the answer.">
             <span class="card-face card-front">
               <span class="card-kicker">Question</span>
@@ -101,7 +113,7 @@
             </span>
           </button>
 
-          <div class="rating-group" aria-label="Rate this card">
+          <div id="rating-group" class="rating-group" aria-label="Rate this card">
             <button class="rating learn" type="button" data-rating="learn"><span>Learn</span><kbd>1</kbd></button>
             <button class="rating unsure" type="button" data-rating="unsure"><span>Unsure</span><kbd>2</kbd></button>
             <button class="rating know" type="button" data-rating="know"><span>Know</span><kbd>3</kbd></button>
@@ -131,6 +143,7 @@
     <script src="data.js"></script>
     <script src="extra-cards.js"></script>
     <script src="henry-cards.js"></script>
+    <script src="quiz-data.js"></script>
     <script src="history.js"></script>
     <script src="app.js"></script>
   </body>

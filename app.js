@@ -2,6 +2,10 @@
   "use strict";
   const data = window.FLASHCARD_DATA;
   const state = { deckId: "macbeth", index: 0, flipped: false, query: "", filter: "all", topic: "all", order: null };
+  state.mode = 'quiz';
+  let quizAnswered = false;
+  let quizOptions = [];
+  try { if (localStorage.getItem('revision-desk-mode') === 'flashcard') state.mode = 'flashcard'; } catch (_) {}
   let saved = {};
   const storageKey = "revision-desk-progress-v2";
   try { saved = JSON.parse(localStorage.getItem(storageKey) || "{}"); } catch (_) { saved = {}; }
@@ -12,7 +16,7 @@
   const deck = () => allDecks.find((item) => item.id === state.deckId);
   const statusFor = (id) => saved[id] || "unseen";
   const filteredCards = () => {
-    const cards = deck().cards;
+    const cards = deck().cards.filter(card => state.mode !== 'quiz' || card.quiz);
     const ordered = state.order ? state.order.map((id) => cards.find((card) => card.id === id)).filter(Boolean) : cards;
     const query = state.query.trim().toLowerCase();
     return ordered.filter((card) => {
@@ -42,6 +46,14 @@
     const currentDeck = deck();
     document.title = `${currentDeck.title} — Revision Desk`;
     $("clear-search").hidden = !state.query;
+    const quizMode = state.mode === 'quiz';
+    $("quiz-mode").setAttribute('aria-pressed', String(quizMode));
+    $("flashcard-mode").setAttribute('aria-pressed', String(!quizMode));
+    $("mode-description").textContent = quizMode ? `${currentDeck.cards.filter(card => card.quiz).length} quiz questions · ${currentDeck.cards.length} cards in Flashcards` : `${currentDeck.cards.length} flashcards`;
+    $("next-button").textContent = quizMode ? 'Next question' : 'Next card';
+    $("study-card").hidden = quizMode;
+    $("quiz-area").hidden = !quizMode;
+    $("rating-group").hidden = quizMode;
     const cards = filteredCards();
     $("subject-label").textContent = currentDeck.subject.name;
     $("deck-title").textContent = currentDeck.title;
@@ -61,7 +73,8 @@
     if (!cards.length) return;
     state.index = Math.min(state.index, cards.length - 1);
     const card = cards[state.index];
-    $("card-number").textContent = `Card ${state.index + 1} of ${cards.length}`;
+    $("card-number").textContent = `${quizMode ? 'Question' : 'Card'} ${state.index + 1} of ${cards.length}`;
+    if (quizMode) renderQuiz(card);
     $("card-question").textContent = card.question;
     $("card-quote").textContent = card.quote || "";
     $("card-answer").textContent = card.answer;
@@ -77,6 +90,49 @@
     $("study-card").setAttribute("aria-label", "Flashcard question. Press Enter or Space to reveal the answer.");
     document.querySelector(".card-front").setAttribute("aria-hidden", "false");
     document.querySelector(".card-back").setAttribute("aria-hidden", "true");
+  }
+
+  function renderQuiz(card) {
+    quizAnswered = false;
+    $("quiz-question").textContent = card.quiz.question;
+    $("quiz-feedback").textContent = '';
+    $("quiz-feedback").className = 'quiz-feedback';
+    $("quiz-explanation").hidden = true;
+    quizOptions = card.quiz.options.map((text, index) => ({text, correct: index === 0}));
+    for (let i = quizOptions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [quizOptions[i], quizOptions[j]] = [quizOptions[j], quizOptions[i]];
+    }
+    $("quiz-options").replaceChildren(...quizOptions.map((option, index) => {
+      const button = document.createElement('button'); button.type = 'button'; button.className = 'quiz-option';
+      const letter = document.createElement('span'); letter.className = 'option-letter'; letter.textContent = 'ABCD'[index];
+      const text = document.createElement('span'); text.textContent = option.text;
+      button.append(letter, text); button.addEventListener('click', () => answerQuiz(index)); return button;
+    }));
+  }
+  function answerQuiz(index) {
+    if (state.mode !== 'quiz' || quizAnswered || !quizOptions[index]) return;
+    const card = filteredCards()[state.index];
+    if (!card) return;
+    quizAnswered = true;
+    const correct = quizOptions[index].correct;
+    Array.from($("quiz-options").children).forEach((button, i) => {
+      button.setAttribute('aria-disabled', 'true');
+      if (quizOptions[i].correct) button.classList.add('is-correct');
+      if (i === index) button.classList.add(correct ? 'is-selected-correct' : 'is-wrong');
+    });
+    $("quiz-feedback").textContent = correct ? 'Correct — nice work.' : `Not quite. Correct answer: ${card.quiz.options[0]}`;
+    $("quiz-feedback").classList.add(correct ? 'correct' : 'incorrect');
+    $("quiz-answer").textContent = card.answer;
+    $("quiz-exam").textContent = card.exam ? `Exam use: ${card.exam}` : '';
+    $("quiz-exam").hidden = !card.exam;
+    $("quiz-explanation").hidden = false;
+    $("rating-group").hidden = false;
+  }
+  function setMode(mode) {
+    state.mode = mode; state.index = 0; state.topic = 'all'; state.order = null;
+    try { localStorage.setItem('revision-desk-mode', mode); } catch (_) {}
+    renderTopics(); renderCard();
   }
 
   function renderProgress() {
@@ -95,19 +151,21 @@
   }
 
   function renderTopics() {
-    const topics = [...new Set(deck().cards.flatMap(card => card.tags || []))].sort();
+    const topics = [...new Set(deck().cards.filter(card => state.mode !== 'quiz' || card.quiz).flatMap(card => card.tags || []))].sort();
     $("topic-filter").replaceChildren(new Option('All topics', 'all'), ...topics.map(topic => new Option(topic, topic)));
   }
   function selectDeck(id) { state.deckId = id; state.index = 0; state.query = ""; state.filter = "all"; state.topic = 'all'; state.order = null; $("search-input").value = ""; $("status-filter").value = "all"; renderTopics(); renderNav(); renderCard(); }
-  function move(delta) { const cards = filteredCards(); if (!cards.length) return; state.index = (state.index + delta + cards.length) % cards.length; renderCard(); }
+  function move(delta) { const cards = filteredCards(); if (!cards.length) return; state.index = (state.index + delta + cards.length) % cards.length; renderCard(); if (state.mode === 'quiz') $("quiz-question").focus({preventScroll: true}); }
   function flip() { if (!filteredCards().length) return; state.flipped = !state.flipped; $("study-card").classList.toggle("flipped", state.flipped); document.querySelector(".card-front").setAttribute("aria-hidden", String(state.flipped)); document.querySelector(".card-back").setAttribute("aria-hidden", String(!state.flipped)); $("study-card").setAttribute("aria-label", state.flipped ? "Flashcard answer. Press Enter or Space to return to the question." : "Flashcard question. Press Enter or Space to reveal the answer."); }
   function persist() { try { localStorage.setItem(storageKey, JSON.stringify(saved)); return true; } catch (_) { toast('Storage is unavailable. Progress is kept for this session only.'); return false; } }
-  function rate(rating) { const card = filteredCards()[state.index]; if (!card) return; saved[card.id] = rating; const stored = persist(); if (stored) { window.RevisionHistory.capture(deck(), saved); toast(`Marked “${rating}”`); } const cards = filteredCards(); if (cards.some(item => item.id === card.id)) state.index = (state.index + 1) % cards.length; else state.index = cards.length ? state.index % cards.length : 0; renderCard(); return stored; }
+  function rate(rating) { if (state.mode === 'quiz' && !quizAnswered) return false; const card = filteredCards()[state.index]; if (!card) return; saved[card.id] = rating; const stored = persist(); if (stored) { window.RevisionHistory.capture(deck(), saved); toast(`Marked “${rating}”`); } const cards = filteredCards(); if (cards.some(item => item.id === card.id)) state.index = (state.index + 1) % cards.length; else state.index = cards.length ? state.index % cards.length : 0; renderCard(); if (state.mode === 'quiz') { if (cards.length) $("quiz-question").focus({preventScroll:true}); else $("clear-filters").focus(); } return stored; }
   let toastTimer;
   function toast(message) { $("toast").textContent = message; $("toast").classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => $("toast").classList.remove("show"), 1600); }
 
   $("deck-nav").addEventListener("click", (event) => { const button = event.target.closest("[data-deck]"); if (button) { selectDeck(button.dataset.deck); document.querySelector(`[data-deck="${state.deckId}"]`).focus({preventScroll: true}); } });
   $("study-card").addEventListener("click", flip);
+  $("quiz-mode").addEventListener("click", () => setMode('quiz'));
+  $("flashcard-mode").addEventListener("click", () => setMode('flashcard'));
   $("prev-button").addEventListener("click", () => move(-1));
   $("next-button").addEventListener("click", () => move(1));
   document.querySelectorAll("[data-rating]").forEach((button) => button.addEventListener("click", () => rate(button.dataset.rating)));
