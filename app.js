@@ -186,7 +186,7 @@
   $("reset-button").addEventListener("click", () => { $("reset-copy").textContent = `All ${deck().cards.length} ratings in ${deck().title} will become Not studied. This cannot be undone. Previous days on your graph stay; today's point becomes 0%. Other decks are unchanged.`; $("reset-dialog").showModal(); });
   $("cancel-reset").addEventListener("click", () => $("reset-dialog").close());
   $("confirm-reset").addEventListener("click", () => { deck().cards.forEach((card) => delete saved[card.id]); const stored = persist(); if (stored) window.RevisionHistory.capture(deck(), saved); renderCard(); $("reset-dialog").close(); if (stored) toast("Deck ratings reset"); });
-  document.addEventListener("keydown", (event) => { if (event.isComposing || $("reset-dialog").open || ["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName)) return; if (event.key === "ArrowLeft") { event.preventDefault(); move(-1); } if (event.key === "ArrowRight") { event.preventDefault(); move(1); } if (["1", "2", "3"].includes(event.key)) rate({ "1": "learn", "2": "unsure", "3": "know" }[event.key]); });
+  document.addEventListener("keydown", (event) => { if (event.isComposing || document.querySelector('dialog[open]') || ["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName)) return; if (event.key === "ArrowLeft") { event.preventDefault(); move(-1); } if (event.key === "ArrowRight") { event.preventDefault(); move(1); } if (["1", "2", "3"].includes(event.key)) rate({ "1": "learn", "2": "unsure", "3": "know" }[event.key]); });
 
   renderTheme();
   renderTopics();

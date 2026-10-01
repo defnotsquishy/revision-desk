@@ -37,6 +37,8 @@ Runtime CSS is canonical (Model B): colors.* map directly to same-name --* prope
 ## Typography
 System sans for controls and explanations, Georgia for recall prompts and quotations, monospace for chart axes. English (UK) is the current locale. No network fonts or runtime dependencies.
 
+The optional account layer loads the pinned Firebase SDK online; guest revision remains independent and works offline.
+
 ## Layout
 244px library; workspace max 980px. Below 780px the library becomes a horizontal rail and the page uses one document scroll owner. Controls remain at least 44px. Collapsed Progress over time keeps card practice compact. No fixed content height; long answers grow naturally. Graph values have a bounded secondary scroller.
 
@@ -48,6 +50,8 @@ Panels use 0.75rem, cards 0.9rem, controls follow established rounded shapes. St
 
 ## Components
 index.html owns shared markup; app.js owns deck, filter, ratings and reset behavior. history.js owns local daily snapshots and SVG chart rendering. styles.css owns all themes, scrollbars and control states. Native selects deliberately retain OS-owned option geometry and keyboard support. Native HTML dialog owns focus trapping and Escape; app controls naming, contents, initial cancel focus and confirmation. No browser confirm prompts.
+
+auth.js owns a single account form/dialog for sign-in, signup, password reset and verification. Reuse the existing button and native-dialog primitives, palette, borders and focus styles; no rebrand. Fields use explicit labels, app-owned inline errors and first-error focus. Submission is locked while pending; session persistence is browser-session only. Passwords are masked with a reveal control and cleared after submission/close, never logged or manually stored. The dialog clearly labels progress as device-only until cloud migration is implemented; account sign-out does not delete guest ratings. Study shortcuts are suppressed while any modal is open.
 
 Scatter dots are actual daily snapshots, percentage Know of the entire deck at recording time. Date axis uses actual date spacing; a single day is centred. No fabricated history or exam-score claims. Text values accompany the graph. Prior-day history remains after reset, today's entry updates. Ratings keep their existing storage key. No cloud sync; storage errors are visible. Theme is saved separately. UI has a 100ms opacity reveal and respects reduced motion.
 

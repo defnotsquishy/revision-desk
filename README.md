@@ -6,6 +6,8 @@ English Literature: Macbeth, A Christmas Carol and An Inspector Calls. Edexcel H
 
 ## Use
 
+Sign in opens the Firebase account form: email/password signup, sign-in, password reset and verification. New passwords require at least 8 characters; choose a fresh unique password privately. Sessions last for the browser session. Guest revision is still available. This is stage 1: ratings and graph history are device-only, not account-specific or cloud-synced yet. Signing out does not remove device ratings. Do not assume different accounts on a shared browser have separate progress profiles until the cloud migration stage.
+
 Multiple choice is the default: 270 authored four-option questions (30 per deck). Options shuffle, and choosing one reveals feedback and an explanation. English answers include the quotation, meaning, writer's technique and essay use. Rate Learn, Unsure or Know afterwards to save confidence and advance; Next question skips rating. Flashcards contains 326 cards, at least 30 per deck. The mode selector shows quiz coverage; topic filters follow the selected mode. Existing ratings and graph history are preserved.
 
 Select a deck, reveal a card, then rate it Learn, Unsure or Know. Keyboard: arrows move; 1/2/3 rate; Enter or Space reveals a focused card. Open Progress over time to see daily Know percentages (not predicted exam marks).

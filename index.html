@@ -17,7 +17,7 @@
         <span class="brand-mark" aria-hidden="true">RD</span>
         <span><strong>Revision Desk</strong><small>GCSE flashcards</small></span>
       </a>
-      <div class="header-actions"><div class="streak" aria-label="Study progress"><span id="mastered-total">0</span> mastered</div><button id="theme-toggle" class="button button-quiet" type="button" aria-label="Switch to light mode">Light mode</button></div>
+      <div class="header-actions"><div class="streak" aria-label="Study progress"><span id="mastered-total">0</span> mastered</div><button id="theme-toggle" class="button button-quiet" type="button" aria-label="Switch to light mode">Light mode</button><button id="account-button" class="button button-quiet" type="button">Sign in</button></div>
     </header>
 
     <main class="app-shell">
@@ -143,6 +143,22 @@
       </section>
     </main>
 
+    <dialog id="account-dialog" aria-labelledby="account-title" aria-describedby="account-help">
+      <div class="account-heading"><h2 id="account-title">Your account</h2><button id="account-close" class="button button-quiet" type="button">Close</button></div>
+      <p id="account-help">Accounts are step 1. Ratings and graphs still belong to this browser, not your account. Cloud sync comes next.</p>
+      <p id="account-status" role="status" aria-live="polite">Connecting to account service…</p>
+      <div id="account-member" hidden>
+        <p id="account-email"></p><p id="account-verification"></p>
+        <div class="account-actions"><button id="account-verify" class="button button-quiet" type="button">Send verification email</button><button id="account-refresh" class="button button-quiet" type="button">Check verification</button><button id="account-signout" class="button button-quiet" type="button">Sign out</button></div>
+      </div>
+      <form id="account-form" novalidate>
+        <div class="account-actions" role="group" aria-label="Account action"><button id="account-login" class="button button-quiet" type="button" aria-pressed="true">Sign in</button><button id="account-signup" class="button button-quiet" type="button" aria-pressed="false">Create account</button><button id="account-reset" class="button button-quiet" type="button" aria-pressed="false">Reset password</button></div>
+        <label for="account-email-input">Email address</label><input id="account-email-input" type="email" autocomplete="username" maxlength="254" required aria-describedby="account-email-error" /><span id="account-email-error" class="field-error"></span>
+        <div id="account-password-group"><label for="account-password">Password</label><div class="password-control"><input id="account-password" type="password" autocomplete="current-password" required aria-describedby="account-password-help account-password-error" /><button id="account-password-toggle" class="button button-quiet" type="button" aria-pressed="false">Show password</button></div><p id="account-password-help">Use a unique password. New accounts need at least 8 characters.</p><span id="account-password-error" class="field-error"></span></div>
+        <button id="account-submit" class="button button-primary" type="submit" disabled>Sign in</button>
+      </form>
+      <button id="account-retry" class="button button-quiet" type="button" hidden>Retry connection</button>
+    </dialog>
     <dialog id="reset-dialog" aria-labelledby="reset-title" aria-describedby="reset-copy">
       <h2 id="reset-title">Reset deck ratings?</h2>
       <p id="reset-copy"></p>
@@ -157,5 +173,6 @@
     <script src="quiz-more.js"></script>
     <script src="history.js"></script>
     <script src="app.js"></script>
+    <script src="auth.js"></script>
   </body>
 </html>
