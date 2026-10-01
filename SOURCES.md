@@ -19,6 +19,25 @@ Known organiser errors corrected in cards include reversed like/unlike electrost
 
 The library retains 18 original science documents with their original filenames on download. The two Year 11 plans contain school-login examples and are not published; their safe study advice is summarised. The two Energy KO PDFs are byte-identical. Individual decks record their source document IDs in science-cards.js, matched to resources-data.js.
 
+## Sociology and the 60-card expansion
+
+Checked on 1 October 2026 against [AQA Sociology 8192 subject content](https://www.aqa.org.uk/subjects/sociology/gcse/sociology-8192/specification/subject-content), [named texts and summaries](https://www.aqa.org.uk/subjects/sociology/gcse/sociology-8192/specification/appendix-b-texts-and-summaries) and [research methods](https://www.aqa.org.uk/subjects/sociology/gcse/sociology-8192/specification/subject-content/sociological-research-methods). There are 60 original flashcards in each of Introduction, Research Methods, Families, Education, Crime and Deviance, and Social Stratification. Families/Education are Paper 1; Crime/Stratification are Paper 2; theory and methods apply across papers. These are concise revision aids, not exhaustive replacements for the specification or school teaching.
+
+Supplied source material read for these cards:
+
+- 1.Revision Sheets - Sociology.pptx
+- Revision Sheets - Sociology.pdf
+- AQA GCSE Sociology Knowledge Organiser - Paper 2 - Crime and Deviance.pdf
+- AQA GCSE Sociology Knowledge Organiser - Paper 2 - Social Stratification.pdf
+- AQA GCSE Sociology Knowledge Organiser - Paper 1 - Families.pdf
+- AQA GCSE Sociology Knowledge Organiser - Paper 1 - Education (1).pdf
+- AQA GCSE Sociology Knowledge Organiser - Cross Paper - Research Methods.pdf
+- AQA GCSE Sociology Knowledge Organiser - Cross Paper - Introduction to Sociology (2).pdf
+
+The slideshow and revision-sheet PDF overlap; duplicated notes do not become duplicate cards. Empty/repeated placeholder sections, undated percentages and current-looking legal details without a reliable date are excluded. Original sociology files remain local; the public app contains original revision explanations, not copies of the source documents. Key corrections include Becker's name, Albert versus Stanley Cohen, universalistic versus particularistic standards, Willis's resistant pupil culture, gender pay gap versus unequal pay, and courts applying rather than legislating laws. Sampling and methods are not described as guaranteeing representativeness, validity or reliability. New Right, Marxist, functionalist, feminist and interactionist explanations are identified as perspectives to evaluate.
+
+expanded-cards.js also adds original application questions, calculations and close-reading practice across the existing decks, bringing every complete deck to 60 while retaining all existing IDs, questions and saved-rating compatibility. Shared science additions are independently identified for Combined and Triple; no Triple-only topic is added to Combined. English expansion reuses the existing verified quotation bank for different analytical questions, with separate meaning, method and essay use. Geography options remain labelled and school case-study evidence must still be supplied from class notes. Flashcard totals differ from smaller authored multiple-choice subsets and Foundation filters.
+
 ## Past papers
 
 The catalogue includes 104 standard/specimen Paper 1 pairs from the public AQA assessment lists for 8464, 8461, 8462, 8463, 8702 and 8035, plus verified public Edexcel Medicine option 11 pairs for June 2023 and 2024. The Medicine question PDFs include the source booklets. Every entry pairs the same component, tier and series; all 212 paper/mark-scheme links returned successful PDF responses when checked on 1 October 2026. They link to the board's published files rather than republishing copyrighted examination PDFs. Official directories are provided for additional years and accessible formats. This is not a claim to include every paper ever issued, locked papers or unreleased assessments.

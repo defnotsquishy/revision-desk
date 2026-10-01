@@ -1,10 +1,12 @@
 # Revision Desk
 
-A matte-black GCSE revision desk with 1,231 flashcards for English Literature, Edexcel History, AQA Geography Paper 1, Combined Science Trilogy and Triple Science.
+A matte-black GCSE revision desk with 2,460 flashcards: 60 in each of 41 topic decks for English Literature, Edexcel History, AQA Geography Paper 1, AQA Sociology, Combined Science Trilogy and Triple Science.
 
 ## Science, profile and paper library
 
-Science adds 905 course-specific cards across B1–B4, C1–C5 and P1–P4, with separate Combined and Triple decks and Higher-only labels. Choose Foundation to hide Higher-only cards. Every science deck has at least 30 cards in Higher; Foundation subsets can be smaller. Existing ratings and cards retain their IDs.
+Science has 1,560 course-specific cards across B1–B4, C1–C5 and P1–P4, with separate Combined and Triple decks and Higher-only labels. Choose Foundation to hide Higher-only cards. Every science deck has 60 cards in Higher; Foundation subsets can be smaller. Existing ratings and cards retain their IDs.
+
+Sociology adds 360 cards in six AQA 8192 decks: Introduction, Research Methods, Families, Education, Crime and Deviance, and Social Stratification. Original explanations draw on all eight supplied sociology files. They include concepts, named studies, application and evaluation, with theories attributed and undated statistics omitted. Select **English, Humanities & Sociology** in Course, then your sociology deck. These are revision flashcards, not predicted exam questions.
 
 Profile saves a name, square picture and practice badge in this browser only. Pictures are re-encoded to a small JPEG with original metadata removed; no Firebase Storage upload occurs. Signed-in UIDs and guests have separate local profiles, but ratings and graphs remain device-wide. Rating 20/50/100 distinct cards unlocks badges, not exam grades. Save commits changes; cancel/close asks before discarding a changed draft.
 
@@ -47,7 +49,7 @@ Reset deck clears only the selected deck's ratings after confirmation. Earlier g
 
 ## Keyboard controls
 
-Multiple choice is the default study mode: 270 authored questions across the original nine decks, plus smaller science quick-recall subsets. Written science calculations, practical explanations and evaluation remain in Flashcards. The mode selector shows actual quiz/card counts. English reveals include the quotation, meaning, writer's technique and essay use. After answering, use Learn, Unsure or Know to save your confidence and advance. Next question skips without changing your rating. Correct quiz answers do not automatically count as mastery. Topic filters show only topics available in the selected mode.
+Multiple choice is the default study mode: 270 authored questions across the original nine decks, plus smaller science quick-recall subsets and 27 sociology questions. Select **Flashcards** for all 60 cards in a topic. Written calculations, practical explanations and extended evaluation remain in Flashcards; they are not auto-converted into guessed multiple-choice answers. The mode selector shows actual quiz/card counts. English reveals include the quotation, meaning, writer's technique and essay use. After answering, use Learn, Unsure or Know to save your confidence and advance. Next question skips without changing your rating. Correct quiz answers do not automatically count as mastery. Topic filters show only topics available in the selected mode.
 
 - Focus a card and press **Enter** or **Space** to flip it.
 - Press **Left Arrow** or **Right Arrow** to move between cards when not typing in search.
@@ -70,6 +72,8 @@ The initial content lives in `data.js`; the expanded History and Geography cards
 ```
 
 Add cards inside the relevant deck's `cards` array. Keep every `id` unique because saved progress uses it as the key.
+
+`sociology-cards.js` owns the six sociology decks. `expanded-cards.js` appends original application and close-reading questions to the existing decks, without replacing any old cards. Preserve row order and IDs after publishing. The 60-card target applies to each complete deck, not every optional Geography topic or Foundation subset. The progress graph keeps historical denominators as recorded; new cards are initially unrated and do not erase earlier work.
 
 The Henry deck now follows **Edexcel B3: Henry VIII and his ministers, 1509–40**, as requested from the specification. Its internal deck ID remains `henry-pending` for compatibility, but it is populated and no longer displayed as pending. Geography option cards are labelled so school choices can be adjusted.
 
