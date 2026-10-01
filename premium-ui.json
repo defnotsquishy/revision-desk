@@ -1,0 +1,5 @@
+{
+  "ownership": {"Select/Listbox": "native"},
+  "sourceRoots": ["."],
+  "evidence": {"notes": "Plain JavaScript event listeners in app.js wire all buttons. Auditor only recognises inline onclick, so actionless-button findings are false positives; work/verify.cjs independently checks bindings."}
+}

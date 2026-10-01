@@ -13,6 +13,7 @@
     });
   };
   function renderUser() {
+    window.dispatchEvent(new CustomEvent('revision-account-change', {detail: {uid:user?.uid || null}}));
     $('account-button').textContent = user ? 'Account' : 'Sign in';
     $('account-member').hidden = !user;
     $('account-form').hidden = !!user;

@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="A focused GCSE revision flashcard workspace for English Literature, History and Geography." />
-    <meta name="theme-color" content="#101936" />
+    <meta name="description" content="A matte-black GCSE revision desk with English, History, Geography, Combined and Triple Science flashcards, profiles and matched Paper 1 past papers." />
+    <meta name="theme-color" content="#0c0c0d" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101936'/%3E%3Cpath d='M15 17h24a8 8 0 0 1 8 8v25H23a8 8 0 0 1-8-8V17Z' fill='%23f4c95d'/%3E%3Cpath d='M23 17v33M29 27h11M29 35h11' stroke='%23101936' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
     <title>Revision Desk — GCSE Flashcards</title>
     <link rel="stylesheet" href="styles.css" />
@@ -17,7 +17,7 @@
         <span class="brand-mark" aria-hidden="true">RD</span>
         <span><strong>Revision Desk</strong><small>GCSE flashcards</small></span>
       </a>
-      <div class="header-actions"><div class="streak" aria-label="Study progress"><span id="mastered-total">0</span> mastered</div><button id="theme-toggle" class="button button-quiet" type="button" aria-label="Switch to light mode">Light mode</button><button id="account-button" class="button button-quiet" type="button">Sign in</button></div>
+      <div class="header-actions"><div class="streak" aria-label="Study progress"><span id="mastered-total">0</span> mastered</div><button id="library-button" class="button button-quiet" type="button">Papers & files</button><button id="profile-button" class="button button-quiet" type="button"><span id="header-avatar" class="mini-avatar" aria-hidden="true">RD</span>Profile</button><button id="theme-toggle" class="button button-quiet" type="button" aria-label="Switch to light mode">Light mode</button><button id="account-button" class="button button-quiet" type="button">Sign in</button></div>
     </header>
 
     <main class="app-shell">
@@ -26,6 +26,8 @@
           <p class="eyebrow">Your library</p>
           <h1>Choose a deck</h1>
         </div>
+        <label class="library-filter" for="course-filter">Course<select id="course-filter"><option value="other">English, History & Geography</option><option value="combined">Combined Science · Trilogy</option><option value="triple">Triple Science</option></select></label>
+        <label class="library-filter" for="science-tier" id="science-tier-control" hidden>Science tier<select id="science-tier"><option value="H">Higher · all course cards</option><option value="F">Foundation · no Higher-only cards</option></select></label>
         <nav id="deck-nav" class="deck-nav"></nav>
       </aside>
 
@@ -143,6 +145,32 @@
       </section>
     </main>
 
+    <dialog id="profile-dialog" aria-labelledby="profile-title" aria-describedby="profile-help">
+      <div class="account-heading"><h2 id="profile-title">Your revision profile</h2><button id="profile-close" class="button button-quiet" type="button">Close</button></div>
+      <p id="profile-help">Your name, photo and badge stay in this browser. They are not uploaded to Firebase or shared publicly. Signing in keeps a separate local profile for that account.</p>
+      <p id="profile-identity" class="history-help">Guest profile · this browser only</p>
+      <div class="profile-summary"><div id="profile-avatar" class="profile-avatar" aria-label="Profile picture">RD</div><div><p id="profile-summary-name">Revision student</p><p id="profile-stats" class="history-help"></p></div></div>
+      <form id="profile-form" novalidate>
+        <label for="profile-name">Display name</label><input id="profile-name" type="text" maxlength="32" autocomplete="nickname" aria-describedby="profile-name-error"/><span id="profile-name-error" class="field-error"></span>
+        <label for="profile-photo">Choose a profile picture</label><p id="profile-photo-help" class="history-help">JPEG, PNG or WebP · up to 5 MB and 16 million pixels. Saved as a small square image; original metadata is removed.</p><input id="profile-photo" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="profile-photo-help profile-photo-error"/><span id="profile-photo-error" class="field-error"></span>
+        <button id="profile-remove-photo" class="button button-quiet" type="button">Remove picture</button>
+        <label for="profile-badge">Study badge</label><select id="profile-badge" aria-describedby="profile-unlocks"></select><p id="profile-unlocks" class="history-help">Review and rate 20, 50 or 100 different cards to unlock badges. These reflect practice, not exam grades.</p>
+        <p id="profile-status" role="status" aria-live="polite"></p>
+        <div class="dialog-actions"><button id="profile-cancel" class="button button-quiet" type="button">Cancel</button><button id="profile-save" class="button button-primary" type="submit">Save profile</button></div>
+      </form>
+    </dialog>
+    <dialog id="profile-discard-dialog" aria-labelledby="profile-discard-title"><h2 id="profile-discard-title">Discard profile changes?</h2><p>Your saved profile stays unchanged. The new name, picture or badge will not be saved.</p><div class="dialog-actions"><button id="profile-keep-editing" class="button button-quiet" type="button" autofocus>Keep editing</button><button id="profile-discard" class="button button-primary" type="button">Discard changes</button></div></dialog>
+    <dialog id="library-dialog" class="library-dialog" aria-labelledby="library-title" aria-describedby="library-help">
+      <div class="account-heading"><h2 id="library-title">Papers & study files</h2><button id="library-close" class="button button-quiet" type="button">Close</button></div>
+      <p id="library-help">Official public Paper 1 papers, each paired with its matching mark scheme. Papers open on the exam board's website and need internet. School files are downloads, not past papers.</p>
+      <div class="account-actions" role="group" aria-label="Library section"><button id="library-papers" class="button button-quiet" type="button" aria-pressed="true">Past papers</button><button id="library-files" class="button button-quiet" type="button" aria-pressed="false">Your science files</button></div>
+      <div class="library-controls"><label for="paper-course">Course<select id="paper-course"><option value="combined">Combined Science · Trilogy</option><option value="triple">Triple Science</option><option value="other">Other subjects</option><option value="all">All courses</option></select></label><label for="paper-subject">Subject<select id="paper-subject"><option value="all">All subjects</option><option>Biology</option><option>Chemistry</option><option>Physics</option><option>English Literature</option><option>Geography</option><option>History</option></select></label><label for="paper-tier">Tier<select id="paper-tier"><option value="all">All tiers</option><option>Foundation</option><option>Higher</option><option>Untiered</option></select></label></div>
+      <div class="search-box"><label class="sr-only" for="paper-search">Search files or exam series</label><input id="paper-search" type="search" placeholder="Search year, exam code or file name…"/><button id="paper-search-clear" class="clear-search" type="button" aria-label="Clear library search" hidden>×</button></div>
+      <p id="library-count" role="status" aria-live="polite"></p><p id="library-empty" hidden>No matches. Try another course, tier or search.</p><ul id="library-results" class="resource-list"></ul>
+      <div class="library-pagination"><button id="library-prev" class="button button-quiet" type="button">Previous page</button><span id="library-page"></span><button id="library-next" class="button button-quiet" type="button">Next page</button></div>
+      <details><summary>Coverage, original files & study plan</summary><p class="history-help">This catalogue contains standard and specimen pairs found in public official resource lists, not every paper ever issued. No locked or unreleased papers are included. Use the board links below for additional, accessible-format or newly released papers. Organisers may contain Triple or Higher material even when shared with Combined: follow the labelled flashcards and your course.</p><div id="paper-directories"></div><p class="history-help">Two Year 11 revision plans contain school-login examples, so their originals are kept off this public site. Their safe guidance: revise regularly, start with your weakest topics, cover and recall your organiser, then practise a matching paper and mark it. Do not assume exam questions will be repeated.</p><p class="history-help">Energy KO and Energy KO-1 are identical; both original filenames are retained. Uploaded organisers are class notes, not authoritative mark schemes. The flashcards correct known errors in them.</p></details>
+    </dialog>
+
     <dialog id="account-dialog" aria-labelledby="account-title" aria-describedby="account-help">
       <div class="account-heading"><h2 id="account-title">Your account</h2><button id="account-close" class="button button-quiet" type="button">Close</button></div>
       <p id="account-help">Accounts are step 1. Ratings and graphs still belong to this browser, not your account. Cloud sync comes next.</p>
@@ -171,8 +199,14 @@
     <script src="quiz-data.js"></script>
     <script src="deeper-content.js"></script>
     <script src="quiz-more.js"></script>
+    <script src="science-cards.js"></script>
+    <script src="science-quizzes.js"></script>
+    <script src="papers-data.js"></script>
+    <script src="resources-data.js"></script>
     <script src="history.js"></script>
     <script src="app.js"></script>
     <script src="auth.js"></script>
+    <script src="profile.js"></script>
+    <script src="library.js"></script>
   </body>
 </html>

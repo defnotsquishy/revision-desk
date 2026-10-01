@@ -14,9 +14,12 @@
   const $ = (id) => document.getElementById(id);
   const allDecks = data.subjects.flatMap((subject) => subject.decks.map((deck) => ({ ...deck, subject })));
   const deck = () => allDecks.find((item) => item.id === state.deckId);
+  let course = 'other', scienceTier = 'H';
+  const tierCards = () => deck().cards.filter(c => !deck().science || scienceTier !== 'F' || c.tier !== 'H');
+  const progressDeck = () => deck().science && scienceTier === 'F' ? {...deck(),id:deck().id+'-foundation',title:deck().title+' · Foundation',cards:tierCards()} : deck();
   const statusFor = (id) => saved[id] || "unseen";
   const filteredCards = () => {
-    const cards = deck().cards.filter(card => state.mode !== 'quiz' || card.quiz);
+    const cards = tierCards().filter(card => state.mode !== 'quiz' || card.quiz);
     const ordered = state.order ? state.order.map((id) => cards.find((card) => card.id === id)).filter(Boolean) : cards;
     const query = state.query.trim().toLowerCase();
     return ordered.filter((card) => {
@@ -26,7 +29,7 @@
   };
 
   function renderNav() {
-    $("deck-nav").replaceChildren(...data.subjects.map(subject => {
+    $("deck-nav").replaceChildren(...data.subjects.filter(subject => (subject.route || 'other') === course).map(subject => {
       const section = document.createElement('section'); section.className = 'subject-group';
       const title = document.createElement('h3'); title.textContent = subject.name;
       const list = document.createElement('div'); list.className = 'deck-list';
@@ -35,7 +38,7 @@
         button.className = `deck-button ${item.id === state.deckId ? 'active' : ''}`;
         button.setAttribute('aria-pressed', String(item.id === state.deckId));
         const name = document.createElement('span'); name.textContent = item.title;
-        const count = document.createElement('span'); count.className = 'count'; count.textContent = item.cards.length;
+        const count = document.createElement('span'); count.className = 'count'; count.textContent = item.cards.filter(c => scienceTier !== 'F' || !item.science || c.tier !== 'H').length;
         button.append(name, count); list.append(button);
       });
       section.append(title, list); return section;
@@ -49,7 +52,7 @@
     const quizMode = state.mode === 'quiz';
     $("quiz-mode").setAttribute('aria-pressed', String(quizMode));
     $("flashcard-mode").setAttribute('aria-pressed', String(!quizMode));
-    $("mode-description").textContent = quizMode ? `${currentDeck.cards.filter(card => card.quiz).length} quiz questions · ${currentDeck.cards.length} cards in Flashcards` : `${currentDeck.cards.length} flashcards`;
+    $("mode-description").textContent = quizMode ? `${tierCards().filter(card => card.quiz).length} quiz questions · ${tierCards().length} cards in Flashcards` : `${tierCards().length} flashcards`;
     $("next-button").textContent = quizMode ? 'Next question' : 'Next card';
     $("study-card").hidden = quizMode;
     $("quiz-area").hidden = !quizMode;
@@ -142,7 +145,7 @@
   }
 
   function renderProgress() {
-    const cards = deck().cards;
+    const cards = tierCards();
     const counts = { know: 0, unsure: 0, learn: 0 };
     cards.forEach((card) => { if (counts[statusFor(card.id)] !== undefined) counts[statusFor(card.id)] += 1; });
     const reviewed = counts.know + counts.unsure + counts.learn;
@@ -153,18 +156,18 @@
     $("progress-bar").parentElement.setAttribute("aria-valuenow", String(percent));
     ["know", "unsure", "learn"].forEach((key) => $(`${key}-count`).textContent = counts[key]);
     $("mastered-total").textContent = allDecks.flatMap((d) => d.cards).filter((card) => statusFor(card.id) === "know").length;
-    window.RevisionHistory.render(deck(), saved);
+    window.RevisionHistory.render(progressDeck(), saved);
   }
 
   function renderTopics() {
-    const topics = [...new Set(deck().cards.filter(card => state.mode !== 'quiz' || card.quiz).flatMap(card => card.tags || []))].sort();
+    const topics = [...new Set(tierCards().filter(card => state.mode !== 'quiz' || card.quiz).flatMap(card => card.tags || []))].sort();
     $("topic-filter").replaceChildren(new Option('All topics', 'all'), ...topics.map(topic => new Option(topic, topic)));
   }
-  function selectDeck(id) { state.deckId = id; state.index = 0; state.query = ""; state.filter = "all"; state.topic = 'all'; state.order = null; $("search-input").value = ""; $("status-filter").value = "all"; renderTopics(); renderNav(); renderCard(); }
+  function selectDeck(id) { state.deckId = id; course = deck().route || 'other'; $("course-filter").value = course; $("science-tier-control").hidden = course === 'other'; state.index = 0; state.query = ""; state.filter = "all"; state.topic = 'all'; state.order = null; $("search-input").value = ""; $("status-filter").value = "all"; renderTopics(); renderNav(); renderCard(); }
   function move(delta) { const cards = filteredCards(); if (!cards.length) return; state.index = (state.index + delta + cards.length) % cards.length; renderCard(); if (state.mode === 'quiz') $("quiz-question").focus({preventScroll: true}); }
   function flip() { if (!filteredCards().length) return; state.flipped = !state.flipped; $("study-card").classList.toggle("flipped", state.flipped); document.querySelector(".card-front").setAttribute("aria-hidden", String(state.flipped)); document.querySelector(".card-back").setAttribute("aria-hidden", String(!state.flipped)); $("study-card").setAttribute("aria-label", state.flipped ? "Flashcard answer. Press Enter or Space to return to the question." : "Flashcard question. Press Enter or Space to reveal the answer."); }
   function persist() { try { localStorage.setItem(storageKey, JSON.stringify(saved)); return true; } catch (_) { toast('Storage is unavailable. Progress is kept for this session only.'); return false; } }
-  function rate(rating) { if (state.mode === 'quiz' && !quizAnswered) return false; const card = filteredCards()[state.index]; if (!card) return; saved[card.id] = rating; const stored = persist(); if (stored) { window.RevisionHistory.capture(deck(), saved); toast(`Marked “${rating}”`); } const cards = filteredCards(); if (cards.some(item => item.id === card.id)) state.index = (state.index + 1) % cards.length; else state.index = cards.length ? state.index % cards.length : 0; renderCard(); if (state.mode === 'quiz') { if (cards.length) $("quiz-question").focus({preventScroll:true}); else $("clear-filters").focus(); } return stored; }
+  function rate(rating) { if (state.mode === 'quiz' && !quizAnswered) return false; const card = filteredCards()[state.index]; if (!card) return; saved[card.id] = rating; const stored = persist(); if (stored) { window.RevisionHistory.capture(progressDeck(), saved); toast(`Marked “${rating}”`); } const cards = filteredCards(); if (cards.some(item => item.id === card.id)) state.index = (state.index + 1) % cards.length; else state.index = cards.length ? state.index % cards.length : 0; renderCard(); if (state.mode === 'quiz') { if (cards.length) $("quiz-question").focus({preventScroll:true}); else $("clear-filters").focus(); } return stored; }
   let toastTimer;
   function toast(message) { $("toast").textContent = message; $("toast").classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => $("toast").classList.remove("show"), 1600); }
 
@@ -175,7 +178,9 @@
   $("prev-button").addEventListener("click", () => move(-1));
   $("next-button").addEventListener("click", () => move(1));
   document.querySelectorAll("[data-rating]").forEach((button) => button.addEventListener("click", () => rate(button.dataset.rating)));
-  $("search-input").addEventListener("input", (event) => { state.query = event.target.value; state.index = 0; renderCard(); });
+  function search(event) { if (event.isComposing) return; state.query = event.target.value; state.index = 0; renderCard(); }
+  $("search-input").addEventListener("input", search);
+  $("search-input").addEventListener("compositionend", search);
   $("clear-search").addEventListener("click", () => { state.query = ""; state.index = 0; $("search-input").value = ""; renderCard(); $("search-input").focus(); });
   $("status-filter").addEventListener("change", (event) => { state.filter = event.target.value; state.index = 0; renderCard(); });
   $("clear-filters").addEventListener("click", () => { state.query = ""; state.filter = "all"; state.topic = 'all'; state.index = 0; $("search-input").value = ""; $("status-filter").value = "all"; $("topic-filter").value = 'all'; renderCard(); });
@@ -183,15 +188,23 @@
   function renderTheme() { const dark = document.documentElement.dataset.theme === 'dark'; $("theme-toggle").textContent = dark ? 'Light mode' : 'Dark mode'; $("theme-toggle").setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode'); }
   $("theme-toggle").addEventListener('click', () => { const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; document.documentElement.dataset.theme = theme; try { localStorage.setItem('revision-desk-theme', theme); } catch (_) {} renderTheme(); });
   $("shuffle-button").addEventListener("click", () => { const shuffled = deck().cards.map((card) => card.id); for (let i = shuffled.length - 1; i > 0; i -= 1) { const j = Math.floor(Math.random() * (i + 1)); [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; } state.order = shuffled; state.index = 0; renderCard(); toast("Deck shuffled"); });
-  $("reset-button").addEventListener("click", () => { $("reset-copy").textContent = `All ${deck().cards.length} ratings in ${deck().title} will become Not studied. This cannot be undone. Previous days on your graph stay; today's point becomes 0%. Other decks are unchanged.`; $("reset-dialog").showModal(); });
+  $("reset-button").addEventListener("click", () => { $("reset-copy").textContent = `All ${tierCards().length} ratings in ${progressDeck().title} will become Not studied. This cannot be undone. Previous days on your graph stay; today's point becomes 0%. Ratings outside this selection are unchanged.`; $("reset-dialog").showModal(); });
   $("cancel-reset").addEventListener("click", () => $("reset-dialog").close());
-  $("confirm-reset").addEventListener("click", () => { deck().cards.forEach((card) => delete saved[card.id]); const stored = persist(); if (stored) window.RevisionHistory.capture(deck(), saved); renderCard(); $("reset-dialog").close(); if (stored) toast("Deck ratings reset"); });
+  $("confirm-reset").addEventListener("click", () => { tierCards().forEach((card) => delete saved[card.id]); const stored = persist(); if (stored) window.RevisionHistory.capture(progressDeck(), saved); renderCard(); $("reset-dialog").close(); if (stored) toast("Deck ratings reset"); });
   document.addEventListener("keydown", (event) => { if (event.isComposing || document.querySelector('dialog[open]') || ["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName)) return; if (event.key === "ArrowLeft") { event.preventDefault(); move(-1); } if (event.key === "ArrowRight") { event.preventDefault(); move(1); } if (["1", "2", "3"].includes(event.key)) rate({ "1": "learn", "2": "unsure", "3": "know" }[event.key]); });
 
   renderTheme();
   renderTopics();
   renderNav();
   renderCard();
+  $("course-filter").addEventListener('change', event => {
+    course = event.target.value; $("science-tier-control").hidden = course === 'other';
+    selectDeck(allDecks.find(d => (d.route || 'other') === course).id);
+  });
+  $("science-tier").addEventListener('change', event => {
+    scienceTier = event.target.value; state.index = 0; state.topic = 'all'; state.order = null;
+    renderTopics(); renderNav(); renderCard();
+  });
 
   window.addEventListener('storage', event => {
     if (event.key === storageKey || event.key === null) {
