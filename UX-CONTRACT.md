@@ -37,4 +37,15 @@ Requested outcome: a matte-black profile with a picture, supplied science notes 
 
 ## Verification boundary
 
+## Customise Desk and full-paper extension
+
+- home.js additionally owns #customise and #customise-title. Route titles, heading focus, browser Back and skip links reuse the existing owner; navigation preserves the selected deck and active practice document.
+- theme.js is the only appearance preference owner. Its private local key is revision-desk-appearance-v1; it reads the legacy light/dark key on first use, never edits account/guest data. Settings apply immediately and autosave locally. Quota/unavailable storage says settings apply only for now. System theme responds to OS changes. Storage events update other tabs. Restore appearance defaults resets only these preferences, not the saved profile accent, card progress, accounts, PDFs or ink.
+- Native labelled radios own theme/density/font selection; native checkboxes own motion/shortcuts. Existing Space/Enter button activation remains available if optional document-level study shortcuts are disabled. Shortcuts never act through input fields, composition, modal dialogs, modifier keys or hidden views. OS reduced motion cannot be overridden.
+- The Profile & accent action opens the canonical profile.js modal and its existing Save/Discard/cloud conflict flow. Swatches are explicitly non-interactive illustrations of the available named colours. Device appearance choices do not claim to sync to Firebase.
+- The paper picker defaults to All courses unless a validated URL filter exists. It shows 317 unique pairs plus 6 Maths packs and sorts newest series first. Filter reset clears course/subject/tier/paper/search, restores the paper section, persists the URL and focuses Course. Selecting a non-science subject from a science-only filter switches to Other subjects. Empty results never imply no papers exist.
+- Maths public coverage includes 66 individual 1MA1 pairs across all three papers and both tiers, four older official ZIP sessions and two sample/specimen PDF packs. History has 22 pairs for 11/B3/P4 only. No Paper 3 option, locked release, older combined-option compatibility or guarantee of every issued paper is invented. PDFs are linked on their original board servers; archive packs require extracting/opening the relevant local PDF. No change to drawing/cloud ownership.
+
+## Verification boundary (continued)
+
 Node tests cover data integrity, scope labels, original-file hashes, unique component/series IDs, all event bindings, profile draft/error/isolation behaviour and historical progress. Browser checks cover real rendering, upload processing, discard/save, filtering, empty states, download links, keyboard and narrow viewport. Link checks validate HTTP success and PDF types; they do not assert every possible exam paper has been found.

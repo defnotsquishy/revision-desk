@@ -45,6 +45,7 @@
     $('profile-remove-photo').disabled=!draft.photo || processing;
     $('profile-save').disabled=processing || conflict;
     $('profile-form').setAttribute('aria-busy',String(processing));
+    window.RevisionCustomise?.refresh();
   }
   function open() {
     read();draft={...saved};dirty=false;processing=false;conflict=false;$('profile-name').value=draft.name;
@@ -57,6 +58,7 @@
     $('profile-dialog').close();
   }
   $('profile-button').addEventListener('click',open);
+  window.RevisionProfile={open};
   $('profile-close').addEventListener('click',close);
   $('profile-cancel').addEventListener('click',close);
   $('profile-dialog').addEventListener('cancel',event=>{event.preventDefault();close();});

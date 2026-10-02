@@ -71,6 +71,16 @@ The paper is always white and the surrounding chrome uses the selected theme. Bl
 
 Optional profile accents map to existing CSS tokens --accent, --accent-dark and --gold. Neutral retains the original palette. Dark blue uses #a4c7ff/#86b4fc, violet #d0b6ff/#ba98fa, mint #9be4c0/#7ed2a9. Light equivalents use #1b56a3/#164784, #7440ae/#60318f, #176b49/#125a3d. Only a saved profile changes the desk; background and semantic rating colours keep their meanings. CSS remains canonical (Model B).
 
+## Workspace and appearance update
+
+The user's October references guide a restrained matte-black settings layout, not a pixel-identical clone. No Aurora gradient, invented score, paid upgrade, billing or non-functional controls are introduced. Existing controls, native dialogs and owner boundaries are retained.
+
+The desktop has a 214px persistent navigation rail alongside the active main view. Below 780px it becomes a wrapping horizontal navigation; below 1100px the flashcard deck picker becomes a horizontal rail to avoid competing sidebars. The document owns scrolling; the navigation is sticky without a fixed height. Customise Desk is an additional home.js route, not a separate router. Its live reading preview displays real library/review counts and uses actual current CSS tokens.
+
+theme.js owns device-only appearance preferences: Dark/Light/System, Compact/Default/Comfortable density, Small/Medium/Large text, reduced motion and flashcard shortcuts. Legacy light/dark preference migrates without touching progress. Root font sizes are 15/16/18px; --desk-space and --desk-panel-space control named density variants. Controls remain at least 44px; OS reduced motion is always respected. Native radios and checkboxes are labelled; inline status distinguishes saved preferences from unavailable storage. Cross-tab updates follow the same owner. Profile/accent editing opens the existing Save/Discard modal; no second profile-saving mechanism.
+
+papers-complete.js extends the existing public catalogue without changing original records or IDs. The library defaults to All courses, orders latest series first, explains Maths archive formats and confirmed History options, and offers a reset-filter action. Only verified public question/scheme pairs appear; History Paper 3 remains unconfirmed rather than guessed. See SOURCES.md for the reproducible resource checks.
+
 ## Do's and Don'ts
 
 - Multiple choice is the default, retaining 270 authored questions in the original nine decks plus smaller science and sociology subsets. Flashcards contains 2,460 cards, 60 in each complete deck. quiz-data.js and quiz-more.js map authored options to stable card IDs; deeper-content.js and expanded-cards.js add English close-reading notes. English reveals separate quotation, meaning, technique and essay use with quiet labels. Choices shuffle on each question visit. One answer locks the question and shows correctness in text plus the explanation; confidence ratings remain explicit and share the existing progress store. Switching mode resets topic and position but preserves search/status. Quiz counts clearly distinguish the subset from the complete deck. Existing palette, serif prompts and control focus styles are reused; no new design tokens.

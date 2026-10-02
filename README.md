@@ -10,7 +10,11 @@ Sociology adds 360 cards in six AQA 8192 decks: Introduction, Research Methods, 
 
 Profile saves a name, square picture, accent colour and practice badge. Signed-in profiles use private Firestore storage; guests save in this browser. Pictures are re-encoded to a small JPEG with original metadata removed. Neutral, Blue, Violet and Mint accents retain the matte-black background. Rating 20/50/100 distinct cards unlocks badges. Save applies changes; cancel/close asks before discarding a changed draft.
 
-Papers & files includes 186 matched pairs: the original 106 Paper 1 pairs, 66 Edexcel GCSE Maths 1MA1 pairs covering Papers 1–3 and both tiers, and 14 AQA Sociology 8192 pairs covering Papers 1–2. Search/filter by course, subject, tier, paper and series. Six official Maths packs add 2017/2018 sessions and sample/specimen assessments. Every standalone question paper is paired with the same component/tier/series mark scheme. Locked or unreleased papers are excluded; official directories link to further formats and releases. PDFs stay on the board's servers.
+Papers & files includes 317 unique matched pairs, including 66 Edexcel GCSE Maths 1MA1 pairs (Papers 1–3, both tiers), 14 AQA Sociology pairs (Papers 1–2) and 22 History pairs for Medicine, Henry VIII and Cold War. The library includes Papers 1 and 2 for Combined Trilogy and Triple Biology/Chemistry/Physics, both English Literature papers, and Geography Papers 1–3. Six official Maths packs add 2017/2018 sessions and sample/specimen assessments. Search/filter by course, subject, tier, paper and series, or use Show all public papers to clear filters. Every standalone question paper is paired with the same component/tier/series scheme. Locked or unreleased papers are excluded; History Paper 3 is not assumed because your school option is unconfirmed. Official directories link to further formats and releases. PDFs stay on the board's servers.
+
+## Customise Desk
+
+Use **Customise Desk** in the navigation for Dark/Light/System theme, spacing, text size, reduced motion and optional flashcard shortcuts. Changes apply immediately and save on this device, separately from accounts and progress. Your Windows reduced-motion preference is always respected. **Edit profile & colour** opens the existing profile form: choose Neutral, Blue, Violet or Mint and Save profile to apply your accent. Signed-in profile colours follow your account; layout preferences do not. Restore appearance defaults never resets your cards or drawings.
 
 ## Draw on papers and whiteboard
 

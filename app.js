@@ -187,7 +187,8 @@
   $("clear-filters").addEventListener("click", () => { state.query = ""; state.filter = "all"; state.topic = 'all'; state.index = 0; $("search-input").value = ""; $("status-filter").value = "all"; $("topic-filter").value = 'all'; renderCard(); });
   $("topic-filter").addEventListener('change', event => { state.topic = event.target.value; state.index = 0; renderCard(); });
   function renderTheme() { const dark = document.documentElement.dataset.theme === 'dark'; $("theme-toggle").textContent = dark ? 'Light mode' : 'Dark mode'; $("theme-toggle").setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode'); }
-  $("theme-toggle").addEventListener('click', () => { const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; document.documentElement.dataset.theme = theme; try { localStorage.setItem('revision-desk-theme', theme); } catch (_) {} renderTheme(); });
+  $("theme-toggle").addEventListener('click', () => { window.RevisionAppearance.update({theme:document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'}); });
+  window.addEventListener('revision-appearance-change',renderTheme);
   $("shuffle-button").addEventListener("click", () => { const shuffled = deck().cards.map((card) => card.id); for (let i = shuffled.length - 1; i > 0; i -= 1) { const j = Math.floor(Math.random() * (i + 1)); [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; } state.order = shuffled; state.index = 0; renderCard(); toast("Deck shuffled"); });
   $("reset-button").addEventListener("click", () => { $("reset-copy").textContent = `All ${tierCards().length} ratings in ${progressDeck().title} will become Not studied. This cannot be undone. Previous days on your graph stay; today's point becomes 0%. Ratings outside this selection are unchanged.`; $('reset-status').textContent='';$('cancel-reset').textContent='Keep ratings';$("reset-dialog").showModal(); });
   $('reset-dialog').addEventListener('cancel',event=>{if($('confirm-reset').disabled)event.preventDefault();});
@@ -203,7 +204,7 @@
       finally{$('confirm-reset').disabled=false;$('cancel-reset').disabled=false;$('reset-dialog').setAttribute('aria-busy','false');}
     } else { $("reset-dialog").close(); if (stored) toast("Deck ratings reset"); }
   });
-  document.addEventListener("keydown", (event) => { if (document.getElementById('view-flashcards')?.hidden || event.isComposing || document.querySelector('dialog[open]') || ["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName)) return; if (event.key === "ArrowLeft") { event.preventDefault(); move(-1); } if (event.key === "ArrowRight") { event.preventDefault(); move(1); } if (["1", "2", "3"].includes(event.key)) rate({ "1": "learn", "2": "unsure", "3": "know" }[event.key]); });
+  document.addEventListener("keydown", (event) => { if (window.RevisionAppearance?.get().shortcuts===false || document.getElementById('view-flashcards')?.hidden || event.isComposing || event.ctrlKey || event.altKey || event.metaKey || document.querySelector('dialog[open]') || ["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName)) return; if (event.key === "ArrowLeft") { event.preventDefault(); move(-1); } if (event.key === "ArrowRight") { event.preventDefault(); move(1); } if (["1", "2", "3"].includes(event.key)) rate({ "1": "learn", "2": "unsure", "3": "know" }[event.key]); });
 
   renderTheme();
   renderTopics();
