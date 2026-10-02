@@ -106,7 +106,7 @@
       while(true){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>MAX_BYTES){await reader.cancel();throw Error('size');}chunks.push(value);}
       const bytes=new Uint8Array(size);let offset=0;chunks.forEach(c=>{bytes.set(c,offset);offset+=c.length;});
       if(token===loading)await openBytes(bytes.buffer,`${source.subject} · ${source.series} · ${source.code}`,{paper:source.paper,markScheme:source.markScheme},token);
-    }catch(error){if(token===loading){status('The board may block embedded viewing. Open the official question paper, download it, then use “Open a PDF” above. '+(record?'Your previous practice is still below.':''));sourceLinks(source);$('practice-mark-scheme').textContent='Requested paper’s mark scheme ↗';}}
+    }catch(error){if(token===loading){console.warn('Official PDF load failed:',error.name,error.message);status('The paper could not open here. '+(error.name==='TypeError'||error.name==='TimeoutError'||['download','size'].includes(error.message)?'The board may block embedded viewing. ':error.message+' ')+'Open the official question paper, download it, then use “Open a PDF” above. '+(record?'Your previous practice is still below.':''));sourceLinks(source);$('practice-mark-scheme').textContent='Requested paper’s mark scheme ↗';}}
     finally{if(token===loading){busy=false;controls();}}
   }
   async function whiteboard(fresh=false){
