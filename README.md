@@ -91,4 +91,14 @@ The Henry deck now follows **Edexcel B3: Henry VIII and his ministers, 1509–40
 
 Expanded cards use rows of `[question, key fact, explanation, exam practice, topic]`. Append rows rather than inserting or reordering them because expanded card IDs use their row number. See `SOURCES.md` for specification links and course-option notes.
 
-Dark mode is the default. The top-right button switches themes and remembers the choice. Cards reveal with a brief fade; reduced-motion preferences disable that fade. Use Topic to select a period, physical process or optional Geography unit.
+Dark mode is the default. The top-right button switches themes; the choice is remembered unless appearance storage is turned off under Cookies & storage. Cards reveal with a brief fade; reduced-motion preferences disable that fade. Use Topic to select a period, physical process or optional Geography unit.
+
+## Policies, copyright and source
+
+The footer opens bookmarkable Privacy (`#privacy`), Cookies & storage (`#cookies`), use guidance (`#terms`), Copyright (`#copyright`) and source/dependency notices (`#open-source`). They share the existing router and work in the Windows copy too. The source link points to this repository. This public repository currently has no general reuse licence for its original code; third-party dependency licences do not license the entire app or exam materials.
+
+**The privacy notice is a draft, not a compliance certification.** The operator must supply an approved public identity/private contact route, confirm the applicable legal basis and retention/deletion process, and assess international-transfer and children's privacy requirements before finalising it. Firestore is configured in London, but Firebase Authentication processes account data in the United States. No account-deletion feature or automatic cloud-data expiry is implemented. Use guidance is not a solicitor-reviewed contract.
+
+The storage choice is owned by `theme.js`. Turning appearance remembering off clears only the appearance/theme/mode values and stops reading/writing them between visits. It retains the explicit on/off choice and does not delete guest progress, profiles, cloud records or IndexedDB drawings. There are no app advertising or analytics integrations. A notice alone does not establish that every storage use is exempt from consent requirements.
+
+Past-paper links use official board servers; the board copyrights and terms remain applicable. Some supplied school science files are hosted as study downloads, without a grant of redistribution rights. Full existing vendor notices accompany PDF.js/pdf-lib assets. The Windows runtime additionally includes `runtime/LICENSE.txt` for Node.js and its dependencies.

@@ -48,4 +48,12 @@ Requested outcome: a matte-black profile with a picture, supplied science notes 
 
 ## Verification boundary (continued)
 
+## Policy navigation and storage choice
+
+- home.js is also the canonical owner for #privacy, #cookies, #terms, #copyright and #open-source. These select one article in #view-legal, set the document title and heading, mark the current policy link, and share the document scroll. Browser Back, skip links and all existing revision views retain their state. No login is needed to read the notices.
+- Footer and account notices use native links; account links open a separate tab so an in-progress account/profile form is not silently discarded. Original homepage text and all saved study data are unchanged.
+- Legal copy is grounded in actual code, work/CLOUD-STORAGE.md and the official references in work/LEGAL-REVIEW.md. The privacy notice is conspicuously a draft: operator identity/private contact, lawful basis, retention criteria, transfer safeguards and wider-launch review remain unresolved. No compliance certification, general source licence, age rule, company identity, private contact or blanket copyright permission is invented.
+- theme.js owns the reversible appearance-storage choice. Turning remembering off explicitly clears only revision-desk-appearance-v1, revision-desk-theme and revision-desk-mode; it keeps current in-memory appearance and never touches account/cloud/guest profiles, progress, history or IndexedDB. The choice itself is remembered in revision-desk-remember-appearance-v1. Opted-out sessions do not read/write preference values; cross-tab choice events stop future preference access. A storage failure is shown and not described as a persisted opt-out.
+- Cookies & storage includes a labelled native checkbox and persistent live status. Customise Desk continues to use the same theme owner and reports session-only changes when remembering is off. There is no fake consent banner or optional tracking implementation.
+
 Node tests cover data integrity, scope labels, original-file hashes, unique component/series IDs, all event bindings, profile draft/error/isolation behaviour and historical progress. Browser checks cover real rendering, upload processing, discard/save, filtering, empty states, download links, keyboard and narrow viewport. Link checks validate HTTP success and PDF types; they do not assert every possible exam paper has been found.

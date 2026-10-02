@@ -6,7 +6,7 @@
     document.querySelectorAll('[data-preference]').forEach(input=>{input.checked=value[input.dataset.preference]===input.value;});
     $('appearance-shortcuts').checked=value.shortcuts;
     $('appearance-motion').checked=value.motion==='reduce';
-    $('appearance-status').textContent=owner.saved()?'Appearance saved on this device. Your account progress is unchanged.':'Applied for now, but browser storage is unavailable. These settings may not survive closing the app.';
+    $('appearance-status').textContent=!owner.saved()?'Applied for now, but browser storage is unavailable. These settings may not survive closing the app.':owner.remember()?'Appearance saved on this device. Your account progress is unchanged.':'Applied for this visit. Remembering appearance is off in Cookies & storage. Your revision data is unchanged.';
     $('appearance-accent').textContent='Saved profile accent: '+({neutral:'Neutral',blue:'Blue',violet:'Violet',mint:'Mint'}[document.documentElement.dataset.accent]||'Neutral');
     $('preview-summary').textContent=window.RevisionHome.summary();
   }

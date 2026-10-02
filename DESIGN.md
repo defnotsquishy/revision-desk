@@ -83,6 +83,8 @@ papers-complete.js extends the existing public catalogue without changing origin
 
 ## Do's and Don'ts
 
+Policy pages reuse the existing matte-black/light tokens, system type and document scroll. A compact footer leads to five bookmarkable reading pages; quiet bordered callouts distinguish the unresolved privacy draft and the explicit appearance-storage choice. Reading copy is capped at 74ch and wraps long storage identifiers. No new brand palette, consent decoration, fixed-height content or separate router is introduced.
+
 - Multiple choice is the default, retaining 270 authored questions in the original nine decks plus smaller science and sociology subsets. Flashcards contains 2,460 cards, 60 in each complete deck. quiz-data.js and quiz-more.js map authored options to stable card IDs; deeper-content.js and expanded-cards.js add English close-reading notes. English reveals separate quotation, meaning, technique and essay use with quiet labels. Choices shuffle on each question visit. One answer locks the question and shows correctness in text plus the explanation; confidence ratings remain explicit and share the existing progress store. Switching mode resets topic and position but preserves search/status. Quiz counts clearly distinguish the subset from the complete deck. Existing palette, serif prompts and control focus styles are reused; no new design tokens.
 - Keep ratings text-labelled; never rely on colour alone.
 - Keep app and graph usable without a network or chart library.

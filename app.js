@@ -5,7 +5,7 @@
   state.mode = 'quiz';
   let quizAnswered = false;
   let quizOptions = [];
-  try { if (localStorage.getItem('revision-desk-mode') === 'flashcard') state.mode = 'flashcard'; } catch (_) {}
+  try { if (window.RevisionAppearance?.remember()!==false && localStorage.getItem('revision-desk-mode') === 'flashcard') state.mode = 'flashcard'; } catch (_) {}
   let saved = {};
   const storageKey = "revision-desk-progress-v2";
   try { saved = JSON.parse(localStorage.getItem(storageKey) || "{}"); } catch (_) { saved = {}; }
@@ -141,7 +141,7 @@
   }
   function setMode(mode) {
     state.mode = mode; state.index = 0; state.topic = 'all'; state.order = null;
-    try { localStorage.setItem('revision-desk-mode', mode); } catch (_) {}
+    try { if(window.RevisionAppearance?.remember()!==false)localStorage.setItem('revision-desk-mode', mode); } catch (_) {}
     renderTopics(); renderCard();
   }
 
