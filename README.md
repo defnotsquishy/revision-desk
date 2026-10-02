@@ -8,15 +8,23 @@ Science has 1,560 course-specific cards across B1–B4, C1–C5 and P1–P4, wit
 
 Sociology adds 360 cards in six AQA 8192 decks: Introduction, Research Methods, Families, Education, Crime and Deviance, and Social Stratification. Original explanations draw on all eight supplied sociology files. They include concepts, named studies, application and evaluation, with theories attributed and undated statistics omitted. Select **English, Humanities & Sociology** in Course, then your sociology deck. These are revision flashcards, not predicted exam questions.
 
-Profile saves a name, square picture and practice badge in this browser only. Pictures are re-encoded to a small JPEG with original metadata removed; no Firebase Storage upload occurs. Signed-in UIDs and guests have separate local profiles, but ratings and graphs remain device-wide. Rating 20/50/100 distinct cards unlocks badges, not exam grades. Save commits changes; cancel/close asks before discarding a changed draft.
+Profile saves a name, square picture, accent colour and practice badge. Signed-in profiles use private Firestore storage; guests save in this browser. Pictures are re-encoded to a small JPEG with original metadata removed. Neutral, Blue, Violet and Mint accents retain the matte-black background. Rating 20/50/100 distinct cards unlocks badges. Save applies changes; cancel/close asks before discarding a changed draft.
 
-Papers & files contains 106 matched official public Paper 1 pairs with mark schemes: AQA Science/Biology/Chemistry/Physics/English Literature/Geography and Edexcel Medicine (June 2023/2024). Search/filter by course, subject, tier and series. PDFs open on the board's published resources and need internet. This is a catalogue of verified public pairs, not every paper ever issued; official directory links cover other years and accessible formats. Henry and Cold War belong to Edexcel Paper 2, not this Paper 1 catalogue.
+Papers & files includes 186 matched pairs: the original 106 Paper 1 pairs, 66 Edexcel GCSE Maths 1MA1 pairs covering Papers 1–3 and both tiers, and 14 AQA Sociology 8192 pairs covering Papers 1–2. Search/filter by course, subject, tier, paper and series. Six official Maths packs add 2017/2018 sessions and sample/specimen assessments. Every standalone question paper is paired with the same component/tier/series mark scheme. Locked or unreleased papers are excluded; official directories link to further formats and releases. PDFs stay on the board's servers.
+
+## Draw on papers and whiteboard
+
+Use **Past papers → Draw on paper**, or **My practice → Open a PDF** for a downloaded file. If the board blocks embedded viewing, download its question paper first and select that PDF locally. The app accepts PDFs up to 20 MB and 200 pages. PDFs that require an opening password are unsupported.
+
+Write with a pen or highlighter in six colours, erase ink strokes, undo/redo, move between pages and zoom. **Whiteboard** opens blank or squared working paper. Typed page notes are a keyboard alternative. Drawings and PDFs save on this device in the current guest/account scope; they do not sync to the cloud. **Resume saved practice** returns to unfinished work. Export an ink-and-notes backup and keep the original PDF too, especially before clearing browser data. A matching PDF fingerprint prevents restoring answers onto the wrong paper.
+
+**Download written PDF** includes all pages and visible ink; PDFs that cannot be edited directly become a flattened page-image copy. **Save page image** exports the current page. Typed notes are included in the ink backup. Clear page ink is undoable while the document stays open; undo history resets when changing pages/documents. Concurrent saves from another window are detected rather than silently overwritten.
 
 Your science files contains 18 unchanged original school downloads. Two supplied study plans contain school-login examples and are excluded from public assets; safe study guidance is summarised. The Energy KO PDFs are identical. Original organisers can contain errors or Triple/Higher material: use labelled, corrected flashcards, the official specifications and teacher guidance. See SOURCES.md and UX-CONTRACT.md.
 
-## Accounts (stage 1)
+## Accounts and cloud saving
 
-Use Sign in to create an email/password account, sign in, request a password reset or verify your email. Firebase handles authentication; choose a fresh unique password privately. Login lasts for the browser session. Authentication needs internet access, but guest revision remains available offline. Ratings and graph history are still device-only and are not linked to or uploaded to your account yet. Cloud progress migration is the next stage. Signing out leaves device ratings unchanged. Do not treat an account on a shared browser as a separate progress profile yet.
+Use Sign in to create an email/password account, sign in, request a password reset or verify your email. Firebase manages credentials; choose a fresh unique password privately. Login lasts for the browser session. Private Firestore records in London hold each signed-in person's profile, card ratings and daily graph. Guest data stays separate and is imported only through the explicit Import guest ratings action. Wait for **Saved to your account** before closing: offline queued ratings survive only the current browser session. Profile errors retain the draft; same-card and profile conflicts are shown explicitly. Guest revision and locally saved paper practice work offline in the Windows app.
 
 ## Run it
 
@@ -32,10 +40,10 @@ Progress belongs to the browser profile and address. Edge and the Codex preview 
 
 No installation or build step is needed. Either:
 
-1. Open `index.html` directly in a modern browser, or
-2. From this folder, run `python -m http.server 4173` and visit `http://localhost:4173`.
+1. Visit the published GitHub Pages website, or
+2. From this folder, run `node server.cjs` and visit `http://localhost:4173`.
 
-The second option is recommended. Progress is saved in the browser's local storage on that device.
+Use a local server rather than opening index.html as a file: PDF workers and account modules require an HTTP(S) origin.
 
 ## Portable Windows copy
 
@@ -45,7 +53,7 @@ To copy or upload the app, use `Revision Desk - Windows.zip` from the parent out
 
 Open **Progress over time** underneath the deck totals. Each dot is that deck's latest saved percentage marked Know on a local calendar day. Multiple ratings on the same day update that day's dot. Come back on another day to add a new dot. There is no invented history for older ratings, and this is not an exam-score prediction. **Read graph values** provides the same data as text.
 
-Reset deck clears only the selected deck's ratings after confirmation. Earlier graph dates stay; today's point updates to zero. All data is local to your browser profile and can be lost if browser site data is cleared. Keep using the same shortcut/profile for consistent progress.
+Reset deck clears only the selected deck's ratings after confirmation. Earlier graph dates stay; today's point updates. Guest data and paper drawings can be lost if browser site data is cleared; signed-in profiles and card progress remain in private cloud storage.
 
 ## Keyboard controls
 

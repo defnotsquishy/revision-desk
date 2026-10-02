@@ -11,6 +11,7 @@
   try { saved = JSON.parse(localStorage.getItem(storageKey) || "{}"); } catch (_) { saved = {}; }
   if (!saved || typeof saved !== 'object' || Array.isArray(saved)) saved = {};
   Object.keys(saved).forEach(id => { if (!["know", "unsure", "learn"].includes(saved[id])) delete saved[id]; });
+  if (window.RevisionStore) saved = window.RevisionStore.ratings();
   const $ = (id) => document.getElementById(id);
   const allDecks = data.subjects.flatMap((subject) => subject.decks.map((deck) => ({ ...deck, subject })));
   const deck = () => allDecks.find((item) => item.id === state.deckId);
@@ -166,7 +167,7 @@
   function selectDeck(id) { state.deckId = id; course = deck().route || 'other'; $("course-filter").value = course; $("science-tier-control").hidden = course === 'other'; state.index = 0; state.query = ""; state.filter = "all"; state.topic = 'all'; state.order = null; $("search-input").value = ""; $("status-filter").value = "all"; renderTopics(); renderNav(); renderCard(); }
   function move(delta) { const cards = filteredCards(); if (!cards.length) return; state.index = (state.index + delta + cards.length) % cards.length; renderCard(); if (state.mode === 'quiz') $("quiz-question").focus({preventScroll: true}); }
   function flip() { if (!filteredCards().length) return; state.flipped = !state.flipped; $("study-card").classList.toggle("flipped", state.flipped); document.querySelector(".card-front").setAttribute("aria-hidden", String(state.flipped)); document.querySelector(".card-back").setAttribute("aria-hidden", String(!state.flipped)); $("study-card").setAttribute("aria-label", state.flipped ? "Flashcard answer. Press Enter or Space to return to the question." : "Flashcard question. Press Enter or Space to reveal the answer."); }
-  function persist() { try { localStorage.setItem(storageKey, JSON.stringify(saved)); return true; } catch (_) { toast('Storage is unavailable. Progress is kept for this session only.'); return false; } }
+  function persist() { if (window.RevisionStore) { const stored=window.RevisionStore.writeRatings(saved,progressDeck().id); if(!stored)toast('Storage is unavailable. Progress is kept for this session only.'); return stored; } try { localStorage.setItem(storageKey, JSON.stringify(saved)); return true; } catch (_) { toast('Storage is unavailable. Progress is kept for this session only.'); return false; } }
   function rate(rating) { if (state.mode === 'quiz' && !quizAnswered) return false; const card = filteredCards()[state.index]; if (!card) return; saved[card.id] = rating; const stored = persist(); if (stored) { window.RevisionHistory.capture(progressDeck(), saved); toast(`Marked “${rating}”`); } const cards = filteredCards(); if (cards.some(item => item.id === card.id)) state.index = (state.index + 1) % cards.length; else state.index = cards.length ? state.index % cards.length : 0; renderCard(); if (state.mode === 'quiz') { if (cards.length) $("quiz-question").focus({preventScroll:true}); else $("clear-filters").focus(); } return stored; }
   let toastTimer;
   function toast(message) { $("toast").textContent = message; $("toast").classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => $("toast").classList.remove("show"), 1600); }
@@ -188,10 +189,21 @@
   function renderTheme() { const dark = document.documentElement.dataset.theme === 'dark'; $("theme-toggle").textContent = dark ? 'Light mode' : 'Dark mode'; $("theme-toggle").setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode'); }
   $("theme-toggle").addEventListener('click', () => { const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; document.documentElement.dataset.theme = theme; try { localStorage.setItem('revision-desk-theme', theme); } catch (_) {} renderTheme(); });
   $("shuffle-button").addEventListener("click", () => { const shuffled = deck().cards.map((card) => card.id); for (let i = shuffled.length - 1; i > 0; i -= 1) { const j = Math.floor(Math.random() * (i + 1)); [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]; } state.order = shuffled; state.index = 0; renderCard(); toast("Deck shuffled"); });
-  $("reset-button").addEventListener("click", () => { $("reset-copy").textContent = `All ${tierCards().length} ratings in ${progressDeck().title} will become Not studied. This cannot be undone. Previous days on your graph stay; today's point becomes 0%. Ratings outside this selection are unchanged.`; $("reset-dialog").showModal(); });
+  $("reset-button").addEventListener("click", () => { $("reset-copy").textContent = `All ${tierCards().length} ratings in ${progressDeck().title} will become Not studied. This cannot be undone. Previous days on your graph stay; today's point becomes 0%. Ratings outside this selection are unchanged.`; $('reset-status').textContent='';$('cancel-reset').textContent='Keep ratings';$("reset-dialog").showModal(); });
+  $('reset-dialog').addEventListener('cancel',event=>{if($('confirm-reset').disabled)event.preventDefault();});
   $("cancel-reset").addEventListener("click", () => $("reset-dialog").close());
-  $("confirm-reset").addEventListener("click", () => { tierCards().forEach((card) => delete saved[card.id]); const stored = persist(); if (stored) window.RevisionHistory.capture(progressDeck(), saved); renderCard(); $("reset-dialog").close(); if (stored) toast("Deck ratings reset"); });
-  document.addEventListener("keydown", (event) => { if (event.isComposing || document.querySelector('dialog[open]') || ["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName)) return; if (event.key === "ArrowLeft") { event.preventDefault(); move(-1); } if (event.key === "ArrowRight") { event.preventDefault(); move(1); } if (["1", "2", "3"].includes(event.key)) rate({ "1": "learn", "2": "unsure", "3": "know" }[event.key]); });
+  $("confirm-reset").addEventListener("click", async () => {
+    if ($('confirm-reset').disabled) return;
+    tierCards().forEach((card) => delete saved[card.id]); const stored = persist();
+    if (stored) window.RevisionHistory.capture(progressDeck(), saved); renderCard();
+    if(window.RevisionStore?.state().uid && stored) {
+      $('confirm-reset').disabled=true;$('cancel-reset').disabled=true;$('reset-dialog').setAttribute('aria-busy','true');$('reset-status').textContent='Confirming reset with your account…';
+      try { await window.RevisionStore.waitForSaving();$('reset-dialog').close();toast('Deck ratings reset in your account'); }
+      catch(error){$('reset-status').textContent=error.message;$('cancel-reset').textContent='Close';}
+      finally{$('confirm-reset').disabled=false;$('cancel-reset').disabled=false;$('reset-dialog').setAttribute('aria-busy','false');}
+    } else { $("reset-dialog").close(); if (stored) toast("Deck ratings reset"); }
+  });
+  document.addEventListener("keydown", (event) => { if (document.getElementById('view-flashcards')?.hidden || event.isComposing || document.querySelector('dialog[open]') || ["INPUT", "SELECT", "TEXTAREA"].includes(document.activeElement.tagName)) return; if (event.key === "ArrowLeft") { event.preventDefault(); move(-1); } if (event.key === "ArrowRight") { event.preventDefault(); move(1); } if (["1", "2", "3"].includes(event.key)) rate({ "1": "learn", "2": "unsure", "3": "know" }[event.key]); });
 
   renderTheme();
   renderTopics();
@@ -207,6 +219,7 @@
   });
 
   window.addEventListener('storage', event => {
+    if (window.RevisionStore?.state().uid) return;
     if (event.key === storageKey || event.key === null) {
       try {
         const next = JSON.parse(localStorage.getItem(storageKey) || '{}');
@@ -215,12 +228,19 @@
     }
     if (event.key === storageKey || event.key === 'revision-desk-history-v1' || event.key === null) { window.RevisionHistory.read(); renderCard(); }
   });
+  window.addEventListener('revision-data-change',event=>{
+    const {type,origin}=event.detail || {};
+    if(type==='scope' || (type==='ratings' && origin!=='local')) {
+      saved=window.RevisionStore.ratings();window.RevisionHistory.read();
+      if(type==='scope'){state.index=0;renderCard();}else renderProgress();
+    } else if(type==='history') {window.RevisionHistory.read();renderProgress();}
+  });
 
   const context = document.modelContext;
   if (context?.registerTool) {
     const register = (tool) => { try { Promise.resolve(context.registerTool(tool)).catch(() => {}); } catch (_) {} };
-    register({ name: "open_revision_deck", title: "Open revision deck", description: "Open a GCSE flashcard deck by its stable deck ID.", inputSchema: { type: "object", properties: { deckId: { type: "string", enum: allDecks.map((item) => item.id) } }, required: ["deckId"], additionalProperties: false }, annotations: { readOnlyHint: false, untrustedContentHint: false }, execute(input) { if (!input || !allDecks.some((item) => item.id === input.deckId)) throw new Error("Unknown deck ID"); selectDeck(input.deckId); return { deckId: state.deckId, title: deck().title, cards: deck().cards.length }; } });
+    register({ name: "open_revision_deck", title: "Open revision deck", description: "Open a GCSE flashcard deck by its stable deck ID.", inputSchema: { type: "object", properties: { deckId: { type: "string", enum: allDecks.map((item) => item.id) } }, required: ["deckId"], additionalProperties: false }, annotations: { readOnlyHint: false, untrustedContentHint: false }, execute(input) { if (!input || !allDecks.some((item) => item.id === input.deckId)) throw new Error("Unknown deck ID"); selectDeck(input.deckId); window.RevisionHome?.show('flashcards'); return { deckId: state.deckId, title: deck().title, cards: deck().cards.length }; } });
     register({ name: "read_revision_progress", title: "Read revision progress", description: "Read progress totals for the currently open deck.", inputSchema: { type: "object", properties: {}, additionalProperties: false }, annotations: { readOnlyHint: true, untrustedContentHint: false }, execute() { const counts = { know: 0, unsure: 0, learn: 0, unseen: 0 }; deck().cards.forEach((card) => { counts[statusFor(card.id)] += 1; }); return { deckId: state.deckId, total: deck().cards.length, ...counts }; } });
-    register({ name: "rate_current_flashcard", title: "Rate current flashcard", description: "Mark the visible flashcard as know, unsure or learn, save the rating locally, and advance.", inputSchema: { type: "object", properties: { rating: { type: "string", enum: ["know", "unsure", "learn"] } }, required: ["rating"], additionalProperties: false }, annotations: { readOnlyHint: false, untrustedContentHint: false }, execute(input) { if (!input || !["know", "unsure", "learn"].includes(input.rating)) throw new Error("Rating must be know, unsure or learn"); const current = filteredCards()[state.index]; if (!current) throw new Error("No flashcard is currently visible"); const ratedId = current.id; const stored = rate(input.rating); return { cardId: ratedId, rating: input.rating, saved: stored }; } });
+    register({ name: "rate_current_flashcard", title: "Rate current flashcard", description: "Rate the visible flashcard and advance. Guest ratings save locally; signed-in ratings are queued for private cloud saving.", inputSchema: { type: "object", properties: { rating: { type: "string", enum: ["know", "unsure", "learn"] } }, required: ["rating"], additionalProperties: false }, annotations: { readOnlyHint: false, untrustedContentHint: false }, execute(input) { if (!input || !["know", "unsure", "learn"].includes(input.rating)) throw new Error("Rating must be know, unsure or learn"); const current = filteredCards()[state.index]; if (!current || document.getElementById('view-flashcards')?.hidden) throw new Error("No flashcard is currently visible"); const ratedId = current.id; const accepted = rate(input.rating); return { cardId: ratedId, rating: input.rating, accepted, saving:window.RevisionStore?.state() || {phase:'guest'} }; } });
   }
 })();

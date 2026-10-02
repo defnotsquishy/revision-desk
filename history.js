@@ -4,6 +4,7 @@
   let entries = [];
   let warning = '';
   function read() {
+    if (window.RevisionStore?.state().uid) { entries=window.RevisionStore.history();warning='';return; }
     try {
       const raw = JSON.parse(localStorage.getItem(key) || '[]');
       if (!Array.isArray(raw)) throw new Error('Invalid history');
@@ -15,6 +16,7 @@
   const label = date => new Date(date + 'T12:00:00').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
   const percentage = p => Math.round(p.known / p.total * 100);
   function capture(deck, ratings, now = new Date()) {
+    if (window.RevisionStore?.state().uid) {read();return true;}
     read();
     const date = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
     entries = entries.filter(p => p.deck !== deck.id || p.date !== date);

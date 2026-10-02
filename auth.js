@@ -1,4 +1,4 @@
-// Stage 1: Firebase accounts only. Never upload or re-label device ratings.
+// Firebase Authentication owns credentials. Guest ratings are never auto-imported.
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
@@ -38,13 +38,16 @@
     status('Connecting to account service…');
     loading = (async () => {
       try {
+        if(!window.RevisionStore)throw Error('Revision data service could not load');
         const [appSdk, authSdk, config] = await Promise.all([
           import('https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js'),
           import('https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js'),
           import('./firebase-config.js')
         ]);
         sdk = authSdk;
-        auth = sdk.getAuth(appSdk.initializeApp(config.firebaseConfig));
+        const app = appSdk.initializeApp(config.firebaseConfig);
+        auth = sdk.getAuth(app);
+        window.RevisionStore?.connect(app,auth);
         auth.languageCode = 'en';
         // Session survives reload, not a closed browser session on a shared PC.
         await sdk.setPersistence(auth, sdk.browserSessionPersistence);
@@ -53,7 +56,7 @@
         user = auth.currentUser;
         ready = true;
         renderUser();
-        status(user ? 'Signed in. Progress is still saved on this device only.' : 'Sign in or create an account. Guest revision stays available.');
+        status(user ? 'Signed in. Your private account data is connecting; see the cloud save status.' : 'Sign in or create an account. Guest revision stays available.');
       } catch (_) {
         status('Account service could not load. Check your connection and retry. You can keep revising as a guest.');
         $('account-retry').hidden = false;
@@ -132,11 +135,24 @@
       } else {
         const result = await sdk.signInWithEmailAndPassword(auth, email, password);
         user = result.user;
-        status('Signed in. Progress is still saved on this device only.');
+        status('Signed in. Your private account data is connecting; see the cloud save status.');
       }
     }, mode);
   });
-  $('account-signout').addEventListener('click', () => perform(async () => { await sdk.signOut(auth); user = null; status('Signed out. Your device-only revision ratings are unchanged.'); }));
+  function signOut() { return perform(async () => { await sdk.signOut(auth); user = null; status('Signed out. Showing separate guest progress; cloud data remains in your account.'); }); }
+  $('account-signout').addEventListener('click', () => {
+    if(window.RevisionStore?.state().pending){$('signout-dialog').showModal();return;}
+    signOut();
+  });
+  $('signout-stay')?.addEventListener('click',()=> $('signout-dialog').close());
+  $('signout-confirm')?.addEventListener('click',()=>{ $('signout-dialog').close();signOut(); });
+  $('account-import')?.addEventListener('click',()=> $('import-dialog').showModal());
+  $('import-cancel')?.addEventListener('click',()=> $('import-dialog').close());
+  $('import-confirm')?.addEventListener('click',()=>{
+    if(window.RevisionStore?.importGuest())status('Guest ratings added to this account’s save queue. Existing account ratings and guest data were not replaced. Check the cloud save status.');
+    else status('Import is unavailable while your account is loading or changes are still pending.');
+    $('import-dialog').close();
+  });
   $('account-refresh').addEventListener('click', () => perform(async () => { if (!user) return; await sdk.reload(user); user = auth.currentUser; status(user?.emailVerified ? 'Your email is verified.' : 'Not verified yet. Open the link in your inbox, then check again.'); }));
   $('account-verify').addEventListener('click', () => {
     if (Date.now() < verifyAfter) return status('Wait one minute between verification-email requests.');

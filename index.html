@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="A matte-black GCSE revision desk with 60 flashcards per topic: English, History, Geography, Sociology, Combined and Triple Science, profiles and matched Paper 1 past papers." />
+    <meta name="description" content="A matte-black GCSE revision desk with 60 flashcards per topic, private account progress, matched past papers, PDF drawing and a whiteboard." />
     <meta name="theme-color" content="#0c0c0d" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101936'/%3E%3Cpath d='M15 17h24a8 8 0 0 1 8 8v25H23a8 8 0 0 1-8-8V17Z' fill='%23f4c95d'/%3E%3Cpath d='M23 17v33M29 27h11M29 35h11' stroke='%23101936' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
     <title>Revision Desk — GCSE Flashcards</title>
@@ -11,16 +11,39 @@
     <script src="theme.js"></script>
   </head>
   <body>
-    <a class="skip-link" href="#study-area">Skip to current question</a>
+    <a id="skip-target" class="skip-link" href="#home-title">Skip to content</a>
     <header class="topbar">
-      <a class="brand" href="./" aria-label="Revision Desk home">
+      <a class="brand" href="#home" data-view="home" aria-label="Revision Desk home">
         <span class="brand-mark" aria-hidden="true">RD</span>
         <span><strong>Revision Desk</strong><small>GCSE flashcards</small></span>
       </a>
       <div class="header-actions"><div class="streak" aria-label="Study progress"><span id="mastered-total">0</span> mastered</div><button id="library-button" class="button button-quiet" type="button">Papers & files</button><button id="profile-button" class="button button-quiet" type="button"><span id="header-avatar" class="mini-avatar" aria-hidden="true">RD</span>Profile</button><button id="theme-toggle" class="button button-quiet" type="button" aria-label="Switch to light mode">Light mode</button><button id="account-button" class="button button-quiet" type="button">Sign in</button></div>
     </header>
+    <nav class="desk-nav" aria-label="Main navigation"><a class="button button-quiet" href="#home" data-view="home">Home</a><a class="button button-quiet" href="#flashcards" data-view="flashcards">Flashcards</a><button id="nav-papers" class="button button-quiet" type="button">Past papers</button><button id="nav-whiteboard" class="button button-quiet" type="button">Whiteboard</button><a class="button button-quiet" href="#practice" data-view="practice">My practice</a></nav>
 
-    <main class="app-shell">
+    <section class="cloud-strip" aria-label="Account saving"><p id="cloud-status" role="status" aria-live="polite">Guest · saved on this device only.</p><div class="account-actions"><button id="cloud-retry" class="button button-quiet" type="button" hidden>Retry cloud connection</button><button id="cloud-use-account" class="button button-quiet" type="button" hidden>Use account ratings</button><button id="cloud-keep-mine" class="button button-quiet" type="button" hidden>Keep my changed ratings</button></div></section>
+
+    <main id="view-home" class="home-workspace">
+      <p class="eyebrow">Your revision desk</p><h1 id="home-title" tabindex="-1">A little practice, every day.</h1><p id="home-summary" class="deck-description"></p>
+      <div class="home-actions"><section><h2>Recall</h2><p>60 flashcards in each full topic deck, quizzes and your daily progress graph.</p><a href="#flashcards" data-view="flashcards" class="button button-primary">Continue flashcards</a></section><section><h2>Work it out</h2><p>Choose an official paper, write on its pages, then check the matching mark scheme.</p><button id="home-papers" class="button button-primary" type="button">Choose a past paper</button></section><section><h2>Think freely</h2><p>A blank or squared whiteboard for calculations, diagrams and quick recall.</p><button id="home-whiteboard" class="button button-quiet" type="button">Open whiteboard</button></section></div>
+      <p class="history-help">Signed-in profiles and card progress use private cloud storage. Paper drawings and whiteboards stay on this device; export a backup to keep a separate copy.</p>
+    </main>
+    <main id="view-practice" class="practice-workspace" hidden>
+      <div class="workspace-header"><div><p class="eyebrow">Write · check · improve</p><h1 id="practice-title" tabindex="-1">Paper practice & whiteboard</h1><p id="practice-description" class="deck-description">Load a PDF or start a whiteboard. Nothing you draw is uploaded.</p></div></div>
+      <div class="practice-files"><label for="practice-pdf">Open a PDF from your computer<input id="practice-pdf" type="file" accept="application/pdf,.pdf" aria-describedby="practice-file-help"/></label><button id="practice-new-board" class="button button-quiet" type="button">New whiteboard</button><label for="practice-saved">Resume saved practice<select id="practice-saved"><option value="">Choose a saved paper or board…</option></select></label><button id="practice-resume" class="button button-quiet" type="button" disabled>Resume</button></div>
+      <p id="practice-file-help" class="history-help">PDF up to 20 MB / 200 pages; must open without a password. Some boards block embedded PDFs: open the official file, download it, then choose it above.</p>
+      <div id="practice-source" class="resource-actions" hidden><a id="practice-official" class="button button-quiet" target="_blank" rel="noopener noreferrer">Open official question paper ↗</a><a id="practice-mark-scheme" class="button button-quiet" target="_blank" rel="noopener noreferrer">Matching mark scheme ↗</a></div>
+      <p id="practice-status" role="status" aria-live="polite">No document loaded.</p><p id="practice-save-status" role="status" aria-live="polite">Drawings are device-only, not cloud-synced.</p>
+      <div class="resource-actions"><button id="practice-save" class="button button-quiet" type="button" disabled>Retry device save</button><button id="practice-reload" class="button button-quiet" type="button" hidden>Reload saved copy</button><button id="practice-backup" class="button button-quiet" type="button" disabled>Export ink & notes backup</button><label for="practice-restore">Restore ink backup<input id="practice-restore" type="file" accept="application/json,.json" disabled/></label><button id="practice-export" class="button button-quiet" type="button" disabled>Download written PDF</button><button id="practice-image" class="button button-quiet" type="button" disabled>Save page image</button></div>
+      <section id="practice-editor" aria-label="Drawing workspace" hidden>
+        <div class="ink-toolbar" role="group" aria-label="Drawing tools"><button class="button button-quiet" data-ink-tool="pen" type="button" aria-pressed="true">Pen</button><button class="button button-quiet" data-ink-tool="highlight" type="button" aria-pressed="false">Highlighter</button><button class="button button-quiet" data-ink-tool="erase" type="button" aria-pressed="false">Eraser</button><button class="button button-quiet" data-ink-tool="scroll" type="button" aria-pressed="false">Scroll / read</button><label for="ink-width">Ink width<select id="ink-width"><option value="1">Fine</option><option value="2" selected>Regular</option><option value="4">Thick</option><option value="8">Bold</option></select></label><div id="ink-colors" role="group" aria-label="Ink colour"></div></div>
+        <div class="ink-toolbar"><button id="ink-undo" class="button button-quiet" type="button" disabled>Undo</button><button id="ink-redo" class="button button-quiet" type="button" disabled>Redo</button><button id="ink-clear" class="button button-quiet" type="button">Clear page ink</button><button id="practice-prev" class="button button-quiet" type="button">Previous page</button><label for="practice-page">Page<select id="practice-page"></select></label><button id="practice-next" class="button button-quiet" type="button">Next page</button><label for="practice-zoom">Zoom<select id="practice-zoom"><option value="fit">Fit width</option><option value="1">100%</option><option value="1.5">150%</option><option value="2">200%</option></select></label><label id="board-grid-label" for="board-grid" hidden>Board<select id="board-grid"><option value="blank">Blank</option><option value="grid">Squared</option></select></label></div>
+        <p class="history-help">Draw with a mouse, finger or stylus. Eraser removes whole ink strokes, never the paper. Choose Scroll / read to swipe the page. Undo/Redo are per page. Typed notes below are a keyboard alternative.</p>
+        <div id="paper-scroll" class="paper-scroll"><div id="paper-stage" class="paper-stage"><canvas id="paper-canvas" aria-label="PDF page or whiteboard"></canvas><canvas id="ink-canvas" aria-label="Drawing surface; use the notes field for typed answers"></canvas></div></div>
+        <label for="practice-notes">Typed answers / notes for this page</label><textarea id="practice-notes" class="resize-none" rows="4" maxlength="10000" placeholder="Write an answer or describe a diagram…"></textarea>
+      </section>
+    </main>
+    <main id="view-flashcards" class="app-shell" hidden>
       <aside class="sidebar" aria-label="Subject and topic selection">
         <div class="sidebar-heading">
           <p class="eyebrow">Your library</p>
@@ -35,7 +58,7 @@
         <header class="workspace-header">
           <div>
             <p id="subject-label" class="eyebrow">English Literature · AQA</p>
-            <h2 id="deck-title">Macbeth</h2>
+            <h2 id="deck-title" tabindex="-1">Macbeth</h2>
             <p id="deck-description" class="deck-description"></p>
           </div>
           <button id="reset-button" class="button button-quiet" type="button">Reset deck</button>
@@ -147,24 +170,25 @@
 
     <dialog id="profile-dialog" aria-labelledby="profile-title" aria-describedby="profile-help">
       <div class="account-heading"><h2 id="profile-title">Your revision profile</h2><button id="profile-close" class="button button-quiet" type="button">Close</button></div>
-      <p id="profile-help">Your name, photo and badge stay in this browser. They are not uploaded to Firebase or shared publicly. Signing in keeps a separate local profile for that account.</p>
+      <p id="profile-help">When signed in, Save profile uploads your display name, small picture, badge and accent colour to your private Firebase account data. They are not shared publicly. Guest profiles stay in this browser. Passwords are managed by Firebase Authentication, never stored in the profile.</p>
       <p id="profile-identity" class="history-help">Guest profile · this browser only</p>
       <div class="profile-summary"><div id="profile-avatar" class="profile-avatar" aria-label="Profile picture">RD</div><div><p id="profile-summary-name">Revision student</p><p id="profile-stats" class="history-help"></p></div></div>
       <form id="profile-form" novalidate>
         <label for="profile-name">Display name</label><input id="profile-name" type="text" maxlength="32" autocomplete="nickname" aria-describedby="profile-name-error"/><span id="profile-name-error" class="field-error"></span>
         <label for="profile-photo">Choose a profile picture</label><p id="profile-photo-help" class="history-help">JPEG, PNG or WebP · up to 5 MB and 16 million pixels. Saved as a small square image; original metadata is removed.</p><input id="profile-photo" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="profile-photo-help profile-photo-error"/><span id="profile-photo-error" class="field-error"></span>
         <button id="profile-remove-photo" class="button button-quiet" type="button">Remove picture</button>
+        <label for="profile-accent">Desk accent colour</label><select id="profile-accent"><option value="neutral">Neutral</option><option value="blue">Blue</option><option value="violet">Violet</option><option value="mint">Mint</option></select><p class="history-help">Keeps the matte-black background. Save profile to apply your colour to buttons and progress bars.</p>
         <label for="profile-badge">Study badge</label><select id="profile-badge" aria-describedby="profile-unlocks"></select><p id="profile-unlocks" class="history-help">Review and rate 20, 50 or 100 different cards to unlock badges. These reflect practice, not exam grades.</p>
         <p id="profile-status" role="status" aria-live="polite"></p>
         <div class="dialog-actions"><button id="profile-cancel" class="button button-quiet" type="button">Cancel</button><button id="profile-save" class="button button-primary" type="submit">Save profile</button></div>
       </form>
     </dialog>
-    <dialog id="profile-discard-dialog" aria-labelledby="profile-discard-title"><h2 id="profile-discard-title">Discard profile changes?</h2><p>Your saved profile stays unchanged. The new name, picture or badge will not be saved.</p><div class="dialog-actions"><button id="profile-keep-editing" class="button button-quiet" type="button" autofocus>Keep editing</button><button id="profile-discard" class="button button-primary" type="button">Discard changes</button></div></dialog>
+    <dialog id="profile-discard-dialog" aria-labelledby="profile-discard-title"><h2 id="profile-discard-title">Discard profile changes?</h2><p>Your saved profile stays unchanged. The new name, picture, badge or accent colour will not be saved.</p><div class="dialog-actions"><button id="profile-keep-editing" class="button button-quiet" type="button" autofocus>Keep editing</button><button id="profile-discard" class="button button-primary" type="button">Discard changes</button></div></dialog>
     <dialog id="library-dialog" class="library-dialog" aria-labelledby="library-title" aria-describedby="library-help">
       <div class="account-heading"><h2 id="library-title">Papers & study files</h2><button id="library-close" class="button button-quiet" type="button">Close</button></div>
-      <p id="library-help">Official public Paper 1 papers, each paired with its matching mark scheme. Papers open on the exam board's website and need internet. School files are downloads, not past papers.</p>
+      <p id="library-help">Official public papers with matching mark schemes. Choose Draw on paper to practise here, or open the official PDF. Board links need internet; downloaded PDFs work offline. School files are downloads, not past papers.</p>
       <div class="account-actions" role="group" aria-label="Library section"><button id="library-papers" class="button button-quiet" type="button" aria-pressed="true">Past papers</button><button id="library-files" class="button button-quiet" type="button" aria-pressed="false">Your science files</button></div>
-      <div class="library-controls"><label for="paper-course">Course<select id="paper-course"><option value="combined">Combined Science · Trilogy</option><option value="triple">Triple Science</option><option value="other">Other subjects</option><option value="all">All courses</option></select></label><label for="paper-subject">Subject<select id="paper-subject"><option value="all">All subjects</option><option>Biology</option><option>Chemistry</option><option>Physics</option><option>English Literature</option><option>Geography</option><option>History</option></select></label><label for="paper-tier">Tier<select id="paper-tier"><option value="all">All tiers</option><option>Foundation</option><option>Higher</option><option>Untiered</option></select></label></div>
+      <div class="library-controls"><label for="paper-course">Course<select id="paper-course"><option value="combined">Combined Science · Trilogy</option><option value="triple">Triple Science</option><option value="other">Other subjects</option><option value="all">All courses</option></select></label><label for="paper-subject">Subject<select id="paper-subject"><option value="all">All subjects</option><option>Biology</option><option>Chemistry</option><option>Physics</option><option>English Literature</option><option>Geography</option><option>History</option><option>Maths</option><option>Sociology</option></select></label><label for="paper-tier">Tier<select id="paper-tier"><option value="all">All tiers</option><option>Foundation</option><option>Higher</option><option>Untiered</option></select></label><label for="paper-number">Paper<select id="paper-number"><option value="all">All papers</option><option value="1">Paper 1</option><option value="2">Paper 2</option><option value="3">Paper 3</option></select></label></div>
       <div class="search-box"><label class="sr-only" for="paper-search">Search files or exam series</label><input id="paper-search" type="search" placeholder="Search year, exam code or file name…"/><button id="paper-search-clear" class="clear-search" type="button" aria-label="Clear library search" hidden>×</button></div>
       <p id="library-count" role="status" aria-live="polite"></p><p id="library-empty" hidden>No matches. Try another course, tier or search.</p><ul id="library-results" class="resource-list"></ul>
       <div class="library-pagination"><button id="library-prev" class="button button-quiet" type="button">Previous page</button><span id="library-page"></span><button id="library-next" class="button button-quiet" type="button">Next page</button></div>
@@ -173,11 +197,12 @@
 
     <dialog id="account-dialog" aria-labelledby="account-title" aria-describedby="account-help">
       <div class="account-heading"><h2 id="account-title">Your account</h2><button id="account-close" class="button button-quiet" type="button">Close</button></div>
-      <p id="account-help">Accounts are step 1. Ratings and graphs still belong to this browser, not your account. Cloud sync comes next.</p>
+      <p id="account-help">Sign in to keep your profile, picture, ratings and daily graph in private Firebase storage, separate from other people’s accounts. Guest progress is never imported automatically. Closing the browser signs you out.</p>
       <p id="account-status" role="status" aria-live="polite">Connecting to account service…</p>
       <div id="account-member" hidden>
         <p id="account-email"></p><p id="account-verification"></p>
         <div class="account-actions"><button id="account-verify" class="button button-quiet" type="button">Send verification email</button><button id="account-refresh" class="button button-quiet" type="button">Check verification</button><button id="account-signout" class="button button-quiet" type="button">Sign out</button></div>
+        <button id="account-import" class="button button-quiet" type="button" disabled>Import guest ratings from this device</button><p class="history-help">Only import ratings you made yourself. Unsaved cloud changes are kept for this browser session, not permanently; wait for “Saved to your account” before closing.</p>
       </div>
       <form id="account-form" novalidate>
         <div class="account-actions" role="group" aria-label="Account action"><button id="account-login" class="button button-quiet" type="button" aria-pressed="true">Sign in</button><button id="account-signup" class="button button-quiet" type="button" aria-pressed="false">Create account</button><button id="account-reset" class="button button-quiet" type="button" aria-pressed="false">Reset password</button></div>
@@ -187,11 +212,15 @@
       </form>
       <button id="account-retry" class="button button-quiet" type="button" hidden>Retry connection</button>
     </dialog>
+    <dialog id="signout-dialog" aria-labelledby="signout-title"><h2 id="signout-title">Changes haven’t reached your account yet</h2><p>If you sign out now, queued ratings stay only in this browser session. Sign back into the same account in this window to retry. Closing the window can lose unsaved changes.</p><div class="dialog-actions"><button id="signout-stay" class="button button-quiet" type="button" autofocus>Stay signed in</button><button id="signout-confirm" class="button button-primary" type="button">Sign out with changes pending</button></div></dialog>
+    <dialog id="import-dialog" aria-labelledby="import-title"><h2 id="import-title">Import your guest ratings?</h2><p>This device’s guest ratings may include other people’s practice. Import only if these are yours. This adds missing ratings to your signed-in account; existing account ratings, guest ratings, profiles and previous graph dates are unchanged. New graph points use today’s date.</p><div class="dialog-actions"><button id="import-cancel" class="button button-quiet" type="button" autofocus>Cancel</button><button id="import-confirm" class="button button-primary" type="button">Import my guest ratings</button></div></dialog>
     <dialog id="reset-dialog" aria-labelledby="reset-title" aria-describedby="reset-copy">
       <h2 id="reset-title">Reset deck ratings?</h2>
       <p id="reset-copy"></p>
+      <p id="reset-status" role="status" aria-live="polite"></p>
       <div class="dialog-actions"><button id="cancel-reset" class="button button-quiet" type="button" autofocus>Keep ratings</button><button id="confirm-reset" class="button button-primary" type="button">Reset ratings</button></div>
     </dialog>
+    <dialog id="ink-confirm-dialog" aria-labelledby="ink-confirm-title"><h2 id="ink-confirm-title">Clear this page’s ink?</h2><p id="ink-confirm-copy">The original paper and typed notes will stay unchanged. You can undo this clear while the document stays open.</p><div class="dialog-actions"><button id="ink-confirm-cancel" class="button button-quiet" type="button" autofocus>Cancel</button><button id="ink-confirm-ok" class="button button-primary" type="button">Clear page ink</button></div></dialog>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script src="data.js"></script>
     <script src="extra-cards.js"></script>
@@ -204,11 +233,17 @@
     <script src="sociology-cards.js"></script>
     <script src="expanded-cards.js"></script>
     <script src="papers-data.js"></script>
+    <script src="papers-extra.js"></script>
     <script src="resources-data.js"></script>
+    <script src="store.js"></script>
     <script src="history.js"></script>
     <script src="app.js"></script>
     <script src="auth.js"></script>
     <script src="profile.js"></script>
     <script src="library.js"></script>
+    <script src="ink-core.js"></script>
+    <script src="practice-storage.js"></script>
+    <script src="practice.js"></script>
+    <script src="home.js"></script>
   </body>
 </html>

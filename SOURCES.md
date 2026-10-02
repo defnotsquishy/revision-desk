@@ -40,4 +40,10 @@ expanded-cards.js also adds original application questions, calculations and clo
 
 ## Past papers
 
+The 2 October 2026 extension adds 66 verified Edexcel GCSE Maths 1MA1 question-paper/mark-scheme pairs (11 public series, June 2019–June 2025, Papers 1–3 in both tiers), four official ZIP packs for June/November 2017 and 2018, and two official sample/specimen combined PDFs. AQA Sociology 8192 adds 14 pairs covering both papers for June 2022–2025, November 2020–2021 and sample set 1. All 166 new URLs returned successful responses and PDF/ZIP signatures; representative PDF first pages and ZIP filenames were inspected. Total: 186 individual matched pairs plus six packs. Locked November 2025/June 2026 Pearson papers are not included.
+
+Official catalogues: [Pearson Maths course materials](https://qualifications.pearson.com/en/qualifications/edexcel-gcses/mathematics-2015.coursematerials.html) and [AQA Sociology assessment resources](https://www.aqa.org.uk/subjects/sociology/gcse/sociology-8192/assessment-resources). The app links to official files; it does not publicly rehost examination PDFs. When a board blocks embedded viewing, download its official file and choose that PDF in My practice.
+
+The renderer uses locally vendored [PDF.js](https://mozilla.github.io/pdf.js/) 6.3.289 (Apache-2.0) and [pdf-lib](https://pdf-lib.js.org/) 1.17.1 (MIT); licence files accompany the assets.
+
 The catalogue includes 104 standard/specimen Paper 1 pairs from the public AQA assessment lists for 8464, 8461, 8462, 8463, 8702 and 8035, plus verified public Edexcel Medicine option 11 pairs for June 2023 and 2024. The Medicine question PDFs include the source booklets. Every entry pairs the same component, tier and series; all 212 paper/mark-scheme links returned successful PDF responses when checked on 1 October 2026. They link to the board's published files rather than republishing copyrighted examination PDFs. Official directories are provided for additional years and accessible formats. This is not a claim to include every paper ever issued, locked papers or unreleased assessments.
