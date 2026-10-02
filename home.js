@@ -18,7 +18,9 @@
   $('nav-papers').addEventListener('click',()=>window.RevisionLibrary.open());
   $('home-whiteboard').addEventListener('click',()=>window.RevisionPractice.whiteboard());
   $('nav-whiteboard').addEventListener('click',()=>window.RevisionPractice.whiteboard());
-  function stats(){const subjects=window.FLASHCARD_DATA.subjects;const ratings=window.RevisionStore.ratings();$('home-summary').textContent=`${subjects.reduce((n,s)=>n+s.decks.length,0)} topic decks · ${subjects.reduce((n,s)=>n+s.decks.reduce((m,d)=>m+d.cards.length,0),0).toLocaleString('en-GB')} flashcards · ${Object.keys(ratings).length} reviewed`;}
+  function counts(){const subjects=window.FLASHCARD_DATA.subjects;return {topics:subjects.reduce((n,s)=>n+s.decks.length,0),cards:subjects.reduce((n,s)=>n+s.decks.reduce((m,d)=>m+d.cards.length,0),0),reviewed:Object.keys(window.RevisionStore.ratings()).length};}
+  function summary(){const c=counts();return `${c.topics} topic decks · ${c.cards.toLocaleString('en-GB')} flashcards · ${c.reviewed} reviewed`;}
+  function stats(){const c=counts();$('home-summary').textContent=`You’ve got ${c.topics} topics and ${c.cards.toLocaleString('en-GB')} flashcards to choose from. `+(c.reviewed?`You’ve reviewed ${c.reviewed.toLocaleString('en-GB')} ${c.reviewed===1?'card':'cards'} so far.`:'Pick a topic below to get started.');}
   window.addEventListener('revision-data-change',stats);window.addEventListener('hashchange',()=>route());
-  window.RevisionHome={show:navigate};stats();route(false);
+  window.RevisionHome={show:navigate,summary};stats();route(false);
 })();
