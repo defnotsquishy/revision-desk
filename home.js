@@ -15,7 +15,7 @@
     document.querySelectorAll('[data-view]').forEach(a=>{if(a.dataset.view===view)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
     document.title=({home:'Home',flashcards:'Flashcards',practice:'Whiteboard',customise:'Customise Desk',profile:'Your profile',legal:policies[policy]}[view])+' — Revision Deck';
     $('skip-target').href=({home:'#home-title',flashcards:'#study-area',practice:'#practice-title',customise:'#customise-title',profile:'#profile-page-title',legal:'#legal-title'}[view]);
-    if(focus)$({home:'home-title',flashcards:'deck-title',practice:'practice-title',customise:'customise-title',profile:'profile-page-title',legal:'legal-title'}[view]).focus({preventScroll:view!=='legal'});
+    if(focus)$({home:'home-title',flashcards:'deck-title',practice:'practice-title',customise:'customise-title',profile:'profile-page-title',legal:'legal-title'}[view]).focus();
     if(view==='practice')window.RevisionPractice?.resize();
   }
   function navigate(view){const hash=view==='practice'?'whiteboard':view;if(location.hash==='#'+hash)show(view);else location.hash=hash;}
@@ -35,7 +35,77 @@
   $('profile-page-edit').addEventListener('click',()=>window.RevisionProfile.open());
   function counts(){const subjects=window.FLASHCARD_DATA.subjects;return {topics:subjects.reduce((n,s)=>n+s.decks.length,0),cards:subjects.reduce((n,s)=>n+s.decks.reduce((m,d)=>m+d.cards.length,0),0),reviewed:Object.keys(window.RevisionStore.ratings()).length};}
   function summary(){const c=counts();return `${c.topics} topic decks · ${c.cards.toLocaleString('en-GB')} flashcards · ${c.reviewed} reviewed`;}
-  function stats(){const c=counts();$('home-summary').textContent=`You’ve got ${c.topics} topics and ${c.cards.toLocaleString('en-GB')} flashcards to choose from. `+(c.reviewed?`You’ve reviewed ${c.reviewed.toLocaleString('en-GB')} ${c.reviewed===1?'card':'cards'} so far.`:'Pick a topic below to get started.');}
+  const courseNames={other:'Other subjects',combined:'Combined Science',triple:'Triple Science'};
+  const subjectNames={english:'English Literature',history:'History',geography:'Geography',sociology:'Sociology',biology:'Biology',chemistry:'Chemistry',physics:'Physics'};
+  const expanded=new Set();
+  function dashboard(selectedCourse='other',selectedTier='H'){
+    const course=Object.hasOwn(courseNames,selectedCourse)?selectedCourse:'other',tier=selectedTier==='F'?'F':'H';
+    const state=window.RevisionStore.state?.() || {phase:'guest'};
+    const loading=Boolean(state.uid&&state.phase==='loading');
+    const ratings=loading?{}:window.RevisionStore.ratings(),groups=new Map();
+    for(const subject of window.FLASHCARD_DATA.subjects){
+      if((subject.route||'other')!==course)continue;
+      for(const deck of subject.decks){
+        const id=deck.science?deck.science.toLowerCase():subject.id;
+        if(!groups.has(id))groups.set(id,{id,title:subjectNames[id]||subject.name,decks:[],cards:[]});
+        const row=groups.get(id);row.decks.push(deck);row.cards.push(...deck.cards.filter(card=>!deck.science||tier!=='F'||card.tier!=='H'));
+      }
+    }
+    function metrics(cards){
+      const reviewed=cards.filter(c=>['know','unsure','learn'].includes(ratings[c.id])).length;
+      const know=cards.filter(c=>ratings[c.id]==='know').length,questions=cards.filter(c=>c.quiz);
+      return {total:cards.length,questions:questions.length,reviewed:loading?null:reviewed,know:loading?null:know,questionsReviewed:loading?null:questions.filter(c=>['know','unsure','learn'].includes(ratings[c.id])).length,confidence:!loading&&reviewed?Math.round(100*know/reviewed):null};
+    }
+    const subjects=[...groups.values()].map(row=>({...row,...metrics(row.cards),subtitle:course==='other'?(row.id==='history'?'GCSE · Edexcel':row.id==='sociology'||row.id==='english'?'GCSE · AQA':'GCSE · Paper 1 topics'):`GCSE · AQA · ${course==='combined'?'Combined':'Triple'} · ${tier==='F'?'Foundation':'Higher'}`}));
+    return {course,tier,loading,subjects,...metrics(subjects.flatMap(row=>row.cards))};
+  }
+  function selection(){
+    const params=new URLSearchParams(location.search||'');
+    return {course:Object.hasOwn(courseNames,params.get('deskCourse'))?params.get('deskCourse'):'other',tier:params.get('deskTier')==='F'?'F':'H'};
+  }
+  function selectCourse(){
+    const url=new URL(location.href||'http://localhost/');
+    url.searchParams.set('deskCourse',$('home-course').value);url.searchParams.set('deskTier',$('home-tier').value);
+    window.history?.replaceState(null,'',url);expanded.clear();stats();
+  }
+  function node(tag,className,text){const el=document.createElement(tag);if(className)el.className=className;if(text!==undefined)el.textContent=text;return el;}
+  function stats(){
+    const selected=selection(),data=dashboard(selected.course,selected.tier),profile=window.RevisionStore.profile?.() || {name:'Revision student',photo:''};
+    $('home-course').value=data.course;$('home-tier').value=data.tier;$('home-tier-control').hidden=data.course==='other';
+    $('home-title').textContent=data.loading?'Getting your desk ready…':profile.name==='Revision student'?'Hey, welcome back.':`Hey, ${profile.name}.`;
+    $('home-identity').textContent=data.loading?'Loading your private account…':window.RevisionStore.state?.().uid?'Your private revision workspace':'Your revision workspace';
+    const avatar=$('home-avatar');avatar.replaceChildren();
+    if(!data.loading&&profile.photo){const img=node('img');img.src=profile.photo;img.alt='';img.width=96;img.height=96;avatar.append(img);}
+    else avatar.textContent=data.loading?'':profile.name.trim().split(/\s+/).slice(0,2).map(n=>n[0]).join('').toUpperCase()||'RD';
+    $('home-subject-count').textContent=`${data.subjects.length} subjects`;
+    $('home-scope').textContent=courseNames[data.course];$('home-topic-count').textContent=`${data.subjects.reduce((n,s)=>n+s.decks.length,0)} topic decks`;
+    $('home-progress-copy').textContent=data.loading?'Loading your ratings…':data.reviewed?`${data.reviewed.toLocaleString('en-GB')} / ${data.total.toLocaleString('en-GB')} cards reviewed`:'Ready for your next topic';
+    if(data.loading)$('home-progress').removeAttribute('value');else $('home-progress').value=data.total?Math.round(100*data.reviewed/data.total):0;
+    $('home-progress-note').textContent=data.loading?'Your figures will appear when your account has loaded.':'Reviewed means you’ve rated a card, not mastered it.';
+    $('home-summary').textContent='Questions and flashcards share the same card rating. Marked Know is your confidence, not an exam score.';
+    const focused=document.activeElement?.dataset?.homeFocusKey;
+    const rows=[];
+    for(const subject of data.subjects){
+      const row=node('tr'),identity=node('th');identity.scope='row';const subjectBlock=node('div','dashboard-subject');
+      const art=window.RevisionDashboardArt?.[subject.id];
+      if(art){const img=node('img','dashboard-subject-art');img.src=art;img.alt='';img.width=48;img.height=48;subjectBlock.append(img);}
+      const copy=node('div');copy.append(node('strong','',subject.title),node('small','',subject.subtitle));subjectBlock.append(copy);identity.append(subjectBlock);
+      const questions=node('td','dashboard-metric');questions.dataset.label='Questions reviewed';questions.append(node('span','',`${data.loading?'…':subject.questionsReviewed} / ${subject.questions}`));
+      const cards=node('td','dashboard-metric');cards.dataset.label='Flashcards / marked Know';cards.append(node('span','',`${data.loading?'…':subject.reviewed} / ${subject.total}`));
+      const confidence=node('span','dashboard-confidence',subject.confidence===null?'—':`${subject.confidence}%`);confidence.setAttribute('aria-label',subject.confidence===null?'No confidence rating yet':`${subject.confidence}% of reviewed cards marked Know`);cards.append(confidence);
+      const action=node('td','dashboard-row-action'),button=node('button','button button-quiet','Topics');button.type='button';button.dataset.homeFocusKey=subject.id;
+      const key=data.course+'-'+subject.id,open=expanded.has(key),detailId='home-topics-'+subject.id;
+      button.setAttribute('aria-label',`Choose ${subject.title} topic`);button.setAttribute('aria-expanded',String(open));button.setAttribute('aria-controls',detailId);
+      const details=node('tr','dashboard-topic-row');details.id=detailId;details.hidden=!open;const cell=node('td');cell.colSpan=4;
+      const list=node('ul','dashboard-topics');for(const deck of subject.decks){const item=node('li'),link=node('a','button button-quiet',deck.title);link.href='#flashcards';link.dataset.homeFocusKey=deck.id;link.addEventListener('click',()=>window.RevisionApp.openDeck(deck.id,data.tier));item.append(link);list.append(item);}cell.append(list);details.append(cell);
+      button.addEventListener('click',()=>{const next=!expanded.has(key);if(next)expanded.add(key);else expanded.delete(key);details.hidden=!next;button.setAttribute('aria-expanded',String(next));});
+      action.append(button);row.append(identity,questions,cards,action);rows.push(row,details);
+    }
+    $('home-subjects').replaceChildren(...rows);
+    if(focused)document.querySelector(`[data-home-focus-key="${focused}"]`)?.focus({preventScroll:true});
+  }
+  $('home-course').addEventListener('change',selectCourse);$('home-tier').addEventListener('change',selectCourse);
+  window.addEventListener('popstate',stats);
   window.addEventListener('revision-data-change',stats);window.addEventListener('hashchange',()=>route());
-  window.RevisionHome={show:navigate,summary};stats();route(false);storageChoice();
+  window.RevisionHome={show:navigate,summary,dashboard};stats();route(false);storageChoice();
 })();

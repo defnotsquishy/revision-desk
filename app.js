@@ -219,6 +219,13 @@
     renderTopics(); renderNav(); renderCard();
   });
 
+  // Dashboard launchers use the existing deck/filter owner; no second study state.
+  window.RevisionApp={openDeck(id,tier){
+    if(!allDecks.some(item=>item.id===id))return false;
+    if(['F','H'].includes(tier)){scienceTier=tier;$("science-tier").value=tier;}
+    selectDeck(id);return true;
+  }};
+
   window.addEventListener('storage', event => {
     if (window.RevisionStore?.state().uid) return;
     if (event.key === storageKey || event.key === null) {

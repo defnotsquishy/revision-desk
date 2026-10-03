@@ -5,9 +5,9 @@ description: A matte-black, compact GCSE study desk with quiet daily progress pl
 colors:
   ink: '#f2f2f3'
   muted: '#ababaf'
-  paper: '#0c0c0d'
-  surface: '#19191b'
-  line: '#38383c'
+  paper: '#202124'
+  surface: '#282a2e'
+  line: '#3c3f44'
   accent: '#e4e4e7'
 typography:
   body:
@@ -29,13 +29,13 @@ components:
 ---
 
 ## Overview
-Product tool for a GCSE student practising recall on Windows. User-requested matte black replaces the earlier blue-purple dark palette. A compact library and serif flashcard are the signature; avoid dashboard decoration, gradients in dark mode, and spinning cards.
+Product tool for a GCSE student practising recall on Windows. The latest Cognito-style reference evolves matte black into flat charcoal with a centred welcome panel and compact subject table. Keep the text-only Revision Deck identity, real private progress, compact library and serif recall prompts; avoid invented XP, upgrade plans, gradients and spinning cards.
 
 ## Colors
 Runtime CSS is canonical (Model B): colors.* map directly to same-name --* properties in styles.css under :root[data-theme="dark"]. The app owner maintains both together. White denotes primary actions; semantic green, amber and red distinguish named ratings. Light theme retains the existing palette and hierarchy.
 
 ## Typography
-System sans for controls and explanations, Georgia for recall prompts and quotations, monospace for chart axes. English (UK) is the current locale. No network fonts or runtime dependencies.
+System sans for study controls and explanations, Georgia for recall prompts/quotations and the Home greeting, monospace for chart axes. The screenshot-inspired Home and navigation use locally hosted Nunito with system fallback; its SIL OFL text accompanies the asset. English (UK) is the current locale. No network font requests.
 
 The optional account layer loads the pinned Firebase SDK online; guest revision remains independent and works offline.
 
@@ -65,7 +65,7 @@ The approved account-saving request supersedes the earlier local-only account st
 
 ## Paper practice and home navigation
 
-home.js owns hash navigation, route titles and focus. Home is a compact three-choice launch surface, using the existing borders, fonts and controls. The drawing view is named Whiteboard with one navigation entry; #practice remains a backwards-compatible alias for #whiteboard. Entering the view does not create or replace a drawing. library.js remains the sole paper-picker owner. practice.js owns one reusable paper/whiteboard workspace; ink-core.js owns normalised strokes; practice-storage.js owns version-checked, UID-partitioned device saving. PDF.js 6.3.289 and pdf-lib 1.17.1 are pinned local vendor assets with licences.
+home.js owns hash navigation, route titles and focus. Home now uses the screenshot-inspired welcome/course dashboard described below, retaining past-paper and whiteboard shortcuts. The drawing view is named Whiteboard with one navigation entry; #practice remains a backwards-compatible alias for #whiteboard. Entering the view does not create or replace a drawing. library.js remains the sole paper-picker owner. practice.js owns one reusable paper/whiteboard workspace; ink-core.js owns normalised strokes; practice-storage.js owns version-checked, UID-partitioned device saving. PDF.js 6.3.289 and pdf-lib 1.17.1 are pinned local vendor assets with licences.
 
 The paper is always white and the surrounding chrome uses the selected theme. Black, blue, red, green, purple and yellow are named ink choices, not rating colours. Pen/highlighter/eraser/scroll tools have text labels and pressed states. Typed notes offer a keyboard alternative. Canvas is the only intentional two-dimensional scroll surface at enlarged zoom; the surrounding page reflows. Export/restore and recoverable clear reuse native app dialogs and statuses.
 
@@ -75,7 +75,7 @@ Optional profile accents map to existing CSS tokens --accent, --accent-dark and 
 
 The user's October references guide a restrained matte-black settings layout, not a pixel-identical clone. No Aurora gradient, invented score, paid upgrade, billing or non-functional controls are introduced. Existing controls, native dialogs and owner boundaries are retained.
 
-The desktop has a 214px persistent navigation rail alongside the active main view. Below 780px it becomes a wrapping horizontal navigation; below 1100px the flashcard deck picker becomes a horizontal rail to avoid competing sidebars. The document owns scrolling; the navigation is sticky without a fixed height. Customise Desk is an additional home.js route, not a separate router. Its live reading preview displays real library/review counts and uses actual current CSS tokens.
+The latest dashboard reference replaces the 214px navigation rail with compact wrapping top navigation at every width. The flashcard deck picker remains a horizontal rail below 1100px. The document owns scrolling; no route inherits a fixed height or clipping. Customise Desk is an additional home.js route, not a separate router. Its live reading preview displays real library/review counts and uses actual current CSS tokens.
 
 theme.js owns device-only appearance preferences: Dark/Light/System, Compact/Default/Comfortable density, Small/Medium/Large text, panel corners, Book/Simple question font, Standard/Roomier reading spacing, Standard/Stronger contrast, reduced motion and flashcard shortcuts. Legacy and older appearance records migrate with defaults without touching progress. Root font sizes are 15/16/18px; --desk-space and --desk-panel-space control named density variants. --desk-question-font maps Book to Georgia and Simple to the existing system sans stack; controls remain sans. --desk-question-leading/--desk-answer-leading are 1.35/1.65 normally and 1.6/1.9 for Roomier. Stronger contrast maps only --line/--muted to #77777e/#c5c5cc in Dark and #747d91/#424b63 in Light; paper pixels, ink and rating colours are unchanged. CSS remains canonical (Model B), with root data attributes set only by theme.js. Controls remain at least 44px; OS reduced motion is always respected. Native radios and checkboxes are labelled; inline status distinguishes saved preferences from unavailable storage. Cross-tab updates follow the same owner. Profile/accent editing opens the existing Save/Discard modal; no second profile-saving mechanism.
 
@@ -96,8 +96,16 @@ Policy pages reuse the existing matte-black/light tokens, system type and docume
 
 ## October navigation, backgrounds and private profile
 
-The visible brand is text-only Revision Deck; no top-left logo mark is displayed. Established filenames, account configuration, public URLs and storage keys remain Revision Desk for compatibility. Homepage text and layout are unchanged.
+The visible brand is text-only Revision Deck; no top-left logo mark is displayed. Established filenames, account configuration, public URLs and storage keys remain Revision Desk for compatibility. The latest screenshot request authorises a new Home dashboard while unrelated view markup and data remain unchanged.
 
-Background colour is an additional device preference owned only by theme.js. Matte black keeps the original palette; Slate, Midnight, Forest and Plum change only --paper, keeping flat surfaces, semantic rating colours and white PDF pixels. Dark alternatives are #15191e/#101827/#101c18/#1d1422; light alternatives are #edf0f3/#edf2fc/#edf5f0/#f5eef8. Labelled native radios share the existing preview, reset, opt-out and cross-tab behaviour. They do not override the saved profile accent or upload preferences.
+Background colour is an additional device preference owned only by theme.js. Matte black uses the accepted flat charcoal default; Slate, Midnight, Forest and Plum change only --paper, keeping flat surfaces, semantic rating colours and white PDF pixels. Dark alternatives are #15191e/#101827/#101c18/#1d1422; light alternatives are #edf0f3/#edf2fc/#edf5f0/#f5eef8. Labelled native radios share the existing preview, reset, opt-out and cross-tab behaviour. They do not override the saved profile accent or upload preferences.
 
 The #profile page reuses profile.js committed name/picture and the existing Edit profile & colour modal. Unsaved modal drafts never appear on the page. Account switching uses the existing private UID boundary. Sharing and First Ten community badges are clearly unavailable, not fake controls or awarded previews. The user approved opt-in publishing of nickname/optional picture/bio only; email, study progress and drawings must stay private. The high-risk public-profile branch remains gated on privacy/operator details, eligibility and trusted backend decisions. The already-published privacy draft remains conspicuously a draft rather than an invented final legal notice.
+
+## Screenshot-inspired Home dashboard
+
+Latest user reference: Cognito dashboard screenshot codex-clipboard-75a95b1c-45f8-4dfa-a166-c4f173973bd3.png. Adapt structure rather than identity: a centred 1,100px content area, 248px welcome panel, Georgia greeting, inset progress panel, dashed course divider and bordered compact subject table. The retained app routes require a second compact navigation row. No Cognito branding, avatar, Upgrade button, sample name/year, XP or streak is copied.
+
+Runtime --paper/--surface/--line dark defaults are #202124/#282a2e/#3c3f44, reflected above. Existing appearance, profile accent and semantic colours retain their canonical owners; alternate background choices remain unchanged. Home panel radius/density/font size use existing preferences. Nunito is the Home/navigation display family only. Original generated transparent science PNGs and attributed Font Awesome icons are local assets; see assets/dashboard/ASSETS.md.
+
+home.js derives bounded 3–4 subject rows from the selected course/tier, consumes committed RevisionStore profile and ratings, and owns no new data store. Questions reviewed counts rated quiz-capable cards, not quiz attempts. Flashcard coverage counts any explicit rating; Marked Know is Know/reviewed, not exam performance or mastery. Account loading is indeterminate and never displays another account's metrics. The shared cloud status remains the authoritative save/retry/conflict UI. Native course/tier filters use deskCourse/deskTier URL parameters without changing paper filters. Topics expands a native button-controlled table row; deck links call the validated existing app.js deck/tier owner. At 680px the same table records stack with visible metric labels, all actions retained. Document scrolling remains natural on all routes.
