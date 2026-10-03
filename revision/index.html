@@ -7,8 +7,8 @@
     <meta name="theme-color" content="#0c0c0d" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101936'/%3E%3Cpath d='M15 17h24a8 8 0 0 1 8 8v25H23a8 8 0 0 1-8-8V17Z' fill='%23f4c95d'/%3E%3Cpath d='M23 17v33M29 27h11M29 35h11' stroke='%23101936' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
     <title>Revision Desk — GCSE Flashcards</title>
-    <link rel="stylesheet" href="styles.css" />
-    <script src="theme.js"></script>
+    <link rel="stylesheet" href="../styles.css" />
+    <script src="../theme.js"></script>
   </head>
   <body>
     <a id="skip-target" class="skip-link" href="#home-title">Skip to content</a>
@@ -19,7 +19,7 @@
       </a>
       <div class="header-actions"><div class="streak" aria-label="Study progress"><span id="mastered-total">0</span> mastered</div><button id="library-button" class="button button-quiet" type="button">Papers & files</button><button id="profile-button" class="button button-quiet" type="button"><span id="header-avatar" class="mini-avatar" aria-hidden="true">RD</span>Profile</button><button id="theme-toggle" class="button button-quiet" type="button" aria-label="Switch to light mode">Light mode</button><button id="account-button" class="button button-quiet" type="button">Sign in</button></div>
     </header>
-    <nav class="desk-nav" aria-label="Main navigation"><p class="nav-caption">Study workspace</p><a class="button button-quiet" href="#home" data-view="home">Home</a><a class="button button-quiet" href="#flashcards" data-view="flashcards">Flashcards</a><button id="nav-papers" class="button button-quiet" type="button">Past papers</button><button id="nav-whiteboard" class="button button-quiet" type="button">Whiteboard</button><a class="button button-quiet" href="#practice" data-view="practice">My practice</a><p class="nav-caption nav-divider">Make it yours</p><a class="button button-quiet" href="#customise" data-view="customise">Customise Desk</a><a class="button button-quiet" href="games/">Games</a><p class="nav-footnote">Small steps.<br/>Steady progress.</p></nav>
+    <nav class="desk-nav" aria-label="Main navigation"><p class="nav-caption">Study workspace</p><a class="button button-quiet" href="#home" data-view="home">Home</a><a class="button button-quiet" href="#flashcards" data-view="flashcards">Flashcards</a><button id="nav-papers" class="button button-quiet" type="button">Past papers</button><button id="nav-whiteboard" class="button button-quiet" type="button">Whiteboard</button><a class="button button-quiet" href="#practice" data-view="practice">My practice</a><p class="nav-caption nav-divider">Make it yours</p><a class="button button-quiet" href="#customise" data-view="customise">Customise Desk</a><a class="button button-quiet" href="../games/">Games</a><p class="nav-footnote">Small steps.<br/>Steady progress.</p></nav>
 
     <section class="cloud-strip" aria-label="Account saving"><p id="cloud-status" role="status" aria-live="polite">Guest · saved on this device only.</p><div class="account-actions"><button id="cloud-retry" class="button button-quiet" type="button" hidden>Retry cloud connection</button><button id="cloud-use-account" class="button button-quiet" type="button" hidden>Use account ratings</button><button id="cloud-keep-mine" class="button button-quiet" type="button" hidden>Keep my changed ratings</button></div></section>
 
@@ -258,8 +258,8 @@
           <li><strong>PDF.js 6.3.289</strong> — PDF rendering, Apache License 2.0. <a href="https://github.com/mozilla/pdf.js" target="_blank" rel="noopener noreferrer">Upstream source</a> · <a href="https://github.com/defnotsquishy/revision-desk/blob/main/vendor/pdfjs/LICENSE" target="_blank" rel="noopener noreferrer">Included licence</a>.</li>
           <li><strong>pdf-lib 1.17.1</strong> — PDF export, MIT licence; © 2019 Andrew Dillon. <a href="https://github.com/Hopding/pdf-lib" target="_blank" rel="noopener noreferrer">Upstream source</a> · <a href="https://github.com/defnotsquishy/revision-desk/blob/main/vendor/pdf-lib-LICENSE.md" target="_blank" rel="noopener noreferrer">Included licence</a>.</li>
           <li><strong>Firebase JavaScript SDK 12.19.0</strong> — online authentication and cloud data, Apache License 2.0. <a href="https://github.com/firebase/firebase-js-sdk" target="_blank" rel="noopener noreferrer">Upstream source</a> · <a href="https://github.com/firebase/firebase-js-sdk/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Licence</a>.</li>
-          <li><strong>Three.js 0.186.1</strong> — FRACTURE’s browser 3D renderer, MIT licence. <a href="https://github.com/mrdoob/three.js" target="_blank" rel="noopener noreferrer">Upstream source</a> · <a href="games/fracture/notices/three/LICENSE.txt" target="_blank" rel="noopener noreferrer">Included licence</a>.</li>
-          <li><strong>Rapier 0.21.0</strong> — FRACTURE’s browser physics, Apache License 2.0. <a href="https://github.com/dimforge/rapier.js" target="_blank" rel="noopener noreferrer">Upstream source</a> · <a href="games/fracture/notices/rapier/LICENSE.txt" target="_blank" rel="noopener noreferrer">Included licence</a>.</li>
+          <li><strong>Three.js 0.186.1</strong> — FRACTURE’s browser 3D renderer, MIT licence. <a href="https://github.com/mrdoob/three.js" target="_blank" rel="noopener noreferrer">Upstream source</a> · <a href="../games/fracture/notices/three/LICENSE.txt" target="_blank" rel="noopener noreferrer">Included licence</a>.</li>
+          <li><strong>Rapier 0.21.0</strong> — FRACTURE’s browser physics, Apache License 2.0. <a href="https://github.com/dimforge/rapier.js" target="_blank" rel="noopener noreferrer">Upstream source</a> · <a href="../games/fracture/notices/rapier/LICENSE.txt" target="_blank" rel="noopener noreferrer">Included licence</a>.</li>
           <li><strong>PDF.js bundled assets</strong> — separate notices apply to Adobe CMaps, Foxit/PDFium fonts, Liberation fonts and the JBIG2, OpenJPEG and qcms components. <a href="https://github.com/defnotsquishy/revision-desk/tree/main/vendor/pdfjs/cmaps" target="_blank" rel="noopener noreferrer">CMap notice</a> · <a href="https://github.com/defnotsquishy/revision-desk/tree/main/vendor/pdfjs/standard_fonts" target="_blank" rel="noopener noreferrer">Font notices</a> · <a href="https://github.com/defnotsquishy/revision-desk/tree/main/vendor/pdfjs/wasm" target="_blank" rel="noopener noreferrer">Component notices</a>. These licence files accompany the local assets; Liberation fonts have their own GPL v2 terms and exceptions.</li>
           <li><strong>Node.js in the Windows download</strong> — the local server runtime uses Node.js under its MIT licence and bundled third-party notices. The portable app includes <code>runtime/LICENSE.txt</code>. <a href="https://github.com/nodejs/node" target="_blank" rel="noopener noreferrer">Upstream source</a> · <a href="https://github.com/nodejs/node/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Upstream licence notices</a>.</li>
         </ul><p>Keep the applicable copyright and licence notices with redistributed dependencies, and check their full terms. Links to GitHub need internet; included vendor licence files remain in downloaded copies.</p>
@@ -323,30 +323,30 @@
     </dialog>
     <dialog id="ink-confirm-dialog" aria-labelledby="ink-confirm-title"><h2 id="ink-confirm-title">Clear this page’s ink?</h2><p id="ink-confirm-copy">The original paper and typed notes will stay unchanged. You can undo this clear while the document stays open.</p><div class="dialog-actions"><button id="ink-confirm-cancel" class="button button-quiet" type="button" autofocus>Cancel</button><button id="ink-confirm-ok" class="button button-primary" type="button">Clear page ink</button></div></dialog>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
-    <script src="data.js"></script>
-    <script src="extra-cards.js"></script>
-    <script src="henry-cards.js"></script>
-    <script src="quiz-data.js"></script>
-    <script src="deeper-content.js"></script>
-    <script src="quiz-more.js"></script>
-    <script src="science-cards.js"></script>
-    <script src="science-quizzes.js"></script>
-    <script src="sociology-cards.js"></script>
-    <script src="expanded-cards.js"></script>
-    <script src="papers-data.js"></script>
-    <script src="papers-extra.js"></script>
-    <script src="papers-complete.js"></script>
-    <script src="resources-data.js"></script>
-    <script src="store.js"></script>
-    <script src="history.js"></script>
-    <script src="app.js"></script>
-    <script src="auth.js"></script>
-    <script src="profile.js"></script>
-    <script src="library.js"></script>
-    <script src="ink-core.js"></script>
-    <script src="practice-storage.js"></script>
-    <script src="practice.js"></script>
-    <script src="home.js"></script>
-    <script src="customise.js"></script>
+    <script src="../data.js"></script>
+    <script src="../extra-cards.js"></script>
+    <script src="../henry-cards.js"></script>
+    <script src="../quiz-data.js"></script>
+    <script src="../deeper-content.js"></script>
+    <script src="../quiz-more.js"></script>
+    <script src="../science-cards.js"></script>
+    <script src="../science-quizzes.js"></script>
+    <script src="../sociology-cards.js"></script>
+    <script src="../expanded-cards.js"></script>
+    <script src="../papers-data.js"></script>
+    <script src="../papers-extra.js"></script>
+    <script src="../papers-complete.js"></script>
+    <script src="../resources-data.js"></script>
+    <script src="../store.js"></script>
+    <script src="../history.js"></script>
+    <script src="../app.js"></script>
+    <script src="../auth.js"></script>
+    <script src="../profile.js"></script>
+    <script src="../library.js"></script>
+    <script src="../ink-core.js"></script>
+    <script src="../practice-storage.js"></script>
+    <script src="../practice.js"></script>
+    <script src="../home.js"></script>
+    <script src="../customise.js"></script>
   </body>
 </html>

@@ -3,6 +3,7 @@
   const $=id=>document.getElementById(id),ink=window.RevisionInk,storage=window.RevisionPracticeStorage;
   const canvas=$('ink-canvas'),paper=$('paper-canvas'),stage=$('paper-stage');
   const MAX_BYTES=20*1024*1024;
+  const assetRoot=new URL('.',document.currentScript?.src || new URL('./practice.js',location.href));
   let scope=window.RevisionStore.state().uid||'guest',record=null,pdf=null,page=1,tool='pen',color=ink.colors.Black;
   let loading=0,rendering=0,renderTask=null,dirty=false,edit=0,saveTask=null,timer,pointer=null,stroke=null,undo=[],redo=[],busy=false,blocked=false;
   const drafts=new Map();
@@ -69,8 +70,8 @@
   }
   function sourceLinks(source){$('practice-source').hidden=!source;if(source){$('practice-official').href=source.paper;$('practice-mark-scheme').href=source.markScheme;$('practice-mark-scheme').textContent='Matching mark scheme ↗';}}
   async function decode(bytes){
-    const api=await import('./vendor/pdfjs/pdf.min.mjs');api.GlobalWorkerOptions.workerSrc=new URL('./vendor/pdfjs/pdf.worker.min.mjs',location.href).href;
-    const task=api.getDocument({data:new Uint8Array(bytes.slice(0)),isEvalSupported:false,maxImageSize:16000000,cMapUrl:new URL('./vendor/pdfjs/cmaps/',location.href).href,cMapPacked:true,standardFontDataUrl:new URL('./vendor/pdfjs/standard_fonts/',location.href).href,wasmUrl:new URL('./vendor/pdfjs/wasm/',location.href).href});
+    const api=await import('./vendor/pdfjs/pdf.min.mjs');api.GlobalWorkerOptions.workerSrc=new URL('./vendor/pdfjs/pdf.worker.min.mjs',assetRoot).href;
+    const task=api.getDocument({data:new Uint8Array(bytes.slice(0)),isEvalSupported:false,maxImageSize:16000000,cMapUrl:new URL('./vendor/pdfjs/cmaps/',assetRoot).href,cMapPacked:true,standardFontDataUrl:new URL('./vendor/pdfjs/standard_fonts/',assetRoot).href,wasmUrl:new URL('./vendor/pdfjs/wasm/',assetRoot).href});
     let timeout;
     const interrupted=new Promise((_,reject)=>{task.onPassword=()=>{reject(Error('This PDF needs a password. Choose a PDF that opens without a password.'));task.destroy().catch(()=>{});};timeout=setTimeout(()=>{reject(Error('This PDF took too long to open. Try a smaller or simpler PDF.'));task.destroy().catch(()=>{});},20000);});
     let doc;try{doc=await Promise.race([task.promise,interrupted]);}finally{clearTimeout(timeout);}if(doc.numPages>200){dispose(doc);throw Error('Choose a PDF with no more than 200 pages.');}return doc;
@@ -152,7 +153,7 @@
   });
   $('practice-image').addEventListener('click',()=>{finishStroke();const output=document.createElement('canvas');output.width=paper.width;output.height=paper.height;const ctx=output.getContext('2d');ctx.drawImage(paper,0,0);ctx.drawImage(canvas,0,0);output.toBlob(blob=>{if(blob)download(blob,`-page-${page}.png`);},'image/png');});
   let pdfLib;
-  function getPdfLib(){return pdfLib ||= new Promise((resolve,reject)=>{const script=document.createElement('script');script.src='vendor/pdf-lib.min.js';script.onload=()=>resolve(window.PDFLib);script.onerror=()=>{pdfLib=null;reject(Error('PDF export could not load. Retry or export an ink backup.'));};document.head.append(script);});}
+  function getPdfLib(){return pdfLib ||= new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=new URL('vendor/pdf-lib.min.js',assetRoot).href;script.onload=()=>resolve(window.PDFLib);script.onerror=()=>{pdfLib=null;reject(Error('PDF export could not load. Retry or export an ink backup.'));};document.head.append(script);});}
   $('practice-export').addEventListener('click',async()=>{
     if(!record||busy)return;finishStroke();const current=record,owner=scope;busy=true;controls();status('Preparing written PDF…');
     try{const lib=await getPdfLib();let doc,flatten=false;

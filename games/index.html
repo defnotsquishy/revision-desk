@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en-GB" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="theme-color" content="#0c0c0d"/>
+  <meta name="description" content="Browser games in their own corner of Revision Desk. Explore FRACTURE, an original 3D battlegrounds game."/>
+  <title>Games — Revision Desk</title>
+  <link rel="stylesheet" href="../styles.css"/>
+  <link rel="stylesheet" href="games.css"/>
+  <script src="../theme.js"></script>
+</head>
+<body class="games-shell">
+  <a class="skip-link" href="#games-title">Skip to games</a>
+  <header class="topbar"><a class="brand" href="../#home"><span class="brand-mark" aria-hidden="true">RD</span><span><strong>Revision Desk</strong><small>Games workspace</small></span></a><div class="header-actions"><a class="button button-quiet" href="../#home">Back to revision</a><button class="button button-quiet" id="games-theme" type="button">Change theme</button></div></header>
+  <nav class="desk-nav" aria-label="Main navigation"><p class="nav-caption">Your website</p><a class="button button-quiet" href="../#home">Home</a><a class="button button-quiet" href="../revision/">Revision</a><a class="button button-quiet" href="./" aria-current="page">Games</a><p class="nav-caption nav-divider">Your desk</p><a class="button button-quiet" href="../#customise">Appearance & profile</a><p class="nav-footnote">A different arena.<br/>Your revision stays separate.</p></nav>
+  <main class="games-workspace">
+    <div class="games-heading"><div><p class="eyebrow">A space to play</p><h1 id="games-title" tabindex="-1">Games</h1><p class="deck-description">Play games without leaving the website.</p></div><span class="game-label">Browser-native</span></div>
+    <section class="recent-section" aria-labelledby="recent-title"><h2 id="recent-title">Recently played</h2><p id="games-recent-empty" class="history-help">Your next game starts here. Launch a game and it’ll appear in this list.</p><ul id="games-recent" class="games-recents" hidden></ul></section>
+    <section class="featured-section" aria-labelledby="featured-title"><div class="section-heading"><h2 id="featured-title">Featured</h2><span class="history-help">One arena. A new beginning.</span></div>
+      <article class="featured-game"><a class="game-preview" href="fracture/" aria-label="See FRACTURE"><img src="fracture/arena-preview.svg" width="1200" height="680" alt="An original industrial city arena with a fractured central plaza and a gravity-wielding fighter"/><span class="preview-wordmark" aria-hidden="true">FRACTURE<span>ONLINE BATTLEGROUNDS</span></span><span class="game-label preview-status">Local combat beta</span></a><div class="featured-info"><div><p class="eyebrow">Original 3D battlegrounds</p><h3>FRACTURE</h3><p>Learn the combo. Bend the battlefield. Train with VECTOR’s gravity abilities in an original city arena.</p><p class="history-help">Single-player training now. Public battles and private rooms are in development.</p></div><div class="game-actions"><a class="button button-primary" href="fracture/">Play</a><a class="button button-quiet" href="fracture/#details">Details</a><button id="games-pin" class="button button-quiet" type="button" aria-pressed="false">Pin FRACTURE</button></div></div></article>
+    </section>
+    <section class="all-games" aria-labelledby="all-games-title"><div class="section-heading"><h2 id="all-games-title">All games</h2><span id="games-count" class="history-help" role="status" aria-live="polite">1 game</span></div><div class="game-filters" role="group" aria-label="Filter games"><button class="button button-quiet" data-game-filter="all" type="button" aria-pressed="true">All games</button><button class="button button-quiet" data-game-filter="multiplayer" type="button" aria-pressed="false">Multiplayer</button><button class="button button-quiet" data-game-filter="single" type="button" aria-pressed="false">Single player</button><button class="button button-quiet" data-game-filter="pinned" type="button" aria-pressed="false">Pinned</button></div><div id="games-result" class="game-result"><img src="fracture/arena-preview.svg" width="1200" height="680" alt=""/><div><h3>FRACTURE</h3><p>Online Battlegrounds · Beta</p><p class="history-help">Available mode: single-player training</p></div><a class="button button-quiet" href="fracture/">Open game</a></div><div id="games-no-results" class="game-empty" hidden><h3 id="games-empty-title">No games here yet</h3><p id="games-empty-copy"></p><button id="games-show-all" class="button button-quiet" type="button">Show all games</button></div></section>
+    <p id="games-storage-status" class="history-help" role="status" aria-live="polite"></p>
+  </main>
+  <footer class="site-footer"><p>© 2026 Revision Desk contributors. FRACTURE is an original project.</p><nav aria-label="Footer policies"><a href="../#privacy">Privacy (draft)</a><a href="../#cookies">Cookies & storage</a><a href="../#copyright">Copyright</a><a href="../#open-source">Source & licences</a><a href="https://github.com/defnotsquishy/revision-desk" target="_blank" rel="noopener noreferrer">Source code ↗</a></nav></footer>
+  <script type="module" src="library.js"></script>
+</body>
+</html>

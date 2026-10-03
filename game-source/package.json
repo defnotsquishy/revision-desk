@@ -1,0 +1,25 @@
+{
+  "name": "revision-desk-fracture",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 4180",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint fracture",
+    "build": "vite build",
+    "test": "node --experimental-strip-types --test fracture/tests/*.test.ts"
+  },
+  "dependencies": {
+    "@dimforge/rapier3d-compat": "0.21.0",
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "@types/three": "0.186.0",
+    "@types/node": "24.10.1",
+    "typescript": "6.0.3",
+    "vite": "8.3.2",
+    "eslint": "10.12.0",
+    "typescript-eslint": "8.71.0"
+  }
+}

@@ -2,6 +2,16 @@
 
 A matte-black GCSE revision desk with 2,460 flashcards: 60 in each of 41 topic decks for English Literature, Edexcel History, AQA Geography Paper 1, AQA Sociology, Combined Science Trilogy and Triple Science.
 
+## Separate Games workspace
+
+Games lives at `/games/`; FRACTURE at `/games/fracture/`. The root and `/revision/` alias remain revision, with no game cards or game stats in the study dashboard.
+
+FRACTURE 0.1 is an original **single-player training beta**, running directly in a modern desktop browser over HTTPS. It includes VECTOR, an original city arena, keyboard/mouse movement, jump/dash, four-hit melee, four gravity abilities, Vector Shift, a limited awakening, knockback/ragdolls, breakable props and locally saved graphics/audio settings. It is not an online multiplayer release. Public matchmaking/private room codes, extra characters, bloom and motion blur remain unfinished and unavailable in the menu.
+
+The engine is downloaded only after Play training; revision and browsing the library/menu do not load Three/Rapier. Game pins, recents and graphics/audio stay on this device, separately from revision accounts, ratings, profiles and drawings. The shared theme/accent system is reused. Privacy and dependency notices describe this separation.
+
+See [game-source/README.md](game-source/README.md) for source layout, verified development commands and remaining limitations. Players need no npm, Node, executable or extension. The Windows app's Games link opens the public website and needs internet; existing revision and local paper practice still work offline.
+
 ## Science, profile and paper library
 
 Science has 1,560 course-specific cards across B1–B4, C1–C5 and P1–P4, with separate Combined and Triple decks and Higher-only labels. Choose Foundation to hide Higher-only cards. Every science deck has 60 cards in Higher; Foundation subsets can be smaller. Existing ratings and cards retain their IDs.

@@ -21,6 +21,13 @@
   function route(focus=true){const hash=location.hash.slice(1);const anchors={'home-title':'home','study-area':'flashcards','practice-title':'practice','customise-title':'customise','legal-title':'legal'};show(anchors[hash]||hash,anchors[hash]?false:focus);}
   document.querySelectorAll('[data-view]').forEach(a=>a.addEventListener('click',()=>show(a.dataset.view)));
   document.querySelectorAll('[data-policy-link]').forEach(a=>a.addEventListener('click',()=>show(a.dataset.policyLink)));
+  // Pass only the saved colour, never an account identifier or revision data.
+  document.querySelectorAll('a[href="games/"],a[href="../games/"],a[href="https://defnotsquishy.github.io/revision-desk/games/"]').forEach(link=>link.addEventListener('click',()=>{
+    const accent=document.documentElement.dataset.accent;
+    const url=new URL(link.href);
+    if(['neutral','blue','violet','mint'].includes(accent))url.searchParams.set('accent',accent);
+    link.href=url.href;
+  }));
   function storageChoice(){
     const owner=window.RevisionAppearance;
     $('cookie-remember-appearance').checked=owner.remember();

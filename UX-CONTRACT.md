@@ -48,6 +48,18 @@ Requested outcome: a matte-black profile with a picture, supplied science notes 
 
 ## Verification boundary (continued)
 
+## Separate Games workspace
+
+- `games/index.html` and `games/fracture/index.html` are real static pages; the GitHub project base `/revision-desk/` is preserved by relative links. Revision keeps its original root and has a generated `/revision/` alias with local hash links and app-root assets. The existing hash router does not intercept Games.
+- The Games library uses a bounded one-game list, native filter buttons with URL-backed `mode`, a pin toggle and actual local recent launch timestamp. Empty Multiplayer/Pinned states explain how to continue. No invented online players, score or match count.
+- The FRACTURE menu deliberately precedes gameplay. Play loads a separate TypeScript/Three/Rapier entry; ordinary Revision, library and menu visits never request engine chunks. Actual named work stages, cancellation, timeout, retry and actionable graphics failure are required. A failed/cancelled start never creates a recent-play entry.
+- Native HTML dialog is the canonical menu/settings owner: background inert, Escape/Close, focus restoration; game input suspends during menu or browser focus loss. Leave disposes frame loop, input handlers, pointer lock, audio, Three and physics resources. Repeated starts must not accumulate a second session.
+- `games/state.js` owns only `fracture-settings-v1` and `fracture-library-v1`: device-local graphics/audio/sensitivity/stat visibility, pinned state and last launch. Bounded validation tolerates corrupt storage; unavailable storage explicitly says applies for now. No game XP, achievements or stats flow into account/guest revision stores. Website appearance uses `theme.js`; no second theme owner.
+- Graphics native selects intentionally retain OS popup ownership. Numeric range controls have visible units; unsupported Bloom/Motion blur are disabled with a reason. Training counters are real simulation data. HUD values are not announced every frame. Keyboard/mouse recommended; browsing works at narrow mobile widths.
+- The Revision Games link hands off only a validated saved accent (`neutral`, `blue`, `violet`, `mint`) in the URL; Games links preserve it without reading profile/session records or writing revision storage. Direct Games bookmarks without an accent use neutral. Shared CSS remains the colour owner; no account identifier, profile picture or revision data is handed to Games.
+- Public battles/Create private server/Join remain unavailable in the local vertical slice, with a persistent explanation. These cannot be enabled or claimed complete until a real remote authoritative server is verified with two clients. No fake room codes or localhost requirement for production players.
+- Evidence: game simulation tests, `work/verify-games-shell.cjs`, `work/verify-games-routes.cjs`, existing11revision suites, strict types/lint/production build and actual browser gameplay. See `work/FRACTURE-GOAL.md` for full-scope pending requirements rather than interpreting these contracts as completion.
+
 ## Policy navigation and storage choice
 
 - home.js is also the canonical owner for #privacy, #cookies, #terms, #copyright and #open-source. These select one article in #view-legal, set the document title and heading, mark the current policy link, and share the document scroll. Browser Back, skip links and all existing revision views retain their state. No login is needed to read the notices.

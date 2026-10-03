@@ -4,10 +4,11 @@
   let mode='papers',page=0;
   const pageSize=12;
   const params=new URLSearchParams(location.search);
+  const assetRoot=new URL('.',document.currentScript?.src || new URL('./library.js',location.href));
   $('paper-course').value='all';
   for(const [id,param,allowed] of [ ['paper-course','papersCourse',['combined','triple','other','all']],['paper-subject','papersSubject',['all','Biology','Chemistry','Physics','English Literature','Geography','History','Maths','Sociology']],['paper-tier','papersTier',['all','Foundation','Higher','Untiered']],['paper-number','papersNumber',['all','1','2','3']]])if(allowed.includes(params.get(param)))$(id).value=params.get(param);
   $('paper-search').value=params.get('papersSearch') || '';
-  function link(label,url,download=false) {const a=document.createElement('a');a.className='button button-quiet';a.textContent=label;a.href=url;if(download)a.download=download;else{a.target='_blank';a.rel='noopener noreferrer';}return a;}
+  function link(label,url,download=false) {const a=document.createElement('a');a.className='button button-quiet';a.textContent=label;a.href=new URL(url,assetRoot).href;if(download)a.download=download;else{a.target='_blank';a.rel='noopener noreferrer';}return a;}
   function render(){
     const course=$('paper-course').value,subject=$('paper-subject').value,tier=$('paper-tier').value,query=$('paper-search').value.trim().toLowerCase();
     $('paper-search-clear').hidden=!query;$('paper-tier').disabled=mode==='files';$('paper-number').disabled=mode==='files';
