@@ -183,7 +183,7 @@
   window.addEventListener('revision-account-change',event=>{
     const next=event.detail?.uid||'guest';if(next===scope)return;
     finishStroke();clearTimeout(timer);if(record&&dirty){drafts.set(scope,record);save().catch(()=>{});}loading++;rendering++;renderTask?.cancel();renderTask=null;dispose(pdf);pdf=null;record=null;dirty=false;blocked=false;busy=false;scope=next;
-    $('practice-editor').hidden=true;sourceLinks(null);$('practice-title').textContent='Paper practice & whiteboard';status('Account changed. Choose saved practice for this account.');saveStatus('Drawings stay separate on this device.');controls();savedList();
+    $('practice-editor').hidden=true;sourceLinks(null);$('practice-title').textContent='Whiteboard';status('Account changed. Choose saved practice for this account.');saveStatus('Drawings stay separate on this device.');controls();savedList();
     const held=drafts.get(scope);if(held){drafts.delete(scope);status('An unsaved draft from this session is being recovered.');(async()=>{const doc=held.kind==='pdf'?await decode(held.bytes):null;if(held.scope!==scope){dispose(doc);return;}await activate(held,doc);changed();})().catch(()=>status('Could not recover this session’s draft.'));
     }
   });

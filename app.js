@@ -48,7 +48,7 @@
 
   function renderCard() {
     const currentDeck = deck();
-    document.title = `${currentDeck.title} — Revision Desk`;
+    if (!$('view-flashcards')?.hidden) document.title = `${currentDeck.title} — Revision Deck`;
     $("clear-search").hidden = !state.query;
     const quizMode = state.mode === 'quiz';
     $("quiz-mode").setAttribute('aria-pressed', String(quizMode));

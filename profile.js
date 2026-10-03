@@ -34,6 +34,10 @@
     const stats = counts();
     const value = $('profile-dialog').open ? draft : saved;
     avatar($('profile-avatar'),value); avatar($('header-avatar'),saved,true);
+    // The profile page displays only committed data, never an unsaved modal draft.
+    avatar($('profile-page-avatar'),saved);
+    $('profile-page-name').textContent=saved.name;
+    $('profile-page-identity').textContent=uid?'Account profile · private Firebase storage':'Guest profile · saved on this device';
     $('profile-summary-name').textContent=(value.name || 'Revision student')+' · '+value.badge;
     $('profile-stats').textContent=`${stats.reviewed} cards reviewed · ${stats.know} marked Know · ${uid?'your account’s practice':'guest practice on this device'}`;
     $('profile-identity').textContent=uid?'Account profile · private Firebase storage':'Guest profile · saved only in this browser';

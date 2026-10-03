@@ -6,20 +6,19 @@
     <meta name="description" content="A matte-black GCSE revision desk with 60 flashcards per topic, private account progress, matched past papers, PDF drawing and a whiteboard." />
     <meta name="theme-color" content="#0c0c0d" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101936'/%3E%3Cpath d='M15 17h24a8 8 0 0 1 8 8v25H23a8 8 0 0 1-8-8V17Z' fill='%23f4c95d'/%3E%3Cpath d='M23 17v33M29 27h11M29 35h11' stroke='%23101936' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
-    <title>Revision Desk — GCSE Flashcards</title>
+    <title>Revision Deck — GCSE Flashcards</title>
     <link rel="stylesheet" href="../styles.css" />
     <script src="../theme.js"></script>
   </head>
   <body>
     <a id="skip-target" class="skip-link" href="#home-title">Skip to content</a>
     <header class="topbar">
-      <a class="brand" href="#home" data-view="home" aria-label="Revision Desk home">
-        <span class="brand-mark" aria-hidden="true">RD</span>
-        <span><strong>Revision Desk</strong><small>GCSE flashcards</small></span>
+      <a class="brand" href="#home" data-view="home" aria-label="Revision Deck home">
+        <span><strong>Revision Deck</strong><small>GCSE flashcards</small></span>
       </a>
       <div class="header-actions"><div class="streak" aria-label="Study progress"><span id="mastered-total">0</span> mastered</div><button id="library-button" class="button button-quiet" type="button">Papers & files</button><button id="profile-button" class="button button-quiet" type="button"><span id="header-avatar" class="mini-avatar" aria-hidden="true">RD</span>Profile</button><button id="theme-toggle" class="button button-quiet" type="button" aria-label="Switch to light mode">Light mode</button><button id="account-button" class="button button-quiet" type="button">Sign in</button></div>
     </header>
-    <nav class="desk-nav" aria-label="Main navigation"><p class="nav-caption">Study workspace</p><a class="button button-quiet" href="#home" data-view="home">Home</a><a class="button button-quiet" href="#flashcards" data-view="flashcards">Flashcards</a><button id="nav-papers" class="button button-quiet" type="button">Past papers</button><button id="nav-whiteboard" class="button button-quiet" type="button">Whiteboard</button><a class="button button-quiet" href="#practice" data-view="practice">My practice</a><p class="nav-caption nav-divider">Make it yours</p><a class="button button-quiet" href="#customise" data-view="customise">Customise Desk</a><p class="nav-footnote">Small steps.<br/>Steady progress.</p></nav>
+    <nav class="desk-nav" aria-label="Main navigation"><p class="nav-caption">Study workspace</p><a class="button button-quiet" href="#home" data-view="home">Home</a><a class="button button-quiet" href="#flashcards" data-view="flashcards">Flashcards</a><button id="nav-papers" class="button button-quiet" type="button">Past papers</button><a id="nav-whiteboard" class="button button-quiet" href="#whiteboard" data-view="practice">Whiteboard</a><p class="nav-caption nav-divider">Make it yours</p><a class="button button-quiet" href="#customise" data-view="customise">Customise Desk</a><a class="button button-quiet" href="#profile" data-view="profile">Your profile</a><div class="nav-game-group"><p class="nav-caption nav-divider">Games</p><a class="button button-quiet" href="../canyon-run/" target="_blank" rel="noopener noreferrer">Canyon Run ↗</a></div><p class="nav-footnote">Small steps.<br/>Steady progress.</p></nav>
 
     <section class="cloud-strip" aria-label="Account saving"><p id="cloud-status" role="status" aria-live="polite">Guest · saved on this device only.</p><div class="account-actions"><button id="cloud-retry" class="button button-quiet" type="button" hidden>Retry cloud connection</button><button id="cloud-use-account" class="button button-quiet" type="button" hidden>Use account ratings</button><button id="cloud-keep-mine" class="button button-quiet" type="button" hidden>Keep my changed ratings</button></div></section>
 
@@ -37,6 +36,13 @@
           <label><input type="radio" name="appearance-theme" value="light" data-preference="theme"/><span><strong>Light</strong><small>A brighter reading surface.</small></span></label>
           <label><input type="radio" name="appearance-theme" value="system" data-preference="theme"/><span><strong>System</strong><small>Follow your device theme.</small></span></label>
         </div></fieldset>
+        <fieldset class="setting-section"><legend>Background colour</legend><p>Choose a flat, matte background. Light mode uses a softer tint of the same colour. Papers stay white.</p><div class="preference-options background-options">
+          <label><input type="radio" name="appearance-background" value="black" data-preference="background"/><span><strong>Matte black</strong><small>The original</small></span></label>
+          <label><input type="radio" name="appearance-background" value="slate" data-preference="background"/><span><strong>Slate</strong><small>Cool grey</small></span></label>
+          <label><input type="radio" name="appearance-background" value="navy" data-preference="background"/><span><strong>Midnight</strong><small>Quiet navy</small></span></label>
+          <label><input type="radio" name="appearance-background" value="forest" data-preference="background"/><span><strong>Forest</strong><small>Deep green</small></span></label>
+          <label><input type="radio" name="appearance-background" value="plum" data-preference="background"/><span><strong>Plum</strong><small>Muted purple</small></span></label>
+        </div></fieldset>
         <section class="setting-section"><h2>Profile & accent colour</h2><p>Your picture, name and accent belong to your profile. Signed-in changes save privately to your account.</p><div class="accent-preview" aria-hidden="true"><span class="accent-dot neutral"></span><span class="accent-dot blue"></span><span class="accent-dot violet"></span><span class="accent-dot mint"></span></div><p id="appearance-accent"></p><button id="appearance-profile" class="button button-quiet" type="button">Edit profile & colour</button></section>
         <fieldset class="setting-section"><legend>Interface density</legend><p>Adjust the space between panels. Buttons stay easy to click.</p><div class="preference-options"><label><input type="radio" name="appearance-density" value="compact" data-preference="density"/><span><strong>Compact</strong><small>More on screen</small></span></label><label><input type="radio" name="appearance-density" value="default" data-preference="density"/><span><strong>Default</strong><small>Balanced spacing</small></span></label><label><input type="radio" name="appearance-density" value="comfortable" data-preference="density"/><span><strong>Comfortable</strong><small>Room to breathe</small></span></label></div></fieldset>
         <fieldset class="setting-section"><legend>Text size</legend><p>Scale questions, explanations and controls together.</p><div class="preference-options"><label><input type="radio" name="appearance-font" value="small" data-preference="font"/><span>Small</span></label><label><input type="radio" name="appearance-font" value="medium" data-preference="font"/><span>Medium</span></label><label><input type="radio" name="appearance-font" value="large" data-preference="font"/><span>Large</span></label></div></fieldset>
@@ -48,8 +54,14 @@
         <div class="appearance-reset-row"><p class="history-help">Layout preferences stay on this device, separately from your profile, ratings and drawings.</p><button id="appearance-reset" class="button button-quiet" type="button">Restore appearance defaults</button></div>
       </div><aside class="desk-preview" aria-labelledby="preview-title"><p class="eyebrow">Live reading preview</p><h2 id="preview-title">Ready for your next session.</h2><p id="preview-summary" class="history-help"></p><div class="preview-question"><p class="card-kicker">A little recall</p><h3>What can you remember without looking?</h3><p>Read a question. Say your answer. Check the explanation, then rate your confidence honestly.</p><span class="tag">One question at a time</span></div><a href="#flashcards" data-view="flashcards" class="button button-primary">Continue studying</a><p class="history-help preview-note">See your theme, colour, corners, font and reading spacing here as you change them. Your study progress stays the same.</p><div class="driving-break"><h3>A driving break?</h3><p class="history-help">Your original dusk-canyon game, in its own tab. Keyboard controls; best lap stays on this device.</p><a href="../canyon-run/" target="_blank" rel="noopener noreferrer" class="button button-quiet">Open Canyon Run</a></div></aside></div>
     </main>
+    <main id="view-profile" class="profile-workspace" hidden>
+      <p class="eyebrow">Make it yours</p><h1 id="profile-page-title" tabindex="-1">Your profile</h1>
+      <section class="profile-page-card" aria-labelledby="profile-page-name"><div id="profile-page-avatar" class="profile-avatar" aria-hidden="true">RD</div><div><h2 id="profile-page-name">Revision student</h2><p id="profile-page-identity" class="history-help">Guest profile · saved on this device</p><span class="status-pill">Private profile</span></div><button id="profile-page-edit" class="button button-quiet" type="button">Edit profile & colour</button></section>
+      <section class="setting-section"><h2>Sharing, on your terms</h2><p>Public profiles will be opt-in, showing a nickname, optional picture and short bio. Email, study progress and drawings will stay private.</p><p>Public sharing isn’t available yet. We’re keeping profiles private while the operator’s privacy details and publishing setup are completed.</p><a href="#privacy" data-policy-link="privacy" class="profile-policy-link">Read the published privacy draft</a></section>
+      <section class="setting-section"><h2>Community badges</h2><p>These will recognise being part of the community—not how much you study.</p><span class="status-pill">First Ten · not launched</span><p class="profile-badge-note">A rare badge for ten early members is planned. The eligibility rule and secure account-based allocation still need to be confirmed. This is a preview, not an awarded badge.</p></section>
+    </main>
     <main id="view-practice" class="practice-workspace" hidden>
-      <div class="workspace-header"><div><p class="eyebrow">Write · check · improve</p><h1 id="practice-title" tabindex="-1">Paper practice & whiteboard</h1><p id="practice-description" class="deck-description">Load a PDF or start a whiteboard. Nothing you draw is uploaded.</p></div></div>
+      <div class="workspace-header"><div><p class="eyebrow">Write · check · improve</p><h1 id="practice-title" tabindex="-1">Whiteboard</h1><p id="practice-description" class="deck-description">Your drawing workspace, for blank boards and past papers. Nothing you draw is uploaded.</p></div></div>
       <div class="practice-files"><label for="practice-pdf">Open a PDF from your computer<input id="practice-pdf" type="file" accept="application/pdf,.pdf" aria-describedby="practice-file-help"/></label><button id="practice-new-board" class="button button-quiet" type="button">New whiteboard</button><label for="practice-saved">Resume saved practice<select id="practice-saved"><option value="">Choose a saved paper or board…</option></select></label><button id="practice-resume" class="button button-quiet" type="button" disabled>Resume</button></div>
       <p id="practice-file-help" class="history-help">PDF up to 20 MB / 200 pages; must open without a password. Some boards block embedded PDFs: open the official file, download it, then choose it above.</p>
       <div id="practice-source" class="resource-actions" hidden><a id="practice-official" class="button button-quiet" target="_blank" rel="noopener noreferrer">Open official question paper ↗</a><a id="practice-mark-scheme" class="button button-quiet" target="_blank" rel="noopener noreferrer">Matching mark scheme ↗</a></div>
@@ -280,7 +292,7 @@
         <label for="profile-name">Display name</label><input id="profile-name" type="text" maxlength="32" autocomplete="nickname" aria-describedby="profile-name-error"/><span id="profile-name-error" class="field-error"></span>
         <label for="profile-photo">Choose a profile picture</label><p id="profile-photo-help" class="history-help">JPEG, PNG or WebP · up to 5 MB and 16 million pixels. Saved as a small square image; original metadata is removed.</p><input id="profile-photo" type="file" accept="image/jpeg,image/png,image/webp" aria-describedby="profile-photo-help profile-photo-error"/><span id="profile-photo-error" class="field-error"></span>
         <button id="profile-remove-photo" class="button button-quiet" type="button">Remove picture</button>
-        <label for="profile-accent">Desk accent colour</label><select id="profile-accent"><option value="neutral">Neutral</option><option value="blue">Blue</option><option value="violet">Violet</option><option value="mint">Mint</option></select><p class="history-help">Keeps the matte-black background. Save profile to apply your colour to buttons and progress bars.</p>
+        <label for="profile-accent">Desk accent colour</label><select id="profile-accent"><option value="neutral">Neutral</option><option value="blue">Blue</option><option value="violet">Violet</option><option value="mint">Mint</option></select><p class="history-help">Keeps your selected background. Save profile to apply your colour to buttons and progress bars.</p>
         <label for="profile-badge">Study badge</label><select id="profile-badge" aria-describedby="profile-unlocks"></select><p id="profile-unlocks" class="history-help">Review and rate 20, 50 or 100 different cards to unlock badges. These reflect practice, not exam grades.</p>
         <p id="profile-status" role="status" aria-live="polite"></p>
         <div class="dialog-actions"><button id="profile-cancel" class="button button-quiet" type="button">Cancel</button><button id="profile-save" class="button button-primary" type="submit">Save profile</button></div>
@@ -336,6 +348,9 @@
     <script src="../science-quizzes.js"></script>
     <script src="../sociology-cards.js"></script>
     <script src="../expanded-cards.js"></script>
+    <script src="../quiz-biology-physics.js"></script>
+    <script src="../quiz-chemistry.js"></script>
+    <script src="../quiz-sociology.js"></script>
     <script src="../papers-data.js"></script>
     <script src="../papers-extra.js"></script>
     <script src="../papers-complete.js"></script>

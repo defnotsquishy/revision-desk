@@ -164,7 +164,7 @@ What is anaerobic respiration in human muscles?|Glucose is incompletely broken d
 What are the products of anaerobic respiration in yeast?|Ethanol and carbon dioxide. This process is fermentation and is useful in bread-making and alcoholic-drink production.|Respiration
 Why do heart rate and breathing increase during exercise?|Muscles need more energy, so greater delivery of oxygen and glucose supports respiration and faster removal of carbon dioxide.|Exercise
 What can happen if muscles receive too little oxygen?|Anaerobic respiration contributes to energy transfer. Lactic acid accumulates and an oxygen debt develops; prolonged vigorous exercise can cause fatigue.|Exercise
-What is oxygen debt?|The extra oxygen needed after exercise to deal with the accumulated lactic acid. Breathing and heart rate remain raised during recovery.|Exercise
+What is oxygen debt?|The extra oxygen needed after exercise to deal with the accumulated lactic acid. Breathing and heart rate remain raised during recovery.|Exercise|H
 What happens to lactic acid after exercise?|It is transported in blood from muscles to the liver, where it can be converted back to glucose. This helps explain post-exercise oxygen demand.|Exercise|H
 What is metabolism?|The sum of all chemical reactions in a cell or organism, including synthesis of larger molecules, respiration and breakdown reactions.|Metabolism
 What building blocks form proteins and lipids?|Amino acids form proteins. Lipids form from glycerol and fatty acids; a typical fat molecule uses one glycerol and three fatty acids.|Metabolism
@@ -497,7 +497,7 @@ How does beta-minus decay change a nucleus?|Mass number stays the same and atomi
 How does gamma emission change mass and atomic numbers?|Neither changes. The nucleus loses energy without losing protons or neutrons.|Nuclear equations
 How do you balance a nuclear equation?|Make total mass numbers and total atomic numbers equal on both sides, including the emitted particle's values.|Nuclear equations
 What is half-life?|The time for the number of undecayed nuclei in a sample, or its activity after background correction, to halve.|Half-life
-What fraction remains after three half-lives?|½ × ½ × ½ = ⅛. Radioactive decay is random for individual nuclei, but a large sample follows a predictable pattern.|Calculation
+What fraction remains after three half-lives?|½ × ½ × ½ = ⅛. Radioactive decay is random for individual nuclei, but a large sample follows a predictable pattern.|Calculation|H
 An activity falls from 800 to 100 Bq in 12 hours. What is the half-life?|800 → 400 → 200 → 100 is three halvings, so half-life = 12 ÷ 3 = 4 hours.|Calculation
 Why subtract background count rate?|The detector measures background as well as the source. Subtraction estimates the source count rate before finding a half-life.|Measurement
 What is radioactive contamination?|Unwanted radioactive material on or inside an object. It continues emitting radiation until removed or until it decays.|Radiation hazards

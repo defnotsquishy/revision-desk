@@ -421,8 +421,8 @@ Why is a radioactive source stored in suitable shielding?|Shielding reduces expo
 Why is a detector reading without the source needed?|It estimates background radiation so the source's contribution can be separated.|Measurement
 A detector reads 75 counts/s with source and 15 without. Find corrected count rate.|75 − 15 = 60 counts/s.|Calculation
 A corrected count rate falls from 60 to 15 counts/s. How many half-lives passed?|Two: 60 → 30 → 15.|Calculation
-What fraction of original nuclei remains after four half-lives?|1/16, or 6.25%.|Calculation
-What percentage has decayed after two half-lives?|75% has decayed because 25% remains.|Calculation
+What fraction of original nuclei remains after four half-lives?|1/16, or 6.25%.|Calculation|H
+What percentage has decayed after two half-lives?|75% has decayed because 25% remains.|Calculation|H
 A 10 h half-life sample starts at 320 Bq. Find activity after 30 h.|Three half-lives: 320 → 160 → 80 → 40 Bq.|Calculation
 A sample's activity halves in 6 days. How long to reach one-quarter?|12 days, which is two half-lives.|Calculation
 Why must a half-life graph use background-corrected readings?|Uncorrected readings approach the background level instead of zero, distorting apparent halvings.|Data interpretation
