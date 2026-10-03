@@ -1,5 +1,7 @@
 # Curriculum and content
 
+The Home video directory contains 50 curated native external links to Cognito science and 1st Class Maths Edexcel lessons. Source pages, scope/tier limitations and checks are recorded in [VIDEO-SOURCES.md](VIDEO-SOURCES.md). No lesson/video material is rehosted or watched-progress claim made.
+
 English additions and close-reading explanations are original revision notes. Quotations were checked against [Macbeth (MIT Shakespeare)](https://shakespeare.mit.edu/macbeth/full.html), [A Christmas Carol (Project Gutenberg)](https://www.gutenberg.org/files/46/46-h/46-h.htm) and [An Inspector Calls school quotation resource](https://www.medenschool.co.uk/data/homework/files/hgi/aic.pdf). Literary interpretations are reasoned readings, not a single compulsory exam answer.
 
 The expanded cards are original revision explanations of standard historical events and geographical processes. The following official specifications were checked on 29 September 2026 to select the scope. They are not predictions of which questions will appear.

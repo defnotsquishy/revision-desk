@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#202124" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101936'/%3E%3Cpath d='M15 17h24a8 8 0 0 1 8 8v25H23a8 8 0 0 1-8-8V17Z' fill='%23f4c95d'/%3E%3Cpath d='M23 17v33M29 27h11M29 35h11' stroke='%23101936' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
     <title>Revision Deck — GCSE Flashcards</title>
-    <link rel="stylesheet" href="../styles.css?v=dashboard-20261003" />
+    <link rel="stylesheet" href="../styles.css?v=lessons-20261003" />
     <script src="../theme.js"></script>
   </head>
   <body>
@@ -30,6 +30,13 @@
       <section class="dashboard-courses" aria-labelledby="home-courses-title"><div class="dashboard-course-heading"><h2 id="home-courses-title"><span id="home-subject-count" class="dashboard-label">Your subjects</span></h2><div class="dashboard-course-filters"><label for="home-course">Course<select id="home-course"><option value="other">Other subjects</option><option value="combined">Combined Science</option><option value="triple">Triple Science</option></select></label><label id="home-tier-control" for="home-tier" hidden>Tier<select id="home-tier"><option value="H">Higher</option><option value="F">Foundation</option></select></label></div></div>
         <div class="dashboard-table-frame"><table class="dashboard-table" aria-describedby="home-summary"><caption class="sr-only">Revision subjects and your saved card ratings</caption><thead><tr><th scope="col">Subject</th><th scope="col">Questions reviewed</th><th scope="col">Flashcards reviewed / marked Know</th><th scope="col"><span class="sr-only">Open topics</span></th></tr></thead><tbody id="home-subjects"></tbody></table></div>
         <p id="home-summary" class="dashboard-explainer">Questions and flashcards share the same card rating. Marked Know is your confidence, not an exam score.</p>
+      </section>
+      <section class="video-lessons" aria-labelledby="home-videos-title">
+        <div class="video-lessons-heading"><div><p class="eyebrow">Watch, then give it a go</p><h2 id="home-videos-title">Video lessons</h2></div><label for="home-video-subject">Subject<select id="home-video-subject"><option value="biology">Biology</option><option value="chemistry">Chemistry</option><option value="physics">Physics</option><option value="maths">Maths</option></select></label></div>
+        <div class="video-course-banner"><div id="home-video-art" aria-hidden="true"></div><div><h3 id="home-video-name">Science & maths</h3><p id="home-video-scope"></p></div><a id="home-video-provider" class="button button-quiet" href="https://www.cognito.org" target="_blank" rel="noopener noreferrer">Browse Cognito<span class="sr-only"> (opens in a new tab)</span></a></div>
+        <div class="video-lessons-toolbar"><p id="home-video-count" role="status" aria-live="polite"></p><button id="home-video-expand" class="button button-quiet" type="button" aria-controls="home-video-topics">Expand all topics</button></div>
+        <div id="home-video-topics" class="video-topic-list"></div>
+        <p class="dashboard-explainer">Lessons open on YouTube in a new tab. Watching isn’t tracked here and won’t change your card progress. These are selected topic links, not a complete course. Full videos may include extra Higher or Triple material; check your specification.</p>
       </section>
       <div class="dashboard-shortcuts"><p>Want space to work things out?</p><button id="home-papers" class="button button-quiet" type="button">Find a past paper</button><button id="home-whiteboard" class="button button-quiet" type="button">Start a whiteboard</button></div>
       <p class="history-help dashboard-storage">Sign in to pick up your profile and card progress on another device. Your paper drawings and whiteboards stay on this device.</p>
@@ -373,7 +380,8 @@
     <script src="../practice-storage.js"></script>
     <script src="../practice.js"></script>
     <script src="../dashboard-art.js"></script>
-    <script src="../home.js?v=dashboard-20261003"></script>
+    <script src="../videos-data.js?v=lessons-20261003"></script>
+    <script src="../home.js?v=lessons-20261003"></script>
     <script src="../customise.js"></script>
   </body>
 </html>

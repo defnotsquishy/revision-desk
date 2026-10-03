@@ -105,6 +105,32 @@
     if(focused)document.querySelector(`[data-home-focus-key="${focused}"]`)?.focus({preventScroll:true});
   }
   $('home-course').addEventListener('change',selectCourse);$('home-tier').addEventListener('change',selectCourse);
+  // Public, curated external links only. No players, requests or watch tracking.
+  let videoPanels=[];
+  function videoSubject(){const selected=new URLSearchParams(location.search||'').get('deskVideoSubject');return Object.hasOwn(window.REVISION_VIDEO_LESSONS||{},selected)?selected:'biology';}
+  function videoExpandLabel(){const allOpen=videoPanels.length>0&&videoPanels.every(panel=>panel.open);$('home-video-expand').textContent=allOpen?'Collapse all topics':'Expand all topics';$('home-video-expand').disabled=!videoPanels.length;}
+  function videoLessons(){
+    const catalogue=window.REVISION_VIDEO_LESSONS;if(!catalogue)return;
+    const id=videoSubject(),subject=catalogue[id];$('home-video-subject').value=id;
+    $('home-video-name').textContent=subject.title;$('home-video-scope').textContent=subject.scope;
+    $('home-video-provider').href=subject.url;$('home-video-provider').replaceChildren(node('span','',subject.providerLabel||'Browse '+subject.provider),node('span','sr-only',' (opens in a new tab)'));
+    const art=$('home-video-art');art.replaceChildren();const asset=window.RevisionDashboardArt?.[id];
+    if(asset){const img=node('img');img.src=asset;img.alt='';img.width=72;img.height=72;art.append(img);}art.hidden=!asset;
+    $('home-video-count').textContent=`${subject.topics.length} topics · ${subject.topics.reduce((n,topic)=>n+topic.lessons.length,0)} linked lessons · ${subject.provider}`;
+    videoPanels=subject.topics.map((topic,index)=>{
+      const panel=node('details','video-topic');panel.open=index===0;
+      const summary=node('summary');summary.append(node('strong','',topic.title),node('span','video-topic-count',`${topic.lessons.length} lessons`));panel.append(summary);
+      const list=node('ul','video-lesson-grid');
+      for(const lesson of topic.lessons){
+        const item=node('li'),link=node('a','video-lesson-link');link.href=lesson.url;link.target='_blank';link.rel='noopener noreferrer';
+        link.append(node('strong','',lesson.title),node('small','',`${subject.provider} · ${lesson.higher?'Higher only':lesson.note||'GCSE lesson'}`),node('span','sr-only',' (opens in a new tab)'));item.append(link);list.append(item);
+      }
+      panel.append(list);panel.addEventListener('toggle',videoExpandLabel);return panel;
+    });$('home-video-topics').replaceChildren(...videoPanels);videoExpandLabel();
+  }
+  $('home-video-subject').addEventListener('change',()=>{const url=new URL(location.href||'http://localhost/');const value=$('home-video-subject').value;if(!Object.hasOwn(window.REVISION_VIDEO_LESSONS||{},value))return;url.searchParams.set('deskVideoSubject',value);window.history?.replaceState(null,'',url);videoLessons();});
+  $('home-video-expand').addEventListener('click',()=>{const next=!videoPanels.every(panel=>panel.open);videoPanels.forEach(panel=>{panel.open=next;});videoExpandLabel();});
+  window.addEventListener('popstate',videoLessons);videoLessons();
   window.addEventListener('popstate',stats);
   window.addEventListener('revision-data-change',stats);window.addEventListener('hashchange',()=>route());
   window.RevisionHome={show:navigate,summary,dashboard};stats();route(false);storageChoice();
