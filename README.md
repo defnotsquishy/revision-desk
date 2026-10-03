@@ -2,15 +2,11 @@
 
 A matte-black GCSE revision desk with 2,460 flashcards: 60 in each of 41 topic decks for English Literature, Edexcel History, AQA Geography Paper 1, AQA Sociology, Combined Science Trilogy and Triple Science.
 
-## Separate Games workspace
+## Original Canyon Run
 
-Games lives at `/games/`; FRACTURE at `/games/fracture/`. The root and `/revision/` alias remain revision, with no game cards or game stats in the study dashboard.
+Games/FRACTURE was removed at the user's request. The original Canyon Run from “Build 3D canyon driving game” is an unchanged, self-contained driving page at `/canyon-run/`, linked in a separate tab from Customise Desk. No Games section or game stats appear in revision.
 
-FRACTURE 0.1 is an original **single-player training beta**, running directly in a modern desktop browser over HTTPS. It includes VECTOR, an original city arena, keyboard/mouse movement, jump/dash, four-hit melee, four gravity abilities, Vector Shift, a limited awakening, knockback/ragdolls, breakable props and locally saved graphics/audio settings. It is not an online multiplayer release. Public matchmaking/private room codes, extra characters, bloom and motion blur remain unfinished and unavailable in the menu.
-
-The engine is downloaded only after Play training; revision and browsing the library/menu do not load Three/Rapier. Game pins, recents and graphics/audio stay on this device, separately from revision accounts, ratings, profiles and drawings. The shared theme/accent system is reused. Privacy and dependency notices describe this separation.
-
-See [game-source/README.md](game-source/README.md) for source layout, verified development commands and remaining limitations. Players need no npm, Node, executable or extension. The Windows app's Games link opens the public website and needs internet; existing revision and local paper practice still work offline.
+WASD/arrows drive, Space brakes and R recovers. A modern WebGL-capable desktop browser is needed. Only the best lap is stored locally in `canyon-run-best-v1`; it does not sync to Firebase or affect revision. The standalone HTML retains its original inline notices, and full React/React DOM/Three MIT and Lucide ISC/Feather notices are in `canyon-run/licenses/`. The Windows copy opens the public HTTPS game and needs internet for that link; existing local revision remains offline-capable.
 
 ## Science, profile and paper library
 
@@ -24,7 +20,7 @@ Papers & files includes 317 unique matched pairs, including 66 Edexcel GCSE Math
 
 ## Customise Desk
 
-Use **Customise Desk** in the navigation for Dark/Light/System theme, spacing, text size, reduced motion and optional flashcard shortcuts. Changes apply immediately and save on this device, separately from accounts and progress. Your Windows reduced-motion preference is always respected. **Edit profile & colour** opens the existing profile form: choose Neutral, Blue, Violet or Mint and Save profile to apply your accent. Signed-in profile colours follow your account; layout preferences do not. Restore appearance defaults never resets your cards or drawings.
+Use **Customise Desk** in the navigation for Dark/Light/System theme, density, text size, Square/Soft/Rounded panel corners, Book/Simple question font, Standard/Roomier reading spacing, stronger interface contrast, reduced motion and optional flashcard shortcuts. The live preview reflects these choices. Changes apply immediately and save on this device, separately from accounts and progress. Your Windows reduced-motion preference is always respected. **Edit profile & colour** opens the existing profile form: choose Neutral, Blue, Violet or Mint and Save profile to apply your accent. Signed-in profile colours follow your account; layout preferences do not. Restore appearance defaults never resets your cards or drawings.
 
 ## Draw on papers and whiteboard
 
