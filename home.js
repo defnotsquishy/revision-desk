@@ -1,25 +1,28 @@
 (() => {
   'use strict';
   const $=id=>document.getElementById(id);
-  const views=['home','flashcards','practice','customise','profile','legal'];
+  const views=['home','flashcards','maths','maker','practice','customise','profile','legal'];
   const policies={privacy:'Privacy & your data',cookies:'Cookies & storage',terms:'Using the app',copyright:'Copyright & credits','open-source':'Source & open-source notices'};
   let policy='privacy';
   function show(view,focus=true){
     if(view==='whiteboard')view='practice';
     if(Object.hasOwn(policies,view)){policy=view;view='legal';}
     if(!views.includes(view))view='home';
+    if(view!=='maker')window.RevisionMaker?.onHide();
     for(const name of views)$('view-'+name).hidden=name!==view;
     document.querySelectorAll('[data-policy]').forEach(a=>{a.hidden=a.dataset.policy!==policy;});
     document.querySelectorAll('[data-policy-link]').forEach(a=>{if(view==='legal'&&a.dataset.policyLink===policy)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
     $('legal-title').textContent=policies[policy];
     document.querySelectorAll('[data-view]').forEach(a=>{if(a.dataset.view===view)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
-    document.title=({home:'Home',flashcards:'Flashcards',practice:'Whiteboard',customise:'Customise Desk',profile:'Your profile',legal:policies[policy]}[view])+' — Revision Deck';
-    $('skip-target').href=({home:'#home-title',flashcards:'#study-area',practice:'#practice-title',customise:'#customise-title',profile:'#profile-page-title',legal:'#legal-title'}[view]);
-    if(focus)$({home:'home-title',flashcards:'deck-title',practice:'practice-title',customise:'customise-title',profile:'profile-page-title',legal:'legal-title'}[view]).focus();
+    document.title=({home:'Home',flashcards:'Flashcards',maths:'Maths resources',maker:'Flashcard maker',practice:'Whiteboard',customise:'Customise Desk',profile:'Your profile',legal:policies[policy]}[view])+' — Revision Deck';
+    $('skip-target').href=({home:'#home-title',flashcards:'#study-area',maths:'#maths-title',maker:'#maker-title',practice:'#practice-title',customise:'#customise-title',profile:'#profile-page-title',legal:'#legal-title'}[view]);
+    if(focus)$({home:'home-title',flashcards:'deck-title',maths:'maths-title',maker:'maker-title',practice:'practice-title',customise:'customise-title',profile:'profile-page-title',legal:'legal-title'}[view]).focus();
     if(view==='practice')window.RevisionPractice?.resize();
+    if(view==='maker')window.RevisionMaker?.onShow();
+    if(view==='maths')window.RevisionMathsResources?.onShow();
   }
   function navigate(view){const hash=view==='practice'?'whiteboard':view;if(location.hash==='#'+hash)show(view);else location.hash=hash;}
-  function route(focus=true){const hash=location.hash.slice(1);const anchors={'home-title':'home','study-area':'flashcards','practice-title':'practice','customise-title':'customise','profile-page-title':'profile','legal-title':'legal'};show(anchors[hash]||hash,anchors[hash]?false:focus);}
+  function route(focus=true){const hash=location.hash.slice(1);const anchors={'home-title':'home','study-area':'flashcards','maths-title':'maths','maker-title':'maker','practice-title':'practice','customise-title':'customise','profile-page-title':'profile','legal-title':'legal'};show(anchors[hash]||hash,anchors[hash]?false:focus);}
   document.querySelectorAll('[data-view]').forEach(a=>a.addEventListener('click',()=>show(a.dataset.view)));
   document.querySelectorAll('[data-policy-link]').forEach(a=>a.addEventListener('click',()=>show(a.dataset.policyLink)));
   function storageChoice(){
@@ -77,7 +80,8 @@
     const avatar=$('home-avatar');avatar.replaceChildren();
     if(!data.loading&&profile.photo){const img=node('img');img.src=profile.photo;img.alt='';img.width=96;img.height=96;avatar.append(img);}
     else avatar.textContent=data.loading?'':profile.name.trim().split(/\s+/).slice(0,2).map(n=>n[0]).join('').toUpperCase()||'RD';
-    $('home-subject-count').textContent=`${data.subjects.length} subjects`;
+    const resources=data.course==='other'?Object.entries(window.REVISION_MATHS_RESOURCES||{}):[];
+    $('home-subject-count').textContent=`${data.subjects.length+resources.length} subjects`;
     $('home-scope').textContent=courseNames[data.course];$('home-topic-count').textContent=`${data.subjects.reduce((n,s)=>n+s.decks.length,0)} topic decks`;
     $('home-progress-copy').textContent=data.loading?'Loading your ratings…':data.reviewed?`${data.reviewed.toLocaleString('en-GB')} / ${data.total.toLocaleString('en-GB')} cards reviewed`:'Ready for your next topic';
     if(data.loading)$('home-progress').removeAttribute('value');else $('home-progress').value=data.total?Math.round(100*data.reviewed/data.total):0;
@@ -100,6 +104,12 @@
       const list=node('ul','dashboard-topics');for(const deck of subject.decks){const item=node('li'),link=node('a','button button-quiet',deck.title);link.href='#flashcards';link.dataset.homeFocusKey=deck.id;link.addEventListener('click',()=>window.RevisionApp.openDeck(deck.id,data.tier));item.append(link);list.append(item);}cell.append(list);details.append(cell);
       button.addEventListener('click',()=>{const next=!expanded.has(key);if(next)expanded.add(key);else expanded.delete(key);details.hidden=!next;button.setAttribute('aria-expanded',String(next));});
       action.append(button);row.append(identity,questions,cards,action);rows.push(row,details);
+    }
+    for(const [id,subject] of resources){
+      const row=node('tr'),identity=node('th');identity.scope='row';identity.append(node('strong','',subject.title),node('small','dashboard-resource-subtitle',subject.qualification));
+      const questions=node('td','dashboard-metric');questions.dataset.label='Questions reviewed';questions.append(node('span','',`${subject.topicCount} topic resources`),node('small','','Not tracked'));
+      const cards=node('td','dashboard-metric');cards.dataset.label='Your own flashcards';const maker=node('a','button button-quiet','Make a deck');maker.href='#maker';cards.append(maker);
+      const action=node('td','dashboard-row-action'),button=node('button','button button-quiet','Resources');button.type='button';button.dataset.homeFocusKey=id;button.setAttribute('aria-label',`Open ${subject.title} resources`);button.addEventListener('click',()=>window.RevisionMathsResources?.open(id));action.append(button);row.append(identity,questions,cards,action);rows.push(row);
     }
     $('home-subjects').replaceChildren(...rows);
     if(focused)document.querySelector(`[data-home-focus-key="${focused}"]`)?.focus({preventScroll:true});

@@ -32,4 +32,22 @@
       {title:'Statistics',lessons:[lesson('Averages & the range','MgwdxJzAqYo'),lesson('Drawing histograms','g7Jnrf0g2tQ',{higher:true})]}
     ]}
   };
+  // The full maths resource directory is canonical. The selected Maths links
+  // above remain a small offline fallback if that separate public asset fails.
+  for(const key of ['maths','furtherMaths']){
+    const course=window.REVISION_MATHS_RESOURCES?.[key];
+    if(!course||!Array.isArray(course.sections))continue;
+    const topics=course.sections.map(section=>({title:section.title,lessons:section.topics.filter(topic=>topic.videoUrl).map(topic=>({
+      title:topic.title,url:topic.videoUrl,
+      ...(key==='maths'&&topic.tier==='higher'?{higher:true}:{}),
+      note:key==='furtherMaths'?'Level 2 Further Maths · Untiered':'Provider difficulty '+topic.gradeLabel+' · May include harder questions'
+    }))})).filter(topic=>topic.lessons.length);
+    window.REVISION_VIDEO_LESSONS[key]={
+      title:course.title,
+      scope:key==='maths'?'Edexcel GCSE · All '+course.topicCount+' listed topics · Tier guidance uses provider difficulty grades':'AQA Level 2 Further Maths · All '+course.topicCount+' listed topics · Untiered',
+      provider:course.provider,url:course.sourceUrl,
+      providerLabel:key==='maths'?'Full 1st Class Maths catalogue · Edexcel GCSE':'Full 1st Class Maths catalogue · AQA Level 2',
+      topics
+    };
+  }
 })();
