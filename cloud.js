@@ -1,11 +1,13 @@
 // Public client SDK only. Firebase Authentication owns credentials and sessions.
 import {initializeFirestore,memoryLocalCache,collection,doc,onSnapshot,runTransaction,getDocFromServer,serverTimestamp} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js';
+import {createMakerCloudAdapter} from './maker-cloud.js';
 
 export function createCloudAdapter(app,auth) {
   const db=initializeFirestore(app,{localCache:memoryLocalCache()});
   const guard=uid=>{if(auth.currentUser?.uid!==uid){const error=Error('Session changed');error.code='permission-denied';throw error;}};
   const conflict=card=>{const error=Error('Version conflict');error.code='revision-conflict';error.card=card;return error;};
   return {
+    maker:createMakerCloudAdapter(db,auth),
     subscribe(uid,next,error) {
       guard(uid);
       const subscriptions=[

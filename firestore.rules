@@ -45,7 +45,100 @@ service cloud.firestore {
         && request.resource.data.known >= 0 && request.resource.data.known <= request.resource.data.total
         && request.resource.data.updatedAt == request.time;
     }
-    // No public profiles, cross-user reads, arbitrary collections or client deletes.
+    // One registry bounds private deck slots, including archived decks.
+    function makerId(value) { return value is string && value.matches('[A-Za-z0-9-]{1,80}'); }
+    function makerIds(values, maximum) {
+      return values is list && values.size() > 0 && values.size() <= maximum
+        && values.toSet().size() == values.size()
+        && values.join(',').matches('[A-Za-z0-9-]{1,80}(,[A-Za-z0-9-]{1,80})*')
+        && values.toSet() == values.join(',').split(',').toSet();
+    }
+    function highlightMask(value, text) {
+      // UTF-16 client offsets may use two positions for one Unicode code point.
+      // Only plain 0/1 bits, at most twenty highlighted runs, can reach the client.
+      return value is string && value.size() <= text.size() * 2
+        && value.matches('0*(1+0+){0,19}1*0*');
+    }
+    match /users/{uid}/settings/makerRegistry {
+      allow read: if owner(uid);
+      allow create, update: if owner(uid)
+        && request.resource.data.keys().hasOnly(['ids','lastDeck','operation','updatedAt'])
+        && makerIds(request.resource.data.ids, 50)
+        && makerId(request.resource.data.lastDeck) && makerId(request.resource.data.operation)
+        && request.resource.data.updatedAt == request.time
+        && getAfter(/databases/$(database)/documents/users/$(uid)/customDecks/$(request.resource.data.lastDeck)).data.updatedAt == request.time
+        && getAfter(/databases/$(database)/documents/users/$(uid)/customDecks/$(request.resource.data.lastDeck)).data.operation == request.resource.data.operation
+        && ((!exists(/databases/$(database)/documents/users/$(uid)/settings/makerRegistry)
+          && request.resource.data.ids == [request.resource.data.lastDeck])
+          || (exists(/databases/$(database)/documents/users/$(uid)/settings/makerRegistry)
+          && request.resource.data.ids.toSet().difference(resource.data.ids.toSet()).hasOnly([request.resource.data.lastDeck])
+          && resource.data.ids.toSet().difference(request.resource.data.ids.toSet()).size() == 0
+          && request.resource.data.ids.size() == resource.data.ids.size() + 1));
+    }
+    match /users/{uid}/customDecks/{deck} {
+      allow read: if owner(uid);
+      allow create, update: if owner(uid) && makerId(deck)
+        && request.resource.data.keys().hasOnly(['schema','title','subject','archived','cardIds','revision','operation','createdAt','updatedAt'])
+        && request.resource.data.schema == 1
+        && request.resource.data.title is string && request.resource.data.title.size() > 0 && request.resource.data.title.size() <= 80
+        && request.resource.data.subject is string && request.resource.data.subject.size() > 0 && request.resource.data.subject.size() <= 60
+        && request.resource.data.archived is bool && makerIds(request.resource.data.cardIds, 100)
+        && request.resource.data.revision is int && request.resource.data.revision > 0
+        && makerId(request.resource.data.operation) && request.resource.data.updatedAt == request.time
+        && deck in getAfter(/databases/$(database)/documents/users/$(uid)/settings/makerRegistry).data.ids
+        && ((!exists(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck))
+          && request.resource.data.revision == 1 && request.resource.data.createdAt == request.time)
+          || (exists(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck))
+          && request.resource.data.revision == resource.data.revision + 1
+          && request.resource.data.createdAt == resource.data.createdAt));
+      match /cards/{card} {
+        // Missing cards may be checked during a transaction. Existing content is
+        // readable only while its stable ID belongs to the current saved deck.
+        allow get: if owner(uid) && (resource == null
+          || card in get(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)).data.cardIds);
+        allow create, update: if owner(uid) && makerId(card)
+          && request.resource.data.keys().hasOnly(['question','answer','questionHighlightMask','answerHighlightMask','contentRevision','deckRevision','operation','updatedAt'])
+          && request.resource.data.question is string && request.resource.data.question.size() > 0 && request.resource.data.question.size() <= 1000
+          && request.resource.data.answer is string && request.resource.data.answer.size() > 0 && request.resource.data.answer.size() <= 4000
+          && highlightMask(request.resource.data.questionHighlightMask, request.resource.data.question)
+          && highlightMask(request.resource.data.answerHighlightMask, request.resource.data.answer)
+          && request.resource.data.contentRevision is int && request.resource.data.contentRevision > 0
+          && request.resource.data.deckRevision is int && request.resource.data.deckRevision > 0
+          && makerId(request.resource.data.operation) && request.resource.data.updatedAt == request.time
+          && card in getAfter(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)).data.cardIds
+          && request.resource.data.deckRevision == getAfter(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)).data.revision
+          && request.resource.data.operation == getAfter(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)).data.operation
+          && getAfter(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)).data.updatedAt == request.time
+          && ((!exists(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)/cards/$(card))
+            && request.resource.data.contentRevision == 1)
+            || (exists(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)/cards/$(card))
+            && ((request.resource.data.question == resource.data.question && request.resource.data.answer == resource.data.answer
+              && request.resource.data.questionHighlightMask == resource.data.questionHighlightMask && request.resource.data.answerHighlightMask == resource.data.answerHighlightMask
+              && request.resource.data.contentRevision == resource.data.contentRevision)
+              || (request.resource.data.contentRevision == resource.data.contentRevision + 1))));
+        allow delete: if owner(uid)
+          && !(card in getAfter(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)).data.cardIds)
+          && getAfter(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)).data.updatedAt == request.time;
+      }
+      match /progress/{card} {
+        allow read: if owner(uid);
+        allow create, update: if owner(uid) && makerId(card)
+          && request.resource.data.keys().hasOnly(['rating','version','contentRevision','operation','updatedAt'])
+          && request.resource.data.rating in ['know','learn','unsure']
+          && request.resource.data.version is int && request.resource.data.version > 0
+          && request.resource.data.contentRevision is int && request.resource.data.contentRevision > 0
+          && makerId(request.resource.data.operation) && request.resource.data.updatedAt == request.time
+          && getAfter(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)).data.archived == false
+          && card in getAfter(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)).data.cardIds
+          && request.resource.data.contentRevision == getAfter(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)/cards/$(card)).data.contentRevision
+          && ((!exists(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)/progress/$(card)) && request.resource.data.version == 1)
+            || (exists(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)/progress/$(card)) && request.resource.data.version == resource.data.version + 1));
+        allow delete: if owner(uid)
+          && !(card in getAfter(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)).data.cardIds)
+          && getAfter(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)).data.updatedAt == request.time;
+      }
+    }
+    // No public profiles, cross-user reads, arbitrary collections or arbitrary client deletes.
     match /{document=**} { allow read, write: if false; }
   }
 }

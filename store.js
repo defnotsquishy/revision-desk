@@ -39,7 +39,7 @@
     else if (phase === 'loading') text = 'Loading your private account data…';
     else if (pending()) text = `${pending()} changes not yet saved to your account. Keep this window open.${cacheUnavailable?' Local session backup is unavailable.':''}`;
     else if (phase === 'offline') text = 'Offline · showing this session’s copy. Reconnect to confirm cloud saving.';
-    else text = 'Saved to your account · private cloud storage.'+(cacheUnavailable?' Local session backup is unavailable.':'');
+    else text = 'Saved to your account · built-in progress and profile. Personal-deck save status appears in Flashcard maker.'+(cacheUnavailable?' Local session backup is unavailable.':'');
     el.textContent = text;
     for (const id of ['cloud-retry','cloud-keep-mine','cloud-use-account']) {
       const button = document.getElementById(id); if (!button) continue;
@@ -86,11 +86,22 @@
     catch (_) { if (connection === pending) connection = null; if (uid) fail(); }
   }
   function connect(app, auth) {
-    connectionFactory = () => import('./cloud.js').then(module => module.createCloudAdapter(app,auth));
+    connectionFactory = () => import('./cloud.js?v=cloud-maker-20261005').then(module => module.createCloudAdapter(app,auth));
     if (!connection) connection = connectionFactory();
     // A guest can keep revising if the optional online SDK is unavailable.
     connection.catch(() => {});
     if (uid) ensureConnection();
+  }
+  async function makerAdapter(owner) {
+    if(!owner || owner!==uid)throw Error('Sign in to use your account decks.');
+    if(!connection && connectionFactory)connection=connectionFactory();
+    if(!connection)throw Error('Account saving is not connected. Sign in and retry.');
+    let result;
+    try { result=await connection; }
+    catch(_) { connection=null;throw Error('Cloud connection could not be opened. Check your connection and retry.'); }
+    if(owner!==uid)throw Error('Account changed. Reopen your decks.');
+    if(!result?.maker)throw Error('Cloud deck saving is unavailable. Reload the updated app.');
+    return result.maker;
   }
   function switchUser(next) {
     if (next===uid) return;
@@ -185,7 +196,7 @@
       window.addEventListener('revision-data-change',check);check();
     });
   }
-  window.RevisionStore={connect,ratings,history,profile,version:()=>uid?account.version:0,state,writeRatings,saveProfile,importGuest,defaults,waitForSaving};
+  window.RevisionStore={connect,ratings,history,profile,version:()=>uid?account.version:0,state,writeRatings,saveProfile,importGuest,defaults,waitForSaving,makerAdapter};
   window.addEventListener('revision-account-change',event=>switchUser(event.detail?.uid || null));
   window.addEventListener('online',()=>{if(uid)subscribe();});
   window.addEventListener('offline',()=>{if(uid){phase='offline';emit('status');}});

@@ -141,7 +141,7 @@
   });
   function signOut() { return perform(async () => { await sdk.signOut(auth); user = null; status('Signed out. Showing separate guest progress; cloud data remains in your account.'); }); }
   $('account-signout').addEventListener('click', () => {
-    if(window.RevisionStore?.state().pending){$('signout-dialog').showModal();return;}
+      if(window.RevisionStore?.state().pending || window.RevisionMaker?.hasDraft() || window.RevisionMaker?.hasPending()){$('signout-dialog').showModal();return;}
     signOut();
   });
   $('signout-stay')?.addEventListener('click',()=> $('signout-dialog').close());

@@ -1,6 +1,12 @@
 # Revision Deck
 
+[Open the website](https://defnotsquishy.github.io/revision-desk/#home) · [Flashcard Maker](https://defnotsquishy.github.io/revision-desk/#maker) · [Maths resources](https://defnotsquishy.github.io/revision-desk/#maths) · [Privacy](https://defnotsquishy.github.io/revision-desk/#privacy)
+
+Created by **nathanyu** — [GitHub: defnotsquishy](https://github.com/defnotsquishy).
+
 A matte-black GCSE revision desk with 2,460 flashcards and 1,230 multiple-choice questions: 60 flashcards and 30 questions in each of 41 topic decks for English Literature, Edexcel History, AQA Geography Paper 1, AQA Sociology, Combined Science Trilogy and Triple Science. The visible brand is Revision Deck; existing Revision Desk URLs, shortcuts and storage keys are retained for compatibility.
+
+Sign in with the same account on another supported device to open your saved profile, built-in study progress, personal flashcard decks, highlights and personal-card confidence ratings. Wait for a confirmed save. Guest work, PDFs, whiteboards, drawings, appearance preferences and Canyon Run's best lap stay on the device where they were made; this release does not enable paid file storage.
 
 ## Original Canyon Run
 
@@ -16,13 +22,23 @@ Sociology adds 360 cards in six AQA 8192 decks: Introduction, Research Methods, 
 
 Your profile displays your saved name and square picture, and opens the existing form for accent colour and practice badge. Signed-in profiles use private Firestore storage; guests save in this browser. Pictures are re-encoded to a small JPEG with original metadata removed. Neutral, Blue, Violet and Mint accents are separate from background choices. Rating 20/50/100 distinct cards unlocks existing practice badges. Save applies changes; cancel/close asks before discarding a changed draft. Public profile sharing and the First Ten community badge are not launched. Future public profiles require explicit opt-in and will not expose email, progress or drawings.
 
-Papers & files includes 354 unique matched pairs, including 66 Edexcel GCSE Maths 1MA1 pairs (Papers 1–3, both tiers), 14 AQA Sociology pairs (Papers 1–2) and 22 History pairs for Medicine, Henry VIII and Cold War. The library includes Papers 1 and 2 for Combined Trilogy and Triple Biology/Chemistry/Physics, AQA English Language and Literature papers, plus AQA Level 2 Further Maths 8365, and Geography Papers 1–3. The new English Language pairs include matching source-text inserts and explicit pre-2026/updated-specimen labels. Six official Maths packs add 2017/2018 sessions and sample/specimen assessments. Search/filter by course, subject, tier, paper and series, or use Show all public papers to clear filters. Every standalone question paper is paired with the same component/tier/series scheme. Locked or unreleased papers are excluded; History Paper 3 is not assumed because your school option is unconfirmed. Official directories link to further formats and releases. PDFs stay on the board's servers.
+Choose **Past papers** in the website navigation to open Papers & files. It includes 354 unique matched pairs, including 66 Edexcel GCSE Maths 1MA1 pairs (Papers 1–3, both tiers), 14 AQA Sociology pairs (Papers 1–2), 22 History pairs for Medicine, Henry VIII and Cold War, 12 AQA Level 2 Further Maths 8365 pairs, and 19 AQA GCSE English Language 8700 pairs with matching source-text inserts. AQA English Literature 8702, Combined Trilogy and Triple Biology/Chemistry/Physics Papers 1 and 2, and Geography Papers 1–3 are included. Historic formats and updated 2026 English Language specimens are labelled; specimens are not 2026 past papers. Six official Maths packs add 2017/2018 sessions and sample/specimen assessments. Search/filter by course, subject, tier, paper and series, or use Show all public papers to clear filters. Every standalone question paper is paired with the same component/tier/series scheme. Locked or unreleased papers are excluded; History Paper 3 is not assumed because your school option is unconfirmed. Official directories link to further formats and releases. PDFs stay on the board's servers.
 
-## Maths resources & your own flashcards
+## Maths resources
 
-Maths resources links all 106 current 1st Class Maths Edexcel GCSE topic rows and all 23 AQA Level 2 Further Maths rows, grouped by section. Every topic has an explanation, practice questions and worked solutions; Further Maths solutions are videos. Three revision booklets are linked too. Search, filter by section/provider difficulty, or open the matching official paper library. These are links to the original provider, not copied materials or predicted exams. Home has 161 explanation links including 32 selected Cognito science lessons. Watching is not tracked.
+[Maths resources](https://defnotsquishy.github.io/revision-desk/#maths) contains all 106 topics in the checked 1st Class Maths Edexcel GCSE directory, grouped into six sections, plus 23 AQA Level 2 Further Maths topics in seven sections. Each topic links to an explanation video, practice questions and worked solutions; Further Maths uses solution videos. Three revision booklets are linked. GCSE provider-grade filters, course/section selection, search and 12-row pagination keep the list manageable. Further Maths is untiered. These are the provider's checked directory rows, not a promise of every channel upload or future release; resources remain on their original provider's service.
 
-Flashcard maker saves up to 50 private device decks per guest/account scope, each with up to 100 question/answer cards. Create, edit, practise, archive/restore and download/restore a JSON backup. Explicit Save is required. These decks do not sync to Firebase or count towards built-in card progress. Visiting another section retains a draft in this window; closing can lose unsaved work. Back up your decks separately, especially before changing device/browser or clearing site data.
+## Make your own flashcards
+
+[Flashcard Maker](https://defnotsquishy.github.io/revision-desk/#maker) lets you create, edit, practise, archive/restore and download/restore private question-and-answer decks. There are up to 50 saved decks per account or local scope, including archived decks, with up to 100 cards each. Choose **Save deck** and wait for confirmation: signed-in decks save to your private Firebase account, while guest decks save only in this browser.
+
+To keep a deck made before this update, sign in, choose **Show device decks**, then explicitly confirm **Copy to account**. Only copy work you made yourself. The original device copy stays unchanged; signing in does not upload it automatically. Restoring a JSON backup creates a new unsaved draft and needs Save before it becomes an account deck.
+
+Select important words in a question or answer and choose **Highlight selection**. A yellow preview and the practice view show your marked passages. Clear highlights removes that field's marks; editing its text clears those marks to avoid highlighting the wrong words. Highlights are plain-text ranges, not executable HTML, and are included in saves and backups.
+
+In signed-in practice, reveal the answer, then choose **Learn again**, **Unsure** or **Know** to save that personal card's confidence across devices. This is separate from built-in deck totals, graphs and badges; guest personal-card practice does not track confidence. Editing a card's text or highlights makes its previous confidence inapplicable to the new content. Concurrent changes show a conflict and offer reloading the saved copy instead of silently overwriting it.
+
+Visiting another section keeps an unsaved draft in this window. Refreshing, closing or changing accounts can lose it: download a draft backup first. Signed-in personal decks need a connection for opening and saving; there is no persistent custom-deck offline cache or retry outbox. JSON backups are limited to 4 MB and contain deck text, card identifiers and highlights, not sign-in credentials or confidence history. Archiving hides a deck from practice but does not delete it.
 
 ## Customise Desk
 
@@ -40,7 +56,7 @@ Your science files contains 18 unchanged original school downloads. Two supplied
 
 ## Accounts and cloud saving
 
-Use Sign in to create an email/password account, sign in, request a password reset or verify your email. Firebase manages credentials; choose a fresh unique password privately. Login lasts for the browser session. Private Firestore records in London hold each signed-in person's profile, card ratings and daily graph. Guest data stays separate and is imported only through the explicit Import guest ratings action. Wait for **Saved to your account** before closing: offline queued ratings survive only the current browser session. Profile errors retain the draft; same-card and profile conflicts are shown explicitly. Guest revision and locally saved paper practice work offline in the Windows app.
+Use Sign in to create an email/password account, sign in, request a password reset or verify your email. Firebase manages credentials; choose a fresh unique password privately. Login lasts for the browser session. Private Firestore records in London hold each signed-in person's profile, built-in card ratings and daily graph, plus saved personal decks/highlights/confidence. Guest data stays separate: Import guest ratings copies missing built-in ratings only; personal decks have their own explicit Copy to account action. Wait for **Saved to your account** before closing built-in revision: its offline queued ratings survive only the current browser session. Personal-deck saves instead need a confirmed online transaction; failed or unconfirmed saves keep the draft in this window for retry or backup. Profile errors retain the draft; same-card, deck and profile conflicts are shown explicitly. Guest revision and locally saved paper practice work offline in the Windows app.
 
 ## Run it
 
@@ -50,16 +66,11 @@ Double-click **Revision Desk** on the Desktop or in the Start menu. You can also
 
 Keep this folder in its current location so the shortcuts continue to work. The server listens only on this computer and remains running in the background for fast reopening. Rebooting stops it; launching the app starts it again. To stop it manually, use Task Manager to end only the node.exe process whose command line points to this folder's server.cjs.
 
-Progress belongs to the browser profile and address. Edge and the Codex preview have separate storage, so progress from the preview will not automatically appear in Edge. Theme and ratings persist when reopening in the same profile. This update preserves the existing progress storage key.
+Guest progress and device-only work belong to the browser profile and address; different browsers have separate local storage. Signed-in saved profiles, revision progress and personal decks follow the same account across the website and Windows app when connected. Appearance and practice files remain local. This update preserves the existing guest-progress storage key.
 
 ### Browser option
 
-No installation or build step is needed. Either:
-
-1. Visit the published GitHub Pages website, or
-2. From this folder, run `node server.cjs` and visit `http://localhost:4173`.
-
-Use a local server rather than opening index.html as a file: PDF workers and account modules require an HTTP(S) origin.
+No installation or build step is needed: [open the published website](https://defnotsquishy.github.io/revision-desk/). The Windows launcher is the separate option for local guest revision; opening `index.html` directly as a file does not support PDF workers or account modules.
 
 ## Portable Windows copy
 
@@ -109,7 +120,7 @@ Dark mode is the default. The top-right button switches themes; the choice is re
 
 The footer opens bookmarkable Privacy (`#privacy`), Cookies & storage (`#cookies`), use guidance (`#terms`), Copyright (`#copyright`) and source/dependency notices (`#open-source`). They share the existing router and work in the Windows copy too. The source link points to this repository. This public repository currently has no general reuse licence for its original code; third-party dependency licences do not license the entire app or exam materials.
 
-**The privacy notice is a draft, not a compliance certification.** The operator must supply an approved public identity/private contact route, confirm the applicable legal basis and retention/deletion process, and assess international-transfer and children's privacy requirements before finalising it. Firestore is configured in London, but Firebase Authentication processes account data in the United States. No account-deletion feature or automatic cloud-data expiry is implemented. Use guidance is not a solicitor-reviewed contract.
+Revision Deck is operated by **nathanyu**. For private access, correction or deletion requests contact [cheesehim21@gmail.com](mailto:cheesehim21@gmail.com); the operator handles requests manually and keeps account data while the account is used. Do not send passwords, sign-in codes or tokens, and do not post account information in public issues. There is no in-app account-deletion button or automatic cloud expiry. The published notice states the current technical facts and confirmed contact/retention criterion; it is not a compliance certification. The operator still needs to confirm the lawful basis, detailed request handling, provider/international-transfer arrangements and appropriate children's privacy assessment. Firestore is in London, but Firebase Authentication processes account data in the United States. Use guidance is not a solicitor-reviewed contract.
 
 The storage choice is owned by `theme.js`. Turning appearance remembering off clears only the appearance/theme/mode values and stops reading/writing them between visits. It retains the explicit on/off choice and does not delete guest progress, profiles, cloud records or IndexedDB drawings. There are no app advertising or analytics integrations. A notice alone does not establish that every storage use is exempt from consent requirements.
 

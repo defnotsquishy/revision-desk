@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#202124" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101936'/%3E%3Cpath d='M15 17h24a8 8 0 0 1 8 8v25H23a8 8 0 0 1-8-8V17Z' fill='%23f4c95d'/%3E%3Cpath d='M23 17v33M29 27h11M29 35h11' stroke='%23101936' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
     <title>Revision Deck — GCSE Flashcards</title>
-    <link rel="stylesheet" href="styles.css?v=resources-20261003" />
+    <link rel="stylesheet" href="styles.css?v=cloud-maker-20261005" />
     <script src="theme.js"></script>
   </head>
   <body>
@@ -39,7 +39,7 @@
         <p class="dashboard-explainer">Lessons open on YouTube in a new tab. Watching isn’t tracked here and won’t change your card progress. Science has selected topic links; Maths and Further Maths cover every topic currently listed on the linked provider pages. Videos may include extra Higher or Triple material; check your specification.</p>
       </section>
       <div class="dashboard-shortcuts"><p>Want space to work things out?</p><button id="home-papers" class="button button-quiet" type="button">Find a past paper</button><button id="home-whiteboard" class="button button-quiet" type="button">Start a whiteboard</button></div>
-      <p class="history-help dashboard-storage">Sign in to pick up your profile and built-in card progress on another device. Your own decks, paper drawings and whiteboards stay on this device.</p>
+      <p class="history-help dashboard-storage">Sign in to pick up your profile, saved flashcard decks, highlights and study confidence on another device. PDFs, drawings, whiteboards and appearance settings stay on this device.</p>
     </main>
     <main id="view-maths" class="maths-workspace" hidden>
       <h1 id="maths-title" tabindex="-1">Maths resources</h1>
@@ -56,12 +56,13 @@
     </main>
     <main id="view-maker" class="maker-view" hidden>
       <header class="maker-heading"><div><p class="eyebrow">Your own questions</p><h1 id="maker-title" tabindex="-1">Flashcard maker</h1><p>Make a deck from your notes, then practise it here.</p></div><button id="maker-new" class="button button-primary" type="button">New deck</button></header>
-      <p class="maker-device-note">Saved on this device only, even when you’re signed in. These decks don’t sync to Firebase or count towards your built-in card progress. Download a JSON backup to keep a separate copy. Guest and account decks stay separate.</p>
+      <p id="maker-save-note" class="maker-device-note">Sign in to save your decks, highlights and confidence privately across devices. Guest decks stay on this device and are uploaded only when you choose Copy to account.</p>
       <p id="maker-status" class="maker-status" role="status" aria-live="polite">Loading your device decks…</p>
       <div class="maker-list-heading"><h2 id="maker-list-title" tabindex="-1">Your device decks</h2><button id="maker-refresh" class="button button-quiet" type="button">Refresh list</button></div>
       <p id="maker-limit-note" class="small-copy">Up to 50 decks per account or guest scope, including archived decks. Up to 100 cards per deck.</p>
       <p id="maker-empty">No decks yet. Choose New deck to write your first questions.</p>
       <ul id="maker-list" class="maker-list" aria-describedby="maker-limit-note"></ul>
+      <section id="maker-device-import" class="maker-import" hidden aria-labelledby="maker-device-title"><h3 id="maker-device-title">Move an existing device deck to your account</h3><p class="small-copy">Nothing is uploaded automatically. Only copy decks you created; guest decks may belong to someone else using this computer. The original device copy is kept.</p><button id="maker-show-device" class="button button-quiet" type="button">Show device decks</button><ul id="maker-device-list" class="maker-list"></ul></section>
       <div class="maker-import"><label for="maker-import-file">Restore a deck backup</label><input id="maker-import-file" type="file" accept="application/json,.json" aria-describedby="maker-import-help"><p id="maker-import-help" class="small-copy">Revision Deck JSON only, up to 4 MB. Opens a new draft; nothing is saved or overwritten until you choose Save deck.</p></div>
       <form id="maker-form" class="maker-editor" novalidate hidden>
         <h2 id="maker-editor-title" tabindex="-1">New deck</h2>
@@ -75,10 +76,10 @@
       </form>
     </main>
     <dialog id="maker-confirm-dialog" class="maker-dialog" aria-labelledby="maker-confirm-title" aria-describedby="maker-confirm-copy">
-      <div class="dialog-body"><h2 id="maker-confirm-title">Discard this draft?</h2><p id="maker-confirm-copy"></p><div class="dialog-actions"><button id="maker-confirm-cancel" class="button button-quiet" type="button" autofocus>Keep editing</button><button id="maker-confirm-ok" class="button button-primary" type="button">Discard draft</button></div></div>
+      <div class="dialog-body"><h2 id="maker-confirm-title">Discard this draft?</h2><p id="maker-confirm-copy"></p><p id="maker-confirm-status" class="field-error" role="alert"></p><div class="dialog-actions"><button id="maker-confirm-cancel" class="button button-quiet" type="button" autofocus>Keep editing</button><button id="maker-confirm-ok" class="button button-primary" type="button">Discard draft</button></div></div>
     </dialog>
     <dialog id="maker-study-dialog" class="maker-dialog maker-study-dialog" aria-labelledby="maker-study-title">
-      <div class="dialog-body"><div class="maker-study-heading"><h2 id="maker-study-title">Your deck</h2><button id="maker-study-close" class="button button-quiet" type="button" autofocus>Close practice</button></div><p id="maker-study-position" role="status" aria-live="polite"></p><p id="maker-study-question" class="maker-study-question"></p><button id="maker-study-reveal" class="button button-primary" type="button" aria-expanded="false" aria-controls="maker-study-answer">Show answer</button><p id="maker-study-answer" class="maker-study-answer" hidden></p><div class="maker-study-controls"><button id="maker-study-previous" class="button button-quiet" type="button">Previous card</button><button id="maker-study-next" class="button button-quiet" type="button">Next card</button></div><p class="small-copy">Your own Q&amp;A cards · device-only practice, with no progress scoring.</p></div>
+      <div class="dialog-body"><div class="maker-study-heading"><h2 id="maker-study-title">Your deck</h2><button id="maker-study-close" class="button button-quiet" type="button" autofocus>Close practice</button></div><p id="maker-study-position" role="status" aria-live="polite"></p><p id="maker-study-question" class="maker-study-question"></p><button id="maker-study-reveal" class="button button-primary" type="button" aria-expanded="false" aria-controls="maker-study-answer">Show answer</button><p id="maker-study-answer" class="maker-study-answer" hidden></p><div class="maker-confidence" aria-label="Your confidence"><button id="maker-rate-learn" class="button button-quiet" type="button" aria-pressed="false">Learn again</button><button id="maker-rate-unsure" class="button button-quiet" type="button" aria-pressed="false">Unsure</button><button id="maker-rate-know" class="button button-quiet" type="button" aria-pressed="false">Know</button></div><p id="maker-study-status" class="maker-status" role="status" aria-live="polite"></p><button id="maker-study-reload" class="button button-quiet" type="button" hidden>Reload progress</button><div class="maker-study-controls"><button id="maker-study-previous" class="button button-quiet" type="button">Previous card</button><button id="maker-study-next" class="button button-quiet" type="button">Next card</button></div><p class="small-copy">Confidence is your own rating, not an exam score. Custom-deck progress stays separate from built-in subjects.</p></div>
     </dialog>
     <main id="view-customise" class="customise-workspace" hidden>
       <p class="eyebrow">Your workspace, your way</p><h1 id="customise-title" tabindex="-1">Customise Desk</h1><p class="deck-description">Keep it quiet. Make it comfortable. Get back to revision.</p>
@@ -110,7 +111,7 @@
     <main id="view-profile" class="profile-workspace" hidden>
       <p class="eyebrow">Make it yours</p><h1 id="profile-page-title" tabindex="-1">Your profile</h1>
       <section class="profile-page-card" aria-labelledby="profile-page-name"><div id="profile-page-avatar" class="profile-avatar" aria-hidden="true">RD</div><div><h2 id="profile-page-name">Revision student</h2><p id="profile-page-identity" class="history-help">Guest profile · saved on this device</p><span class="status-pill">Private profile</span></div><button id="profile-page-edit" class="button button-quiet" type="button">Edit profile & colour</button></section>
-      <section class="setting-section"><h2>Sharing, on your terms</h2><p>Public profiles will be opt-in, showing a nickname, optional picture and short bio. Email, study progress and drawings will stay private.</p><p>Public sharing isn’t available yet. We’re keeping profiles private while the operator’s privacy details and publishing setup are completed.</p><a href="#privacy" data-policy-link="privacy" class="profile-policy-link">Read the published privacy draft</a></section>
+      <section class="setting-section"><h2>Sharing, on your terms</h2><p>Public profiles will be opt-in, showing a nickname, optional picture and short bio. Email, study progress and drawings will stay private.</p><p>Public sharing isn’t available yet. Your current account profile is private.</p><a href="#privacy" data-policy-link="privacy" class="profile-policy-link">Read Privacy & your data</a></section>
       <section class="setting-section"><h2>Community badges</h2><p>These will recognise being part of the community—not how much you study.</p><span class="status-pill">First Ten · not launched</span><p class="profile-badge-note">A rare badge for ten early members is planned. The eligibility rule and secure account-based allocation still need to be confirmed. This is a preview, not an awarded badge.</p></section>
     </main>
     <main id="view-practice" class="practice-workspace" hidden>
@@ -256,18 +257,19 @@
     <main id="view-legal" class="legal-workspace" hidden>
       <p class="eyebrow">About your revision desk</p>
       <h1 id="legal-title" tabindex="-1">Privacy & your data</h1>
-      <p class="legal-updated">Technical information checked <time datetime="2026-10-03">3 October 2026</time>.</p>
+      <p class="legal-updated">Technical information checked <time datetime="2026-10-05">5 October 2026</time>.</p>
       <nav class="policy-nav" aria-label="Policies and credits">
-        <a href="#privacy" data-policy-link="privacy">Privacy (draft)</a>
+        <a href="#privacy" data-policy-link="privacy">Privacy</a>
         <a href="#cookies" data-policy-link="cookies">Cookies & storage</a>
         <a href="#terms" data-policy-link="terms">Using the app</a>
         <a href="#copyright" data-policy-link="copyright">Copyright</a>
         <a href="#open-source" data-policy-link="open-source">Source & licences</a>
       </nav>
       <article class="policy-copy" data-policy="privacy">
-        <aside class="policy-review" aria-labelledby="privacy-review-title"><h2 id="privacy-review-title">Draft notice — operator review needed</h2><p>The storage details below describe the current app. A complete privacy notice still needs the operator’s identity and private contact route, confirmed legal basis, retention policy and international-transfer arrangements. These have not been confirmed. This draft is not a claim of UK GDPR compliance.</p></aside>
+        <h2>Who looks after this app</h2><p>Revision Deck is operated by <strong>nathanyu</strong>. For a private question about your information, or to request access, correction or deletion, email <a href="mailto:cheesehim21@gmail.com">cheesehim21@gmail.com</a>. Requests are handled manually; the operator may need to check that you own the account. Never send passwords, sign-in codes or tokens, or post private account details in public GitHub issues.</p>
+        <aside class="policy-review" aria-labelledby="privacy-review-title"><h2 id="privacy-review-title">Operator review still needed</h2><p>The operator/contact and retention choices below have been confirmed. The operator still needs to confirm the lawful basis for each purpose, detailed request handling, provider and international-transfer arrangements, and an appropriate children’s privacy assessment. This published notice describes the implementation; it is not a claim of UK GDPR compliance.</p></aside>
         <h2>The short version</h2>
-        <p>You can revise as a guest. Signing in lets you save your profile and flashcard progress to your account. Papers you import, drawings, whiteboards and typed practice notes stay in this browser on this device; the app does not upload them to Firebase.</p>
+        <p>You can revise as a guest. Signing in lets your saved profile, built-in flashcard progress, personal decks, highlighted passages and personal-card confidence follow your private account across devices. Use the same account and wait for the app to confirm a cloud save. Unsaved drafts are not uploaded. Papers you import, drawings, whiteboards, typed practice notes and appearance preferences stay on this device; the app does not upload them to Firebase.</p>
         <p>Use a nickname and a picture you are happy to save. You do not need to provide your school, address, date of birth or location. Do not put sensitive personal information in your notes or profile. The app has no advertising or analytics integration.</p>
         <h2>What is saved, and why</h2>
         <dl class="policy-facts">
@@ -275,22 +277,22 @@
           <div><dt>Profile</dt><dd>Your chosen display name, small profile picture, badge and accent colour let you personalise the desk. A picture is cropped and re-encoded as a 256px JPEG, removing its original metadata. A guest profile stays locally; saving a signed-in profile sends it to Firestore.</dd></div>
           <div><dt>Study progress</dt><dd>Card ratings, deck identifiers, dated daily “Know” counts and save timestamps let you resume revision and see your graph. Signed-in progress saves to Firestore; guest progress stays locally. Guest ratings are uploaded only if you choose Import guest ratings and confirm.</dd></div>
           <div><dt>Practice files</dt><dd>Imported PDF bytes, ink, whiteboards, typed notes and document identifiers are stored in this device’s IndexedDB database to resume your work. Account-scoped drawings still do not follow you to another device.</dd></div>
-          <div><dt>Your own flashcard decks</dt><dd>Deck titles, subject labels and question/answer text are stored in a separate device database, separated by guest or signed-in account ID. They are not uploaded to Firebase. Download a JSON backup if you want a separate copy.</dd></div>
+          <div><dt>Your own flashcard decks</dt><dd>When signed in, Save deck sends the title, subject, question/answer text, highlighted passages, archive state and save timestamps to your private Firestore account. Explicit confidence ratings save separately against the card’s content version. These are not official grades. Guest and older device decks remain in this device’s database, separated by guest/account ID, until you explicitly confirm Copy to account. The original copy stays unchanged. JSON backups contain card content and highlights, not your account credentials or study progress.</dd></div>
           <div><dt>Preferences and session cache</dt><dd>Browser storage remembers appearance and study mode, and holds a signed-in account’s temporary cache and pending rating changes. Read <a href="#cookies" data-policy-link="cookies">Cookies & storage</a> for the details and appearance storage choice.</dd></div>
         </dl>
         <h2>Who provides the services</h2>
         <p>The public website is hosted on GitHub Pages. GitHub says it logs visitors’ IP addresses for security, including when they are not signed into GitHub. See <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection" target="_blank" rel="noopener noreferrer">GitHub’s hosting information</a> and <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">GitHub’s privacy statement</a>.</p>
         <p>Google Firebase provides account authentication and the cloud database. The account service loads from Google when the online app starts, including for guests, so those network requests expose connection details such as your IP address to the provider. Guest ratings and guest profiles are not automatically uploaded.</p>
         <p>The Firestore database is configured in London, UK (<code>europe-west2</code>). This does not mean all account processing stays in the UK: Firebase states that Authentication processes data in the United States. See <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">Firebase privacy and processing locations</a>. The operator must confirm the applicable transfer safeguards before finalising this notice.</p>
-        <p>Cloud rules separate users by their authenticated account ID. Other ordinary accounts cannot read your profile or progress. Authorised project administrators and service providers can have administrative access; the app is not end-to-end encrypted.</p>
+        <p>Cloud rules separate users by their authenticated account ID. Other ordinary accounts cannot read your profile, progress or saved personal decks. Authorised project administrators and service providers can have administrative access; the app is not end-to-end encrypted.</p>
         <p>Opening or fetching an official paper contacts the examination board’s server, which can receive connection information. External links follow the destination’s policies. Exported backups are files on your computer; look after them, especially on shared devices.</p>
         <h2>How long information stays</h2>
-        <p>Currently, saved cloud records have no automatic expiry in the app. Signing out does not delete your cloud data. Reset deck changes ratings but keeps earlier graph history and does not delete your profile or account. There is currently no in-app account-deletion control. The operator still needs to confirm a retention and deletion process.</p>
+        <p>The operator keeps account information and saved revision work while you use your account so you can return to it. Request access or deletion privately at <a href="mailto:cheesehim21@gmail.com">cheesehim21@gmail.com</a>; the operator handles requests manually. Cloud records have no automatic expiry or inactive-account purge in the app. Signing out does not delete your cloud data. Reset deck changes ratings but keeps earlier graph history and does not delete your profile or account. Archiving a personal deck is reversible and does not erase it. There is currently no in-app account-deletion control. Provider backup and security-log retention is separate; this notice does not promise instant deletion from backups.</p>
         <p>Guest progress, profiles, appearance and practice documents remain until removed, browser site data is cleared, or the browser evicts them. Account session caches and unconfirmed changes are temporary. Wait for “Saved to your account” before closing; pending edits can be lost when a browser session ends. Downloaded exports remain until you remove them yourself.</p>
         <h2>Your choices and privacy requests</h2>
-        <p>You can use guest mode instead of creating an account, edit your profile, remove your picture and save, reset deck ratings, sign out, and export drawing backups. Clearing browser data removes local work, not server-side account records. Export practice files first.</p>
-        <p>Depending on the circumstances, UK data protection rights include access, correction, erasure, restriction, portability and objection. The operator’s private contact for making these requests has not yet been supplied. <strong>Do not post your email, passwords, account details or personal data in public GitHub issues.</strong></p>
-        <p><strong>Right to object:</strong> you may be able to object to processing depending on its legal basis. The basis and private request route must be confirmed by the operator. The appearance storage choice is available under <a href="#cookies" data-policy-link="cookies">Cookies & storage</a>.</p>
+        <p>You can use guest mode instead of creating an account, edit your profile, remove your picture and save, reset deck ratings, archive or restore personal decks, sign out, and download backups. Clearing browser data removes local work, not server-side account records. Export practice files first. Personal-deck editor drafts stay only in this window until a confirmed Save; they may be lost on close or refresh. No persistent custom-deck offline queue is implemented: failed saves retain the current draft for retry or backup.</p>
+        <p>Depending on the circumstances, UK data protection rights include access, correction, erasure, restriction, portability and objection. Use the private email above to make a request. <strong>Do not post your email, passwords, account details or personal data in public GitHub issues.</strong></p>
+        <p><strong>Right to object:</strong> you may be able to object to processing depending on its legal basis. The operator’s basis decisions remain under review. The appearance storage choice is available under <a href="#cookies" data-policy-link="cookies">Cookies & storage</a>.</p>
         <p>You can read about <a href="https://ico.org.uk/for-the-public/" target="_blank" rel="noopener noreferrer">your rights at the ICO</a> or <a href="https://ico.org.uk/make-a-complaint/" target="_blank" rel="noopener noreferrer">make a privacy complaint to the ICO</a>. If this notice is confusing, ask a trusted adult to help you read it.</p>
         <h2>No exam-grade decisions</h2><p>Confidence ratings, graph points and badges summarise your practice. They are not official grades, and the app does not make admission, grading or other legal decisions about you.</p>
       </article>
@@ -303,7 +305,7 @@
           <div><dt>Guest revision · local storage</dt><dd><code>revision-desk-progress-v2</code>, <code>revision-desk-history-v1</code> and <code>revision-desk-profile-v1:guest</code> keep guest ratings, dated graph points and your guest profile between visits. They are device-wide guest data, not an account login. They stay until removed or site storage is cleared or evicted.</dd></div>
           <div><dt>Signed-in cache · session storage</dt><dd><code>revision-desk-account-session-v1:{account ID}</code> temporarily caches your account data and pending rating edits. Firebase Authentication also uses session persistence for sign-in. These are for the browser session; session restoration can depend on your browser. Confirmed cloud records remain separately in Firebase.</dd></div>
           <div><dt>Paper practice · IndexedDB</dt><dd><code>revision-desk-practice-v1</code> keeps PDFs, ink, whiteboards and typed notes on this device, separated by guest/account ID. It has no automatic expiry and is not a cloud backup.</dd></div>
-          <div><dt>Flashcard maker · IndexedDB</dt><dd><code>revision-desk-maker-v1</code> keeps your own decks on this device, separated by guest/account ID. Decks have no automatic expiry; archiving is reversible and does not erase them. They do not sync to another device. JSON backups contain deck text, not your email or account ID.</dd></div>
+          <div><dt>Flashcard maker · device and account storage</dt><dd><code>revision-desk-maker-v1</code> retains guest and older device decks, separated by guest/account ID. They have no automatic expiry and are uploaded only through a confirmed Copy to account action. New signed-in saves and personal-card confidence use private Firestore records. The cloud transport keeps only an in-memory copy, not a persistent offline deck cache or queue. Unsaved drafts stay in this window. Archiving is reversible and does not erase a saved deck. JSON backups contain card text, IDs and highlights, not your email, account ID or practice progress.</dd></div>
           <div><dt>Older game version · local storage</dt><dd>If you used the removed FRACTURE game, <code>fracture-settings-v1</code> and <code>fracture-library-v1</code> may still contain its device-only settings and recent launch. The current app no longer reads or writes them. Removing the game did not clear your browser data or revision work. Browser site-data controls can remove these older entries; export any device-only revision work before clearing all site data.</dd></div>
           <div><dt>Canyon Run · local storage</dt><dd>The separate driving page remembers only your best lap in <code>canyon-run-best-v1</code>. It stays in this browser, has no automatic expiry, and does not sync to your revision account. Revision pages do not load the game or read this entry. Browser site-data controls can remove it; export any device-only revision work before clearing all site data.</dd></div>
         </dl>
@@ -321,7 +323,7 @@
         <p>The project’s original app code has not been assigned a general reuse licence. Its public source is available to inspect on GitHub, but public availability is not the same as an open-source licence. See <a href="#open-source" data-policy-link="open-source">Source & licences</a> for separately licensed dependencies.</p>
         <h2>Examination papers and school files</h2><p>AQA and Pearson Edexcel papers and mark schemes are linked to their official servers, not republished by this app. Their publishers’ copyright and conditions still apply. Some supplied science organisers are available as unchanged study downloads; availability here does not grant permission to copy or redistribute them.</p>
         <h2>Literary quotations and revision notes</h2><p>Quotations are identified by their studied work: William Shakespeare’s <cite>Macbeth</cite>, Charles Dickens’s <cite>A Christmas Carol</cite>, and J. B. Priestley’s <cite>An Inspector Calls</cite>. Priestley’s work remains third-party material. The short quotations are accompanied by study explanations; this notice does not grant a licence to the underlying texts or declare that every possible reuse is lawful.</p><p>Sources and course boundaries are recorded in the <a href="https://github.com/defnotsquishy/revision-desk/blob/main/SOURCES.md" target="_blank" rel="noopener noreferrer">curriculum and source notes</a>. For general UK guidance, see <a href="https://www.gov.uk/using-somebody-elses-intellectual-property/copyright" target="_blank" rel="noopener noreferrer">using someone else’s copyrighted material</a>.</p>
-        <h2>Copyright concerns</h2><p>For a non-sensitive correction, you can identify the affected resource in the <a href="https://github.com/defnotsquishy/revision-desk/issues" target="_blank" rel="noopener noreferrer">public issue tracker</a>. A private rights-holder contact route is awaiting the operator’s details. Do not post private documents or personal details publicly. This notice does not replace any publisher’s or hosting provider’s formal reporting process.</p>
+        <h2>Copyright concerns</h2><p>For a non-sensitive correction, you can identify the affected resource in the <a href="https://github.com/defnotsquishy/revision-desk/issues" target="_blank" rel="noopener noreferrer">public issue tracker</a>. For a private rights-holder request contact <a href="mailto:cheesehim21@gmail.com">cheesehim21@gmail.com</a>. Do not post private documents or personal details publicly. This notice does not replace any publisher’s or hosting provider’s formal reporting process.</p>
       </article>
       <article class="policy-copy" data-policy="open-source" hidden>
         <h2>See how the app works</h2><p>The website source is available in the <a href="https://github.com/defnotsquishy/revision-desk" target="_blank" rel="noopener noreferrer">Revision Desk GitHub repository</a>. There is currently no general open-source licence for the original app code. Do not assume the dependency licences below license the entire app, revision content, quotations or examination papers.</p>
@@ -338,7 +340,7 @@
       </article>
       <a class="button button-quiet legal-return" href="#home" data-view="home">Back to revision</a>
     </main>
-    <footer class="site-footer" aria-label="Site information"><p>© 2026 Revision Desk <span>Independent GCSE revision. Third-party rights reserved.</span></p><nav aria-label="Footer policies"><a href="#privacy" data-policy-link="privacy">Privacy (draft)</a><a href="#cookies" data-policy-link="cookies">Cookies & storage</a><a href="#terms" data-policy-link="terms">Using the app</a><a href="#copyright" data-policy-link="copyright">Copyright</a><a href="#open-source" data-policy-link="open-source">Open-source notices</a><a href="https://github.com/defnotsquishy/revision-desk" target="_blank" rel="noopener noreferrer">Source code ↗</a></nav></footer>
+    <footer class="site-footer" aria-label="Site information"><p>© 2026 Revision Deck · Created by <a href="https://github.com/defnotsquishy" target="_blank" rel="noopener noreferrer">nathanyu</a> <span>Independent GCSE revision. Third-party rights reserved.</span></p><nav aria-label="Footer policies"><a href="#privacy" data-policy-link="privacy">Privacy</a><a href="#cookies" data-policy-link="cookies">Cookies & storage</a><a href="#terms" data-policy-link="terms">Using the app</a><a href="#copyright" data-policy-link="copyright">Copyright</a><a href="#open-source" data-policy-link="open-source">Open-source notices</a><a href="https://github.com/defnotsquishy/revision-desk" target="_blank" rel="noopener noreferrer">Source code ↗</a></nav></footer>
 
     <dialog id="profile-dialog" aria-labelledby="profile-title" aria-describedby="profile-help">
       <div class="account-heading"><h2 id="profile-title">Your revision profile</h2><button id="profile-close" class="button button-quiet" type="button">Close</button></div>
@@ -370,7 +372,7 @@
     <dialog id="account-dialog" aria-labelledby="account-title" aria-describedby="account-help">
       <div class="account-heading"><h2 id="account-title">Your account</h2><button id="account-close" class="button button-quiet" type="button">Close</button></div>
       <p id="account-help">Sign in to keep your profile, picture, ratings and daily graph in private Firebase storage, separate from other people’s accounts. Guest progress is never imported automatically. Closing the browser signs you out.</p>
-      <p class="history-help account-policy-note">Before creating an account, read <a href="./#privacy" target="_blank" rel="noopener noreferrer">Privacy & your data (draft) ↗</a> and <a href="./#terms" target="_blank" rel="noopener noreferrer">Using the app ↗</a>. Operator privacy details are still being finalised.</p>
+      <p class="history-help account-policy-note">Before creating an account, read <a href="./#privacy" target="_blank" rel="noopener noreferrer">Privacy & your data ↗</a> and <a href="./#terms" target="_blank" rel="noopener noreferrer">Using the app ↗</a>. For privacy requests contact <a href="mailto:cheesehim21@gmail.com">cheesehim21@gmail.com</a>. Some operator privacy decisions remain under review.</p>
       <p id="account-status" role="status" aria-live="polite">Connecting to account service…</p>
       <div id="account-member" hidden>
         <p id="account-email"></p><p id="account-verification"></p>
@@ -385,7 +387,7 @@
       </form>
       <button id="account-retry" class="button button-quiet" type="button" hidden>Retry connection</button>
     </dialog>
-    <dialog id="signout-dialog" aria-labelledby="signout-title"><h2 id="signout-title">Changes haven’t reached your account yet</h2><p>If you sign out now, queued ratings stay only in this browser session. Sign back into the same account in this window to retry. Closing the window can lose unsaved changes.</p><div class="dialog-actions"><button id="signout-stay" class="button button-quiet" type="button" autofocus>Stay signed in</button><button id="signout-confirm" class="button button-primary" type="button">Sign out with changes pending</button></div></dialog>
+    <dialog id="signout-dialog" aria-labelledby="signout-title"><h2 id="signout-title">Changes haven’t reached your account yet</h2><p>Signing out clears unsaved personal-deck drafts. Download a backup or finish saving first. An in-progress save may still reach the original account, so check it when you return. Queued built-in ratings stay only in this browser session; sign back into the same account in this window to retry. Closing the window can lose unconfirmed changes.</p><div class="dialog-actions"><button id="signout-stay" class="button button-quiet" type="button" autofocus>Stay signed in</button><button id="signout-confirm" class="button button-primary" type="button">Sign out with changes pending</button></div></dialog>
     <dialog id="import-dialog" aria-labelledby="import-title"><h2 id="import-title">Import your guest ratings?</h2><p>This device’s guest ratings may include other people’s practice. Import only if these are yours. This adds missing ratings to your signed-in account; existing account ratings, guest ratings, profiles and previous graph dates are unchanged. New graph points use today’s date.</p><div class="dialog-actions"><button id="import-cancel" class="button button-quiet" type="button" autofocus>Cancel</button><button id="import-confirm" class="button button-primary" type="button">Import my guest ratings</button></div></dialog>
     <dialog id="reset-dialog" aria-labelledby="reset-title" aria-describedby="reset-copy">
       <h2 id="reset-title">Reset deck ratings?</h2>
@@ -413,10 +415,10 @@
     <script src="papers-complete.js"></script>
     <script src="papers-english-further.js"></script>
     <script src="resources-data.js"></script>
-    <script src="store.js"></script>
+    <script src="store.js?v=cloud-maker-20261005"></script>
     <script src="history.js"></script>
     <script src="app.js?v=dashboard-20261003"></script>
-    <script src="auth.js"></script>
+    <script src="auth.js?v=cloud-maker-20261005"></script>
     <script src="profile.js"></script>
     <script src="library.js?v=resources-20261003"></script>
     <script src="ink-core.js"></script>
@@ -425,8 +427,9 @@
     <script src="dashboard-art.js"></script>
     <script src="maths-resources-data.js"></script>
     <script src="videos-data.js?v=resources-20261003"></script>
-    <script src="maker-storage.js"></script>
-    <script src="maker.js"></script>
+    <script src="maker-storage.js?v=cloud-maker-20261005"></script>
+    <script src="maker-richtext.js?v=cloud-maker-20261005"></script>
+    <script src="maker.js?v=cloud-maker-20261005"></script>
     <script src="home.js?v=resources-20261003"></script>
     <script src="maths-resources.js"></script>
     <script src="customise.js"></script>
