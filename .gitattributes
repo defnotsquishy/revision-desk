@@ -1,0 +1,2 @@
+# Preserve the supplied compiled game export exactly, including line endings.
+kart-royale/play/** -text
