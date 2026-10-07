@@ -15,7 +15,7 @@
   <main>
     <section id="game-stage" class="game-stage" aria-label="Kart Royale player">
       <div id="launch-panel" class="launch-panel"><p class="eyebrow">12 racers · 3 courses · 10 items</p><h2>Your next race is here.</h2><p>The original kart game, hosted here. No sign-in needed.</p><button id="play-game" class="button primary" type="button">Play Kart Royale</button><p class="small-copy">First load downloads about 40 MB. Best on a computer with a keyboard or controller and WebGL 2.</p></div>
-      <iframe id="game-frame" title="Kart Royale racing game" sandbox="allow-scripts allow-pointer-lock" allow="fullscreen; gamepad" referrerpolicy="no-referrer" allowfullscreen hidden></iframe>
+      <iframe id="game-frame" title="Kart Royale racing game" sandbox="allow-scripts allow-pointer-lock" allow="fullscreen *; gamepad *" referrerpolicy="no-referrer" allowfullscreen hidden></iframe>
     </section>
     <div class="player-toolbar"><p id="player-status" role="status" aria-live="polite">Ready when you are.</p><div class="player-actions"><button id="fullscreen-game" class="button" type="button" disabled>Fullscreen</button><button id="reload-game" class="button" type="button" disabled>Restart game</button></div></div>
     <p class="small-copy">The game runs in an isolated frame with no revision-account connection. Races and game settings aren’t cloud-synced; settings reset when you reopen it. Restarting leaves the current race.</p>
