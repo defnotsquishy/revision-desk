@@ -1,0 +1,47 @@
+KART ROYALE — THIRD-PARTY DEPENDENCY NOTICES
+=========================================
+
+These notices cover the identified Three.js, Draco, Fredoka and Lilita One
+dependencies included in this web export. They do not grant a licence to
+the game as a whole or to character names, likenesses, trademarks, models,
+portraits, icons, game artwork, or other assets.
+
+Original export description and disclaimer:
+KART ROYALE - unofficial fan experiment
+Not affiliated with or endorsed by Nintendo or LeBron James.
+
+Three.js r186
+-------------
+Copyright © 2010-2026 three.js authors
+Licensed under the MIT License. The full copyright and permission notice
+is reproduced in three-LICENSE.txt.
+Project: https://github.com/mrdoob/three.js
+
+Google Draco 1.5.6
+-----------------
+Copyright 2016 The Draco Authors.
+Licensed under the Apache License, Version 2.0.
+The complete upstream licence file is reproduced in draco-LICENSE.txt.
+Project: https://github.com/google/draco
+Both the general and glTF decoder builds are included in the export.
+
+Fredoka (font metadata version 2.001)
+-----------------------------------
+Copyright 2016 The Fredoka Project Authors
+(https://github.com/hafontia/Fredoka-One)
+Licensed under the SIL Open Font License, Version 1.1.
+The complete copyright notice and licence are in Fredoka-OFL.txt.
+
+Lilita One (font metadata version 1.002)
+--------------------------------------
+Bundled font copyright notice:
+Copyright (c) 2011 Juan Montoreano (juan@remolacha.biz),
+with Reserved Font Names "Lilita One"
+
+Licensed under the SIL Open Font License, Version 1.1.
+The complete upstream copyright notice and licence are in LilitaOne-OFL.txt.
+That upstream text states "with Reserved Font Name Lilita"; the bundled
+font's embedded notice above is retained in addition to that text.
+
+The accompanying PROVENANCE.md records source URLs, immutable upstream
+revisions, hashes, the matching export files, and the limits of this review.

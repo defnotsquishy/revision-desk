@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#202124">
+  <meta name="description" content="Kart Royale, nathanyu's browser kart-racing project on Revision Deck.">
+  <title>Kart Royale — nathanyu</title>
+  <link rel="stylesheet" href="host.css">
+  <script src="host.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#game-title">Skip to game</a>
+  <header class="game-header"><div><h1 id="game-title" tabindex="-1">Kart Royale</h1><p>A racing break · project by nathanyu</p></div><a id="revision-link" class="button" href="../#games">Back to Revision Deck</a></header>
+  <main>
+    <section id="game-stage" class="game-stage" aria-label="Kart Royale player">
+      <div id="launch-panel" class="launch-panel"><p class="eyebrow">12 racers · 3 courses · 10 items</p><h2>Your next race is here.</h2><p>The original kart game, hosted here. No sign-in needed.</p><button id="play-game" class="button primary" type="button">Play Kart Royale</button><p class="small-copy">First load downloads about 40 MB. Best on a computer with a keyboard or controller and WebGL 2.</p></div>
+      <iframe id="game-frame" title="Kart Royale racing game" sandbox="allow-scripts allow-pointer-lock" allow="fullscreen; gamepad" referrerpolicy="no-referrer" allowfullscreen hidden></iframe>
+    </section>
+    <div class="player-toolbar"><p id="player-status" role="status" aria-live="polite">Ready when you are.</p><div class="player-actions"><button id="fullscreen-game" class="button" type="button" disabled>Fullscreen</button><button id="reload-game" class="button" type="button" disabled>Restart game</button></div></div>
+    <p class="small-copy">The game runs in an isolated frame with no revision-account connection. Races and game settings aren’t cloud-synced; settings reset when you reopen it. Restarting leaves the current race.</p>
+    <details><summary>Keyboard controls & tips</summary><div class="details-body"><dl><div><dt>Drive</dt><dd>W / ↑ to accelerate · A / D or ← / → to steer · S / ↓ to brake</dd></div><div><dt>Drift</dt><dd>Hold Space or Shift, then release for a boost</dd></div><div><dt>Item</dt><dd>E or K · hold S / ↓ to aim backwards</dd></div><div><dt>Camera</dt><dd>Q to look behind · C to reset</dd></div><div><dt>Pause & menus</dt><dd>Esc or P to pause · arrows and Enter to choose · Backspace to go back</dd></div></dl><p>Click inside the game first to give it keyboard focus. Fullscreen uses the whole player; Escape leaves fullscreen. Accelerate just after “2” for a rocket start.</p></div></details>
+    <details><summary>Credits & fan-game notice</summary><div class="details-body"><p>Project by <strong>nathanyu</strong>. Transferred from the supplied Kart Royale browser export; the gameplay and assets are unchanged.</p><p>This is an unofficial fan experiment, not affiliated with or endorsed by Nintendo or LeBron James. Character names, likenesses and third-party artwork belong to their respective owners. Project credit does not claim ownership of those assets.</p><p>The export did not include a licence for the whole game or proof of rights to redistribute its character assets. It is not labelled open source here. Included library and font notices are available in <a href="NOTICES.txt" target="_blank" rel="noopener noreferrer">dependency notices (new tab)</a>. The <a href="play/README.txt" target="_blank" rel="noopener noreferrer">original README (new tab)</a> is retained.</p></div></details>
+    <noscript><p>JavaScript is needed to play this game. Enable it, then use Play Kart Royale.</p></noscript>
+  </main>
+  <footer>Project by nathanyu · <a href="../#copyright">Revision Deck credits</a></footer>
+</body>
+</html>
