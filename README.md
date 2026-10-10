@@ -116,7 +116,9 @@ The initial content lives in `data.js`; the expanded History and Geography cards
 
 Add cards inside the relevant deck's `cards` array. Keep every `id` unique because saved progress uses it as the key.
 
-`sociology-cards.js` owns the six sociology decks. `expanded-cards.js` appends original application and close-reading questions to the existing decks, without replacing any old cards. Preserve row order and IDs after publishing. The 60-card target applies to each complete deck, not every optional Geography topic or Foundation subset. The progress graph keeps historical denominators as recorded; new cards are initially unrated and do not erase earlier work.
+`sociology-cards.js` owns the six sociology decks. `expanded-cards.js` appends original application and close-reading questions to the existing decks. The user's 10 October replacement is the deliberate exception: `medicine-notes.js` loads after all providers and replaces only Medicine with 60 adapted cards and 30 authored MCQs. Fresh IDs prevent different questions inheriting old confidence; other deck IDs/content and saved records remain unchanged. See [Medicine sources and corrections](MEDICINE-SOURCES.md). The 60-card target applies to each complete deck, not every optional Geography topic or Foundation subset. The progress graph keeps historical denominators as recorded; new cards are initially unrated and do not erase earlier work.
+
+Built-in decks have a **Print flashcards** disclosure with an A4 preview, optional current filters and question-only output. Printing is read-only: no confidence, mode, profile or cloud write is made. Browser Print/save-PDF owns the destination; the app does not claim a save completed. `app.js` owns the print snapshot and `styles.css` isolates its white handout from private/hidden application content.
 
 The Henry deck now follows **Edexcel B3: Henry VIII and his ministers, 1509–40**, as requested from the specification. Its internal deck ID remains `henry-pending` for compatibility, but it is populated and no longer displayed as pending. Geography option cards are labelled so school choices can be adjusted.
 

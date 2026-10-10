@@ -62,6 +62,7 @@
     $("subject-label").textContent = currentDeck.subject.name;
     $("deck-title").textContent = currentDeck.title;
     $("deck-description").textContent = currentDeck.description;
+    $("prepare-print").disabled = tierCards().length === 0;
     $("study-area").hidden = cards.length === 0;
     $("empty-state").hidden = cards.length !== 0;
     if (!cards.length) {
@@ -172,6 +173,73 @@
   let toastTimer;
   function toast(message) { $("toast").textContent = message; $("toast").classList.add("show"); clearTimeout(toastTimer); toastTimer = setTimeout(() => $("toast").classList.remove("show"), 1600); }
 
+  // Read-only output of the existing deck owner: no rating, cloud or mode writes.
+  let printSnapshot = null;
+  function printText(tag, text, className) {
+    const element = document.createElement(tag);
+    element.textContent = text;
+    if (className) element.className = className;
+    return element;
+  }
+  function printContent() {
+    const content = document.createElement('div');
+    const cards = $('print-filtered').checked ? printSnapshot.filtered : printSnapshot.cards;
+    const answers = $('print-answers').checked;
+    content.append(printText('h1', printSnapshot.title));
+    content.append(printText('p', `${printSnapshot.subject} · ${cards.length} flashcards · ${answers ? 'Questions & answers' : 'Questions only'}`, 'print-meta'));
+    content.append(printText('p', $('print-filtered').checked ? printSnapshot.filters : 'Whole deck, in its original order.', 'print-meta'));
+    content.append(printText('p', 'Revision Deck · Created by nathanyu · defnotsquishy.github.io/revision-desk/', 'print-meta'));
+    if (printSnapshot.notes) content.append(printText('p', 'Adapted from your supplied medicine notes; factual corrections and sources: defnotsquishy.github.io/revision-desk/MEDICINE-SOURCES.md', 'print-meta'));
+    const list = document.createElement('div'); list.className = 'print-card-list';
+    cards.forEach((card, index) => {
+      const article = document.createElement('article'); article.className = 'print-card';
+      article.append(printText('p', `${index + 1} · ${(card.tags || []).join(' / ')}`, 'print-card-label'));
+      article.append(printText('h2', card.question));
+      if (answers) {
+        if (card.quote) article.append(printText('p', card.quote, 'print-key-fact'));
+        article.append(printText('p', card.answer));
+        if (card.method) article.append(printText('p', `Analysis: ${card.method}`));
+        if (card.exam) article.append(printText('p', `Exam use: ${card.exam}`, 'print-exam'));
+      } else article.append(printText('p', 'Recall the answer before checking your deck.', 'print-answer-space'));
+      list.append(article);
+    });
+    content.append(list);
+    return {content, count: cards.length};
+  }
+  function renderPrint() {
+    if (!printSnapshot) return;
+    const {content, count} = printContent();
+    $('flashcard-print-preview').replaceChildren(content);
+    $('flashcard-print-sheet').replaceChildren(printContent().content);
+    $('start-print').disabled = count === 0;
+    $('flashcard-print-status').textContent = count ? `${count} cards ready. Printing does not mark them as studied.` : 'No cards match these study filters. Untick the filter option to print the whole deck.';
+    $('flashcard-print-preview').scrollTop = 0;
+  }
+  $('prepare-print').addEventListener('click', () => {
+    if ($('prepare-print').disabled || document.querySelector('dialog[open]')) return;
+    printSnapshot = {title: deck().title, subject: deck().subject.name, notes: deck().id === 'medicine', cards: tierCards().slice(), filtered: filteredCards().slice(),
+      filters: `Study mode: ${state.mode === 'quiz' ? 'Multiple choice' : 'Flashcards'} · Topic: ${state.topic} · Status: ${$('status-filter').selectedOptions[0].textContent}${state.query ? ' · Search: ' + state.query : ''}${deck().science ? ' · Tier: ' + scienceTier : ''}`};
+    $('print-filtered').checked = false; $('print-answers').checked = true;
+    renderPrint(); $('flashcard-print-dialog').showModal(); $('close-print').focus();
+  });
+  $('print-filtered').addEventListener('change', renderPrint);
+  $('print-answers').addEventListener('change', renderPrint);
+  $('close-print').addEventListener('click', () => $('flashcard-print-dialog').close());
+  $('flashcard-print-dialog').addEventListener('close', () => {
+    printSnapshot = null;
+    document.body.classList.remove('printing-flashcards');
+    $('flashcard-print-sheet').replaceChildren(); $('flashcard-print-preview').replaceChildren();
+    if (!$('view-flashcards').hidden) $('prepare-print').focus({preventScroll: true});
+  });
+  $('start-print').addEventListener('click', () => {
+    if (!printSnapshot || $('start-print').disabled) return;
+    document.body.classList.add('printing-flashcards');
+    try { window.print(); }
+    catch (_) { document.body.classList.remove('printing-flashcards'); $('flashcard-print-status').textContent = 'The print window could not open. Try again, or use your browser’s Print command while this preview is open.'; }
+  });
+  window.addEventListener('beforeprint', () => { if (printSnapshot) document.body.classList.add('printing-flashcards'); });
+  window.addEventListener('afterprint', () => { document.body.classList.remove('printing-flashcards'); });
+
   $("deck-nav").addEventListener("click", (event) => { const button = event.target.closest("[data-deck]"); if (button) { selectDeck(button.dataset.deck); document.querySelector(`[data-deck="${state.deckId}"]`).focus({preventScroll: true}); } });
   $("study-card").addEventListener("click", flip);
   $("quiz-mode").addEventListener("click", () => setMode('quiz'));
@@ -240,7 +308,7 @@
     const {type,origin}=event.detail || {};
     if(type==='scope' || (type==='ratings' && origin!=='local')) {
       saved=window.RevisionStore.ratings();window.RevisionHistory.read();
-      if(type==='scope'){state.index=0;renderCard();}else renderProgress();
+      if(type==='scope'){if($('flashcard-print-dialog').open)$('flashcard-print-dialog').close();state.index=0;renderCard();}else renderProgress();
     } else if(type==='history') {window.RevisionHistory.read();renderProgress();}
   });
 

@@ -253,6 +253,48 @@ dialog h2 { font-size: 1.4rem; }
 dialog p { line-height: 1.6; color: var(--muted); }
 .dialog-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: .75rem; }
 body:has(dialog[open]) { overflow: hidden; }
+
+/* A print handout is intentionally white; the surrounding controls use the desk theme. */
+.flashcard-print-section { margin: 1rem 0; border: 1px solid var(--line); border-radius: var(--desk-panel-radius, .75rem); padding: .8rem 1rem; }
+.flashcard-print-section summary { cursor: pointer; min-height: 44px; align-content: center; font-weight: 700; }
+.flashcard-print-section p { color: var(--muted); line-height: 1.6; }
+#flashcard-print-dialog { width: min(900px, calc(100% - 2rem)); padding: 0; overflow: hidden; border-radius: var(--desk-panel-radius, .75rem); }
+#flashcard-print-dialog[open] { display: flex; flex-direction: column; }
+.print-dialog-controls { padding: 1rem; flex-shrink: 0; }
+.print-dialog-controls h2 { margin-top: 0; }
+.print-dialog-controls p { margin: .5rem 0; font-size: .85rem; }
+.print-options { display: flex; flex-wrap: wrap; gap: .4rem 1rem; }
+.print-options label { display: flex; align-items: center; gap: .55rem; min-height: 44px; font-size: .9rem; cursor: pointer; }
+.print-options input { width: 20px; height: 20px; flex-shrink: 0; accent-color: var(--accent-dark); }
+.print-preview { min-height: 0; overflow: auto; padding: 1rem; border-top: 1px solid var(--line); background: #fff; color: #161616; scrollbar-gutter: stable; }
+.print-preview h1, .print-sheet h1 { font-family: Georgia, serif; font-size: 1.6rem; margin: 0 0 .5rem; }
+.print-preview .print-meta, .print-sheet .print-meta { color: #444; margin: .35rem 0; font-size: .75rem; overflow-wrap: anywhere; }
+.print-card-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; margin-top: 1rem; }
+.print-card { border: 1px dashed #999; padding: 1rem; overflow-wrap: anywhere; break-inside: avoid; }
+.print-card h2 { font-family: Georgia, serif; font-size: 1rem; line-height: 1.4; margin: .5rem 0; color: #161616; }
+.print-card p { color: #161616; font-size: .8rem; line-height: 1.5; margin: .5rem 0; }
+.print-card .print-card-label { color: #444; font: 700 .7rem/1.4 ui-sans-serif, system-ui, sans-serif; }
+.print-card .print-key-fact { font-weight: 700; }
+.print-card .print-exam { border-top: 1px solid #ddd; padding-top: .5rem; }
+.print-card .print-answer-space { min-height: 4rem; color: #555; }
+@media (max-width: 600px) { .print-card-list { grid-template-columns: 1fr; } .print-options { display: block; } }
+@media (max-height: 560px) { #flashcard-print-dialog { overflow: auto; } .print-preview { overflow: visible; flex-shrink: 0; } }
+@media print {
+  @page { size: A4; margin: 12mm; }
+  /* Isolate the requested handout, not any hidden profile, draft or account dialog. */
+  body.printing-flashcards { background: #fff; color: #161616; overflow: visible; padding: 0; margin: 0; }
+  body.printing-flashcards > :not(#flashcard-print-sheet) { display: none; }
+  /* Override the HTML hidden rule only while the user explicitly prints this preview. */
+  body.printing-flashcards > #flashcard-print-sheet { display: block !important; font: 10pt/1.45 ui-sans-serif, system-ui, sans-serif; }
+  #flashcard-print-dialog::backdrop { display: none; }
+  .print-sheet h1 { font-size: 18pt; break-after: avoid; }
+  .print-sheet .print-meta { font-size: 8pt; }
+  .print-sheet .print-card-list { display: block; columns: 2; column-gap: 6mm; }
+  .print-sheet .print-card { margin-bottom: 6mm; padding: 4mm; page-break-inside: avoid; }
+  .print-sheet .print-card h2 { font-size: 11pt; }
+  .print-sheet .print-card p { font-size: 9pt; }
+  .print-sheet .print-card .print-card-label { font-size: 8pt; }
+}
 button:active { filter: brightness(.9); }
 .account-heading { display: flex; align-items: center; justify-content: space-between; gap: .75rem; }
 .account-heading h2 { margin: 0; }

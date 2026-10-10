@@ -4,6 +4,7 @@
   const guestKey = 'revision-desk-progress-v2';
   const decks = new Map(window.FLASHCARD_DATA.subjects.flatMap(s => s.decks.map(d => [d.id,d])));
   const cards = new Map([...decks.values()].flatMap(d => d.cards.map(c => [c.id,d.id])));
+  const retiredCards = new Set([...decks.values()].flatMap(d => d.retiredCardIds || []));
   const validRating = value => ['know','learn','unsure'].includes(value);
   const defaults = () => ({name:'Revision student',photo:'',badge:'Starter',accent:'neutral'});
   const cleanRatings = raw => Object.fromEntries(Object.entries(raw || {}).filter(([id,v]) => cards.has(id) && validRating(v)));
@@ -86,7 +87,7 @@
     catch (_) { if (connection === pending) connection = null; if (uid) fail(); }
   }
   function connect(app, auth) {
-    connectionFactory = () => import('./cloud.js?v=cloud-maker-20261005').then(module => module.createCloudAdapter(app,auth));
+    connectionFactory = () => import('./cloud.js?v=medicine-print-20261010').then(module => module.createCloudAdapter(app,auth));
     if (!connection) connection = connectionFactory();
     // A guest can keep revising if the optional online SDK is unavailable.
     connection.catch(() => {});
@@ -118,7 +119,10 @@
   }
   function writeRatings(next, series) {
     next=cleanRatings(next);
-    if (!uid) { try { localStorage.setItem(guestKey,JSON.stringify(next));emit('ratings','local');return true; } catch (_) { return false; } }
+    if (!uid) { try {
+      const retired=Object.fromEntries(Object.entries(localRead(guestKey,{})).filter(([id,value])=>retiredCards.has(id) && validRating(value)));
+      localStorage.setItem(guestKey,JSON.stringify({...retired,...next}));emit('ratings','local');return true;
+    } catch (_) { return false; } }
     const previous=account.ratings;
     for(const id of new Set([...Object.keys(previous),...Object.keys(next)])) {
       const value=next[id] || null;if(value===(previous[id] || null))continue;

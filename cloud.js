@@ -22,7 +22,10 @@ export function createCloudAdapter(app,auth) {
     },
     async writeRating(uid,card,item,seriesCards) {
       guard(uid);
-      const reference=doc(db,'users',uid,'decks',item.deck);
+      // A replaced built-in deck can have a new rating document while keeping
+      // its navigation/history identity. Retired records are never rewritten.
+      const sourceDeck=window.FLASHCARD_DATA.subjects.flatMap(subject=>subject.decks).find(deck=>deck.id===item.deck);
+      const reference=doc(db,'users',uid,'decks',sourceDeck?.cloudRatingScope || item.deck);
       let sawMissing=false;
       const commit=()=>runTransaction(db,async transaction=>{
         guard(uid);

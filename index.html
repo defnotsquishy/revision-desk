@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#202124" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101936'/%3E%3Cpath d='M15 17h24a8 8 0 0 1 8 8v25H23a8 8 0 0 1-8-8V17Z' fill='%23f4c95d'/%3E%3Cpath d='M23 17v33M29 27h11M29 35h11' stroke='%23101936' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
     <title>Revision Deck — GCSE Flashcards</title>
-    <link rel="stylesheet" href="styles.css?v=kart-20261007" />
+    <link rel="stylesheet" href="styles.css?v=medicine-print-20261010" />
     <script src="theme.js"></script>
   </head>
   <body>
@@ -184,6 +184,11 @@
           <button id="flashcard-mode" class="button button-quiet" type="button" aria-pressed="false">Flashcards</button>
           <span id="mode-description"></span>
         </div>
+        <details class="flashcard-print-section">
+          <summary>Print flashcards</summary>
+          <p>Take this deck off-screen. Preview all its flashcards, or use your current study filters, then print or save a PDF.</p>
+          <button id="prepare-print" class="button button-quiet" type="button">Preview printable cards</button>
+        </details>
 
         <section class="progress-panel" aria-label="Deck progress">
           <div class="progress-copy"><strong id="progress-count">0 of 0 reviewed</strong><span id="progress-percent">0%</span></div>
@@ -407,6 +412,20 @@
       <div class="dialog-actions"><button id="cancel-reset" class="button button-quiet" type="button" autofocus>Keep ratings</button><button id="confirm-reset" class="button button-primary" type="button">Reset ratings</button></div>
     </dialog>
     <dialog id="ink-confirm-dialog" aria-labelledby="ink-confirm-title"><h2 id="ink-confirm-title">Clear this page’s ink?</h2><p id="ink-confirm-copy">The original paper and typed notes will stay unchanged. You can undo this clear while the document stays open.</p><div class="dialog-actions"><button id="ink-confirm-cancel" class="button button-quiet" type="button" autofocus>Cancel</button><button id="ink-confirm-ok" class="button button-primary" type="button">Clear page ink</button></div></dialog>
+    <dialog id="flashcard-print-dialog" aria-labelledby="flashcard-print-title" aria-describedby="flashcard-print-help">
+      <div class="print-dialog-controls">
+        <h2 id="flashcard-print-title">Print flashcards</h2>
+        <p id="flashcard-print-help">White paper, black text, no account details. Choose A4 in the print window; you can also save a PDF there.</p>
+        <div class="print-options">
+          <label for="print-filtered"><input id="print-filtered" type="checkbox" /> Use current study filters, including study mode</label>
+          <label for="print-answers"><input id="print-answers" type="checkbox" checked /> Include answers and exam tips</label>
+        </div>
+        <p id="flashcard-print-status" role="status" aria-live="polite"></p>
+        <div class="dialog-actions"><button id="close-print" class="button button-quiet" type="button" autofocus>Back to revision</button><button id="start-print" class="button button-primary" type="button">Print / save PDF</button></div>
+      </div>
+      <div id="flashcard-print-preview" class="print-preview" aria-label="Printable card preview" tabindex="0"></div>
+    </dialog>
+    <section id="flashcard-print-sheet" class="print-sheet" aria-label="Printable flashcards" hidden></section>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script src="data.js"></script>
     <script src="extra-cards.js"></script>
@@ -421,14 +440,15 @@
     <script src="quiz-biology-physics.js"></script>
     <script src="quiz-chemistry.js"></script>
     <script src="quiz-sociology.js"></script>
+    <script src="medicine-notes.js?v=20261010"></script>
     <script src="papers-data.js"></script>
     <script src="papers-extra.js"></script>
     <script src="papers-complete.js"></script>
     <script src="papers-english-further.js"></script>
     <script src="resources-data.js"></script>
-    <script src="store.js?v=cloud-maker-20261005"></script>
+    <script src="store.js?v=medicine-print-20261010"></script>
     <script src="history.js"></script>
-    <script src="app.js?v=dashboard-20261003"></script>
+    <script src="app.js?v=medicine-print-20261010"></script>
     <script src="auth.js?v=cloud-maker-20261005"></script>
     <script src="profile.js"></script>
     <script src="library.js?v=resources-20261003"></script>
