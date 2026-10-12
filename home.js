@@ -9,6 +9,7 @@
     if(Object.hasOwn(policies,view)){policy=view;view='legal';}
     if(!views.includes(view))view='home';
     if(view!=='maker')window.RevisionMaker?.onHide();
+    if(view!=='games')window.RevisionGames?.hide();
     for(const name of views)$('view-'+name).hidden=name!==view;
     document.querySelectorAll('[data-policy]').forEach(a=>{a.hidden=a.dataset.policy!==policy;});
     document.querySelectorAll('[data-policy-link]').forEach(a=>{if(view==='legal'&&a.dataset.policyLink===policy)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});

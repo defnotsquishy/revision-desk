@@ -10,7 +10,7 @@ Sign in with the same account on another supported device to open your saved pro
 
 ## Original Canyon Run
 
-FRACTURE was removed at the user's request and stays retired. The original Canyon Run from “Build 3D canyon driving game” is an unchanged, self-contained driving page at `/canyon-run/`, linked from the [Games section](https://defnotsquishy.github.io/revision-desk/#games) and Customise Desk. No game stats or embedded renderer appear in revision.
+FRACTURE was removed at the user's request and stays retired. The original Canyon Run from “Build 3D canyon driving game” is an unchanged, self-contained driving page at `/canyon-run/`, linked from the [Games section](https://defnotsquishy.github.io/revision-desk/#games) and Customise Desk. Its renderer stays separate; no game stats are added to revision.
 
 WASD/arrows drive, Space brakes and R recovers. A modern WebGL-capable desktop browser is needed. Only the best lap is stored locally in `canyon-run-best-v1`; it does not sync to Firebase or affect revision. The standalone HTML retains its original inline notices, and full React/React DOM/Three MIT and Lucide ISC/Feather notices are in `canyon-run/licenses/`. The Windows copy opens the public HTTPS game and needs internet for that link; existing local revision remains offline-capable.
 
@@ -31,6 +31,14 @@ Choose **Past papers** in the website navigation to open Papers & files. It incl
 The player loads the game only after Play, in an opaque-origin sandbox without revision-account/storage access. It has fullscreen, restart, controls and credits. There is no multiplayer, cloud game saving or study reward. Volume/help preferences are session-only in the isolated player. The separate **Kart Royale - Windows App.zip** contains the same assets, a licensed Node runtime and a hidden launcher opening an Edge app window, without changing the Revision Desk app. Extract the whole folder and double-click **Launch Kart Royale.vbs**; don't open the raw game HTML as a file.
 
 The export is a compiled build, not the editable source project. Gameplay bundles/assets are unchanged; the entry adds a fixed readiness/error bridge. Its original unofficial fan-game disclaimer is preserved. Character assets and names belong to their respective owners; the export supplies neither a whole-game open-source licence nor evidence of rights to redistribute those assets. Project credit is not an ownership claim over third-party material. Included library/font licences are in [Kart Royale dependency notices](https://defnotsquishy.github.io/revision-desk/kart-royale/NOTICES.txt).
+
+## No Flag — original external game
+
+Find **No Flag** in [Games](https://defnotsquishy.github.io/revision-desk/#games) and choose **Load No Flag** to open the original https://noescapefromhere.netlify.app/ player inside the page. Nothing contacts that game until you load it. Fullscreen/Close and a separate-tab original link are provided; leaving Games closes the frame and ends any active match. Internet, keyboard/mouse and a compatible desktop browser are required.
+
+This is an external embed, not a transferred source copy or a claim of ownership/open-source licensing. The cross-origin sandbox permits the game's own settings and pointer lock but receives no revision-account data and no camera/microphone permission. Third-party storage may be restricted by your browser. Kart Royale's stricter opaque-origin sandbox is unchanged.
+
+**Online multiplayer is not configured by this integration.** The original Multiplayer screen was checked on 12 October 2026: its Server field was empty, and it said Offline/not connected-bots only. Real players need a working WebSocket game server and the same room. The game refers to a separate `server/` bundle, which has not been provided. Displaying the lobby does not establish a multiplayer connection. Revision Deck does not provision a backend or enable billing for it.
 
 ## Maths resources
 

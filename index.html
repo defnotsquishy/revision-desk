@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#202124" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101936'/%3E%3Cpath d='M15 17h24a8 8 0 0 1 8 8v25H23a8 8 0 0 1-8-8V17Z' fill='%23f4c95d'/%3E%3Cpath d='M23 17v33M29 27h11M29 35h11' stroke='%23101936' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
     <title>Revision Deck — GCSE Flashcards</title>
-    <link rel="stylesheet" href="styles.css?v=medicine-print-20261010" />
+    <link rel="stylesheet" href="styles.css?v=no-flag-20261012" />
     <script src="theme.js"></script>
   </head>
   <body>
@@ -42,11 +42,21 @@
       <p class="history-help dashboard-storage">Sign in to pick up your profile, saved flashcard decks, highlights and study confidence on another device. PDFs, drawings, whiteboards and appearance settings stay on this device.</p>
     </main>
     <main id="view-games" class="games-workspace" hidden>
-      <h1 id="games-title" tabindex="-1">A racing break.</h1>
-      <p class="deck-description">Your games, on your website. Open one in its own tab and leave your revision right where it is.</p>
+      <h1 id="games-title" tabindex="-1">Take a game break.</h1>
+      <p class="deck-description">Leave your revision right where it is. Open a racing game in its own tab, or load the original No Flag player below.</p>
       <div class="game-library">
         <article class="game-library-card"><p class="eyebrow">Kart racing</p><h2>Kart Royale</h2><p>Pick a racer, drift round three courses and try for the podium. Your original browser export, with 12 racers and 10 items.</p><p class="history-help">Project by nathanyu · unofficial fan experiment. Keyboard or controller; WebGL 2 required. No multiplayer or account sync.</p><a class="button button-primary" href="kart-royale/" target="_blank" rel="noopener noreferrer">Play Kart Royale ↗<span class="sr-only"> (opens in a new tab)</span></a></article>
         <article class="game-library-card"><p class="eyebrow">Dusk canyon driving</p><h2>Canyon Run</h2><p>A quieter drive through the canyon. The game you picked earlier, kept as it was.</p><p class="history-help">Keyboard controls · best lap stays on this device.</p><a class="button button-quiet" href="canyon-run/" target="_blank" rel="noopener noreferrer">Play Canyon Run ↗<span class="sr-only"> (opens in a new tab)</span></a></article>
+        <article class="game-library-card game-library-external" aria-labelledby="no-flag-title">
+          <p class="eyebrow">Original external game · keyboard & mouse</p><h2 id="no-flag-title">No Flag</h2>
+          <p>The bodycam-style game you linked, played from its original website. Choose Single Player or Multiplayer inside the game.</p>
+          <p class="history-help" id="no-flag-help">Online matches need a working game server: the original lobby currently says “not connected — bots only”. In Multiplayer, players must use the same server and room. Revision Deck does not provide that server.</p>
+          <p class="history-help">Nothing loads until you choose Load No Flag. This contacts noescapefromhere.netlify.app and any services the game uses. It runs on that separate origin with its own settings and policies; we do not send your revision account, progress or drawings. No game files are copied or claimed as our work.</p>
+          <div class="external-game-actions"><button id="load-no-flag" class="button button-primary" type="button" aria-controls="no-flag-frame" aria-describedby="no-flag-help">Load No Flag</button><button id="fullscreen-no-flag" class="button button-quiet" type="button" disabled>Fullscreen</button><button id="close-no-flag" class="button button-quiet" type="button" disabled>Close game</button><a class="button button-quiet" href="https://noescapefromhere.netlify.app/" target="_blank" rel="noopener noreferrer">Open original game ↗<span class="sr-only"> (opens in a new tab)</span></a></div>
+          <p id="no-flag-status" class="history-help external-game-status" role="status" aria-live="polite">Not loaded. Internet and a keyboard/mouse are needed. If the player is blocked here, use Open original game.</p>
+          <div id="no-flag-frame" class="external-game-frame" hidden></div>
+          <p class="history-help">Press Esc to release the mouse or leave fullscreen. Close game or leave this section to stop the player; an active match will end. Game settings and multiplayer connections are not part of revision cloud sync.</p>
+        </article>
       </div>
       <p class="history-help">Games don’t change your study progress or award revision badges. Kart Royale stays in an isolated player with no revision-account connection.</p>
     </main>
@@ -300,6 +310,7 @@
         <p>The Firestore database is configured in London, UK (<code>europe-west2</code>). This does not mean all account processing stays in the UK: Firebase states that Authentication processes data in the United States. See <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">Firebase privacy and processing locations</a>. The operator must confirm the applicable transfer safeguards before finalising this notice.</p>
         <p>Cloud rules separate users by their authenticated account ID. Other ordinary accounts cannot read your profile, progress or saved personal decks. Authorised project administrators and service providers can have administrative access; the app is not end-to-end encrypted.</p>
         <p>Opening or fetching an official paper contacts the examination board’s server, which can receive connection information. External links follow the destination’s policies. Exported backups are files on your computer; look after them, especially on shared devices.</p>
+        <p data-no-flag-privacy>Choosing Load No Flag in Games embeds the original player from <a href="https://noescapefromhere.netlify.app/" target="_blank" rel="noopener noreferrer">noescapefromhere.netlify.app</a>. The game and its providers receive connection information and may use their own browser storage. It does not load just from visiting revision or Games. We do not pass revision account details, progress or drawings to it; its availability, settings and multiplayer server are separate from this app.</p>
         <h2>How long information stays</h2>
         <p>The operator keeps account information and saved revision work while you use your account so you can return to it. Request access or deletion privately at <a href="mailto:cheesehim21@gmail.com">cheesehim21@gmail.com</a>; the operator handles requests manually. Cloud records have no automatic expiry or inactive-account purge in the app. Signing out does not delete your cloud data. Reset deck changes ratings but keeps earlier graph history and does not delete your profile or account. Archiving a personal deck is reversible and does not erase it. There is currently no in-app account-deletion control. Provider backup and security-log retention is separate; this notice does not promise instant deletion from backups.</p>
         <p>Guest progress, profiles, appearance and practice documents remain until removed, browser site data is cleared, or the browser evicts them. Account session caches and unconfirmed changes are temporary. Wait for “Saved to your account” before closing; pending edits can be lost when a browser session ends. Downloaded exports remain until you remove them yourself.</p>
@@ -323,6 +334,7 @@
           <div><dt>Older game version · local storage</dt><dd>If you used the removed FRACTURE game, <code>fracture-settings-v1</code> and <code>fracture-library-v1</code> may still contain its device-only settings and recent launch. The current app no longer reads or writes them. Removing the game did not clear your browser data or revision work. Browser site-data controls can remove these older entries; export any device-only revision work before clearing all site data.</dd></div>
           <div><dt>Canyon Run · local storage</dt><dd>The separate driving page remembers only your best lap in <code>canyon-run-best-v1</code>. It stays in this browser, has no automatic expiry, and does not sync to your revision account. Revision pages do not load the game or read this entry. Browser site-data controls can remove it; export any device-only revision work before clearing all site data.</dd></div>
           <div data-kart-storage><dt>Kart Royale · isolated player</dt><dd>The game opens separately and runs inside an opaque-origin sandbox, without access to revision accounts or revision storage. Its exported volume/help preferences cannot persist in this player and reset when it is reopened. Races and game settings are not sent to Firebase or cloud-synced. Playing does not change your study progress.</dd></div>
+          <div data-no-flag-storage><dt>No Flag · original external player</dt><dd>Load No Flag opens a sandboxed cross-origin player only after your click. The original game may remember settings on its own origin; your browser may restrict third-party storage. Those settings are separate from Revision Deck’s appearance choice and cloud account. Closing the player or leaving Games stops it. Opening the original game in a separate tab follows that site’s policies.</dd></div>
         </dl>
         <h2>Clearing or blocking storage</h2><p>Your browser’s site-data controls can remove or block local storage. Removing site data can permanently lose device-only papers and drawings, so export them first. Blocking storage can prevent saved revision or sign-in from working. Signing out is not a substitute for removing local files on a shared computer.</p>
         <h2>If the app changes</h2><p>This notice must be reviewed before adding tracking or a new storage purpose. A decorative “Accept all” button is not proof of consent or compliance. The <a href="https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/guidance-on-the-use-of-storage-and-access-technologies/" target="_blank" rel="noopener noreferrer">ICO’s storage and access guidance</a> covers cookies and other device storage.</p>
@@ -461,7 +473,8 @@
     <script src="maker-storage.js?v=cloud-maker-20261005"></script>
     <script src="maker-richtext.js?v=cloud-maker-20261005"></script>
     <script src="maker.js?v=cloud-maker-20261005"></script>
-    <script src="home.js?v=kart-20261007"></script>
+    <script src="external-game.js?v=no-flag-20261012"></script>
+    <script src="home.js?v=no-flag-20261012"></script>
     <script src="maths-resources.js"></script>
     <script src="customise.js"></script>
   </body>
