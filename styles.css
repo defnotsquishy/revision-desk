@@ -475,9 +475,6 @@ body { display: grid; grid-template-columns: 214px minmax(0,1fr); grid-template-
 .preview-question .card-kicker { margin-bottom: .85rem; }.preview-question h3 { font-family: var(--desk-question-font); font-size: 1.5rem; line-height: var(--desk-question-leading); }
 .preview-question > p:not(.card-kicker) { font-size: .9rem; line-height: var(--desk-answer-leading); color: var(--muted); }
 .preview-note { margin-top: 1.2rem; margin-bottom: 0; }
-.driving-break { margin-top: 1.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
-.driving-break h3 { font-size: .95rem; margin-bottom: .55rem; }
-.driving-break a { margin-top: .75rem; }
 .profile-workspace { width: 100%; max-width: 1000px; margin: 0 auto; padding: clamp(1rem,3vw,2.5rem); }
 .profile-workspace h1 { font-size: clamp(2rem,3.4vw,2.8rem); letter-spacing: -.045em; margin: .6rem 0 1.5rem; }
 .profile-workspace > .setting-section { margin-top: var(--desk-space); }
@@ -509,8 +506,6 @@ body { display: grid; grid-template-columns: 214px minmax(0,1fr); grid-template-
   .desk-nav { position: static; display: flex; flex-direction: row; flex-wrap: wrap; padding: .7rem 1rem; gap: .3rem; border-right: 0; border-bottom: 1px solid var(--line); }
   .desk-nav .button { width: auto; font-size: .85rem; padding: .6rem .7rem; }
   .nav-caption, .nav-footnote { display: none; }
-  .nav-game-group { display: flex; align-items: center; gap: .3rem; border-left: 1px solid var(--line); padding-left: .5rem; }
-  .nav-game-group .nav-caption { display: block; margin: 0; padding: 0 .3rem; border: 0; }
   .preference-options { grid-template-columns: minmax(0,1fr); }
   .theme-options label { min-height: 64px; }
   .desk-preview { max-width: 100%; }
@@ -562,8 +557,6 @@ body { display: block; min-width: 0; }
 .desk-nav .button { width: auto; font-size: .85rem; padding: .5rem .85rem; }
 .desk-nav [aria-current="page"] { box-shadow: inset 0 -2px var(--accent); }
 .nav-caption, .nav-footnote { display: none; }
-.nav-game-group { display: flex; align-items: center; gap: .25rem; margin-left: auto; border-left: 1px solid var(--line); padding-left: .75rem; }
-.nav-game-group .nav-caption { display: block; margin: 0; padding: 0 .4rem; border: 0; font-size: .65rem; }
 .cloud-strip { padding: .4rem clamp(1rem,3vw,3rem); border-bottom: 0; font-size: .75rem; }
 .cloud-strip p { margin: 0; }
 .home-workspace { max-width: 1164px; padding: 1.7rem 2rem 2.5rem; }
@@ -635,7 +628,6 @@ a.dashboard-label:hover { background: var(--accent-dark); }
   .brand strong { font-size: .95rem; }
   .header-actions .button { padding: .4rem .6rem; font-size: .75rem; }
   .header-actions { max-width: 240px; }
-  .nav-game-group { margin-left: 0; padding-left: .25rem; }
   .home-workspace { padding: 1.25rem 1rem 2rem; }
   .dashboard-welcome { grid-template-columns: minmax(0,1fr); min-height: 0; gap: 2rem; padding: var(--desk-panel-space); }
   .dashboard-person { padding-bottom: .25rem; }
@@ -700,20 +692,7 @@ a.dashboard-label:hover { background: var(--accent-dark); }
 @media (max-width: 680px) { .maker-view { padding: 1.5rem 1rem; } .maker-metadata { grid-template-columns: 1fr; gap: .5rem; } .maker-deck-row { align-items: flex-start; } .maker-deck-actions { width: 100%; } .maker-dialog .dialog-body { padding: 1rem; } }
 
 /* Read-only Maths library uses existing palette, controls and document scroll. */
-.maths-workspace, .maker-view, .games-workspace { width: 100%; min-width: 0; max-width: 1164px; margin: 0 auto; padding: 1.7rem 2rem 2.5rem; font-family: Nunito, Inter, ui-sans-serif, system-ui, sans-serif; }
-.games-workspace h1 { margin: .3rem 0 .8rem; font: 700 clamp(1.9rem,3vw,2.6rem)/1.2 Georgia,serif; }
-.game-library { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 1rem; margin: 1.8rem 0 1rem; }
-.game-library-card { padding: 1.5rem; border: 1px solid var(--line); border-radius: .8rem; background: var(--surface); }
-.game-library-card h2 { margin: .75rem 0; }
-.game-library-card p { line-height: 1.65; }
-.game-library-card a.button { display: inline-flex; align-items: center; text-decoration: none; }
-.game-library-external { grid-column: 1 / -1; min-width: 0; }
-.external-game-actions { display: flex; flex-wrap: wrap; gap: .65rem; align-items: center; }
-.external-game-status { min-height: 3.3em; overflow-wrap: anywhere; }
-.external-game-frame { aspect-ratio: 16 / 9; width: 100%; border: 1px solid var(--line); border-radius: var(--desk-panel-radius, .75rem); background: var(--paper); }
-.external-game-frame iframe { display: block; width: 100%; height: 100%; border: 0; border-radius: inherit; }
-.external-game-frame:fullscreen { aspect-ratio: auto; border: 0; border-radius: 0; }
-@media (max-width: 680px) { .games-workspace { padding: 1.5rem 1rem; } .game-library { grid-template-columns: 1fr; } }
+.maths-workspace, .maker-view { width: 100%; min-width: 0; max-width: 1164px; margin: 0 auto; padding: 1.7rem 2rem 2.5rem; font-family: Nunito, Inter, ui-sans-serif, system-ui, sans-serif; }
 .maths-workspace h1 { margin: .3rem 0 .8rem; font: 700 clamp(1.9rem, 3vw, 2.6rem)/1.2 Georgia, serif; }
 .maths-workspace .eyebrow { font-size: .72rem; }
 .maths-course-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem; margin-top: 1rem; }

@@ -6,13 +6,7 @@ Created by **nathanyu** — [GitHub: defnotsquishy](https://github.com/defnotsqu
 
 A matte-black GCSE revision desk with 2,460 flashcards and 1,230 multiple-choice questions: 60 flashcards and 30 questions in each of 41 topic decks for English Literature, Edexcel History, AQA Geography Paper 1, AQA Sociology, Combined Science Trilogy and Triple Science. The visible brand is Revision Deck; existing Revision Desk URLs, shortcuts and storage keys are retained for compatibility.
 
-Sign in with the same account on another supported device to open your saved profile, built-in study progress, personal flashcard decks, highlights and personal-card confidence ratings. Wait for a confirmed save. Guest work, PDFs, whiteboards, drawings, appearance preferences and Canyon Run's best lap stay on the device where they were made; this release does not enable paid file storage.
-
-## Original Canyon Run
-
-FRACTURE was removed at the user's request and stays retired. The original Canyon Run from “Build 3D canyon driving game” is an unchanged, self-contained driving page at `/canyon-run/`, linked from the [Games section](https://defnotsquishy.github.io/revision-desk/#games) and Customise Desk. Its renderer stays separate; no game stats are added to revision.
-
-WASD/arrows drive, Space brakes and R recovers. A modern WebGL-capable desktop browser is needed. Only the best lap is stored locally in `canyon-run-best-v1`; it does not sync to Firebase or affect revision. The standalone HTML retains its original inline notices, and full React/React DOM/Three MIT and Lucide ISC/Feather notices are in `canyon-run/licenses/`. The Windows copy opens the public HTTPS game and needs internet for that link; existing local revision remains offline-capable.
+Sign in with the same account on another supported device to open your saved profile, built-in study progress, personal flashcard decks, highlights and personal-card confidence ratings. Wait for a confirmed save. Guest work, PDFs, whiteboards, drawings, appearance preferences stay on the device where they were made; this release does not enable paid file storage.
 
 ## Science, profile and paper library
 
@@ -24,21 +18,9 @@ Your profile displays your saved name and square picture, and opens the existing
 
 Choose **Past papers** in the website navigation to open Papers & files. It includes 354 unique matched pairs, including 66 Edexcel GCSE Maths 1MA1 pairs (Papers 1–3, both tiers), 14 AQA Sociology pairs (Papers 1–2), 22 History pairs for Medicine, Henry VIII and Cold War, 12 AQA Level 2 Further Maths 8365 pairs, and 19 AQA GCSE English Language 8700 pairs with matching source-text inserts. AQA English Literature 8702, Combined Trilogy and Triple Biology/Chemistry/Physics Papers 1 and 2, and Geography Papers 1–3 are included. Historic formats and updated 2026 English Language specimens are labelled; specimens are not 2026 past papers. Six official Maths packs add 2017/2018 sessions and sample/specimen assessments. Search/filter by course, subject, tier, paper and series, or use Show all public papers to clear filters. Every standalone question paper is paired with the same component/tier/series scheme. Locked or unreleased papers are excluded; History Paper 3 is not assumed because your school option is unconfirmed. Official directories link to further formats and releases. PDFs stay on the board's servers.
 
-## Kart Royale — project by nathanyu
+## Study-only public website
 
-[Play Kart Royale](https://defnotsquishy.github.io/revision-desk/kart-royale/) or find it in [Games](https://defnotsquishy.github.io/revision-desk/#games). The complete supplied browser build is hosted under this website, not redirected to Agora: 12 racers, three courses and ten items. Keyboard/controller, modern desktop browser and WebGL 2 required. The first web load is about 40 MB.
-
-The player loads the game only after Play, in an opaque-origin sandbox without revision-account/storage access. It has fullscreen, restart, controls and credits. There is no multiplayer, cloud game saving or study reward. Volume/help preferences are session-only in the isolated player. The separate **Kart Royale - Windows App.zip** contains the same assets, a licensed Node runtime and a hidden launcher opening an Edge app window, without changing the Revision Desk app. Extract the whole folder and double-click **Launch Kart Royale.vbs**; don't open the raw game HTML as a file.
-
-The export is a compiled build, not the editable source project. Gameplay bundles/assets are unchanged; the entry adds a fixed readiness/error bridge. Its original unofficial fan-game disclaimer is preserved. Character assets and names belong to their respective owners; the export supplies neither a whole-game open-source licence nor evidence of rights to redistribute those assets. Project credit is not an ownership claim over third-party material. Included library/font licences are in [Kart Royale dependency notices](https://defnotsquishy.github.io/revision-desk/kart-royale/NOTICES.txt).
-
-## No Flag — original external game
-
-Find **No Flag** in [Games](https://defnotsquishy.github.io/revision-desk/#games) and choose **Load No Flag** to open the original https://noescapefromhere.netlify.app/ player inside the page. Nothing contacts that game until you load it. Fullscreen/Close and a separate-tab original link are provided; leaving Games closes the frame and ends any active match. Internet, keyboard/mouse and a compatible desktop browser are required.
-
-This is an external embed, not a transferred source copy or a claim of ownership/open-source licensing. The cross-origin sandbox permits the game's own settings and pointer lock but receives no revision-account data and no camera/microphone permission. Third-party storage may be restricted by your browser. Kart Royale's stricter opaque-origin sandbox is unchanged.
-
-**Online multiplayer is not configured by this integration.** The original Multiplayer screen was checked on 12 October 2026: its Server field was empty, and it said Offline/not connected-bots only. Real players need a working WebSocket game server and the same room. The game refers to a separate `server/` bundle, which has not been provided. Displaying the lobby does not establish a multiplayer connection. Revision Deck does not provision a backend or enable billing for it.
+The public website contains revision features only. Game navigation, players, external game links and hosted game files were removed on 1 November 2026 at your request. Local backups retain the files and licence notices outside the published site. Previous game bookmarks do not launch a player. No browser data, account, flashcard progress or drawings were deleted. Network administrators and filtering providers still control categorisation; this change is not a guarantee of access on every network.
 
 ## Maths resources
 
