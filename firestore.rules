@@ -4,7 +4,7 @@ service cloud.firestore {
     function owner(uid) { return request.auth != null && request.auth.uid == uid; }
     function id(value) { return value is string && value.matches('[A-Za-z0-9_-]{1,120}'); }
     function rating(value) { return value == null || value in ['know', 'learn', 'unsure']; }
-    function updateAllowed(value) { return value in ['home-real-reactions','home-cloud-flashcards','home-maths-resources','home-study-only']; }
+    function updateAllowed(value) { return value in ['home-navigation-dock','home-real-reactions','home-cloud-flashcards','home-maths-resources','home-study-only']; }
     function reaction(value) { return value in ['helpful','like','more']; }
     function votePath(uid, updateId) { return /databases/$(database)/documents/users/$(uid)/updateVotes/$(updateId); }
     function countsPath(updateId) { return /databases/$(database)/documents/publicUpdates/$(updateId)/counts/summary; }

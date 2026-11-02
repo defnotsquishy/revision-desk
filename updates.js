@@ -3,6 +3,7 @@
   'use strict';
   const $=id=>document.getElementById(id);
   const releases=[
+    {id:'home-navigation-dock',date:'2 November 2026 · New',title:'A clearer way around your desk',copy:'A compact icon dock keeps Home, flashcards, maths, papers, the whiteboard and your profile within easy reach. A small violet gradient marks the active section; your study pages stay matte black.',featured:true},
     {id:'home-real-reactions',date:'2 November 2026 · New',title:'React to an update',copy:'Choose Helpful, Like or More like this. Totals start at zero and count real signed-in choices; your name and profile stay private.'},
     {id:'home-study-only',date:'1 November 2026',title:'A focused revision desk',copy:'The public site now keeps its homepage, flashcards, papers, maths resources and whiteboard together for GCSE study.'},
     {id:'home-cloud-flashcards',date:'5 October 2026',title:'Save your own flashcards',copy:'Sign in, choose Save deck, and your questions, answers, highlights and personal confidence ratings are saved to your private account.'},
@@ -15,7 +16,7 @@
   function node(tag,className,text){const element=document.createElement(tag);if(className)element.className=className;if(text!==undefined)element.textContent=text;return element;}
   function blankRow(){return {counts:null,reaction:'',confirmed:false};}
   function renderItem(item){
-    const article=node('article','update-card');article.dataset.updateId=item.id;
+    const article=node('article','update-card'+(item.featured?' update-card-featured':''));article.dataset.updateId=item.id;
     const heading=node('div','update-card-heading');heading.append(node('p','eyebrow',item.date),node('h3','',item.title));
     article.append(heading,node('p','update-card-copy',item.copy));
     const group=node('div','update-reactions');group.setAttribute('role','group');group.setAttribute('aria-label','React to '+item.title);

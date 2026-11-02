@@ -9,6 +9,9 @@ colors:
   surface: '#282a2e'
   line: '#3c3f44'
   accent: '#e4e4e7'
+  dock-gradient-start: '#4d61db'
+  dock-gradient-mid: '#7149d1'
+  dock-gradient-end: '#923db6'
   highlight: '#f3d77b'
   highlight-ink: '#202124'
 typography:
@@ -31,10 +34,10 @@ components:
 ---
 
 ## Overview
-Product tool for a GCSE student practising recall on Windows. The latest Cognito-style reference evolves matte black into flat charcoal with a centred welcome panel and compact subject table. Keep the text-only Revision Deck identity, real private progress, compact library and serif recall prompts; avoid invented XP, upgrade plans, gradients and spinning cards.
+Product tool for a GCSE student practising recall on Windows. The Cognito-style reference evolves matte black into flat charcoal with a centred welcome panel and compact subject table. Keep the text-only Revision Deck identity, real private progress, compact library and serif recall prompts; avoid invented XP, upgrade plans and spinning cards. The requested violet gradient is a restrained navigation accent, not a page background.
 
 ## Colors
-Runtime CSS is canonical (Model B): colors.* map directly to same-name --* properties in styles.css under :root[data-theme="dark"]. The app owner maintains both together. White denotes primary actions; semantic green, amber and red distinguish named ratings. Light theme retains the existing palette and hierarchy.
+Runtime CSS is canonical (Model B): colors.* map directly to same-name --* properties in styles.css under :root[data-theme="dark"]. The app owner maintains both together. The dock gradient maps `dock-gradient-start/mid/end` to `--dock-gradient-start/mid/end`; the shared `--dock-gradient` combines them for the active rail tile, wordmark accent and newest update card. White text remains legible on the gradient. Semantic green, amber and red distinguish named ratings. Light theme retains the existing palette and hierarchy.
 
 ## Typography
 System sans for study controls and explanations, Georgia for recall prompts/quotations and the Home greeting, monospace for chart axes. The screenshot-inspired Home and navigation use locally hosted Nunito with system fallback; its SIL OFL text accompanies the asset. English (UK) is the current locale. No network font requests.
@@ -42,10 +45,10 @@ System sans for study controls and explanations, Georgia for recall prompts/quot
 The optional account layer loads the pinned Firebase SDK online; guest revision remains independent and works offline.
 
 ## Layout
-244px library; workspace max 980px. Below 780px the library becomes a horizontal rail and the page uses one document scroll owner. Controls remain at least 44px. Collapsed Progress over time keeps card practice compact. No fixed content height; long answers grow naturally. Graph values have a bounded secondary scroller.
+80px icon dock; the flashcard library keeps its adjacent 244px subject rail; workspace max 980px. At 780px and below the navigation becomes a horizontally scrollable bottom dock with safe-area padding, while the page keeps one document scroll owner. Controls remain at least 44px. Collapsed Progress over time keeps card practice compact. No fixed content height; long answers grow naturally. Graph values have a bounded secondary scroller.
 
 ## Elevation & Depth
-Flat dark surfaces with borders. Dark --shadow is none. Modal backdrop isolates reset; no decorative glow.
+Flat dark surfaces with borders. Dark --shadow is none. Modal backdrop isolates reset; no decorative glow. The floating phone dock has only a compact separation shadow, and the active icon tile has a restrained violet edge shadow.
 
 ## Shapes
 Panels default to 0.75rem, cards 0.9rem. Device preferences offer Square (0.15rem for both) and Rounded (1.25rem panels, 1.5rem cards). CSS owns --desk-panel-radius and --desk-card-radius; Home panels, study cards, settings/preview, policy callouts and the paper frame share them. Controls and status chips retain established shapes.
@@ -77,7 +80,9 @@ Optional profile accents map to existing CSS tokens --accent, --accent-dark and 
 
 The user's October references guide a restrained matte-black settings layout, not a pixel-identical clone. No Aurora gradient, invented score, paid upgrade, billing or non-functional controls are introduced. Existing controls, native dialogs and owner boundaries are retained.
 
-The latest dashboard reference replaces the 214px navigation rail with compact wrapping top navigation at every width. The flashcard deck picker remains a horizontal rail below 1100px. The document owns scrolling; no route inherits a fixed height or clipping. Customise Desk is an additional home.js route, not a separate router. Its live reading preview displays real library/review counts and uses actual current CSS tokens.
+The latest reference brings back a slim 80px icon dock on desktop and a horizontally scrollable bottom dock on phones; Home remains the first destination. Each icon has a visible keyboard-focus/hover tooltip and a persistent accessible name. Past papers keeps its native dialog action. The existing flashcard deck picker remains a distinct adjacent sidebar and becomes its own horizontal rail below 780px. The document owns content scrolling; no route inherits clipping. Customise Desk is an additional home.js route, not a separate router. Its live reading preview displays real library/review counts and uses actual current CSS tokens.
+
+The user's latest screenshot approves the restrained violet/indigo gradient `#4d61db → #7149d1 → #923db6`. It appears on the active dock item, the word “Deck” in the text-only wordmark and the newest navigation update card. It does not tint the background, cards, flashcards or paper; semantic rating colours and saved profile accents keep their existing owners. The gradients are CSS tokens under `styles.css` (Model B).
 
 theme.js owns device-only appearance preferences: Dark/Light/System, Compact/Default/Comfortable density, Small/Medium/Large text, panel corners, Book/Simple question font, Standard/Roomier reading spacing, Standard/Stronger contrast, reduced motion and flashcard shortcuts. Legacy and older appearance records migrate with defaults without touching progress. Root font sizes are 15/16/18px; --desk-space and --desk-panel-space control named density variants. --desk-question-font maps Book to Georgia and Simple to the existing system sans stack; controls remain sans. --desk-question-leading/--desk-answer-leading are 1.35/1.65 normally and 1.6/1.9 for Roomier. Stronger contrast maps only --line/--muted to #77777e/#c5c5cc in Dark and #747d91/#424b63 in Light; paper pixels, ink and rating colours are unchanged. CSS remains canonical (Model B), with root data attributes set only by theme.js. Controls remain at least 44px; OS reduced motion is always respected. Native radios and checkboxes are labelled; inline status distinguishes saved preferences from unavailable storage. Cross-tab updates follow the same owner. Profile/accent editing opens the existing Save/Discard modal; no second profile-saving mechanism.
 

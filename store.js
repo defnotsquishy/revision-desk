@@ -87,7 +87,7 @@
     catch (_) { if (connection === pending) connection = null; if (uid) fail(); }
   }
   function connect(app, auth) {
-    connectionFactory = () => import('./cloud.js?v=updates-reactions-20261102').then(module => module.createCloudAdapter(app,auth));
+    connectionFactory = () => import('./cloud.js?v=navigation-dock-20261102').then(module => module.createCloudAdapter(app,auth));
     if (!connection) connection = connectionFactory();
     // A guest can keep revising if the optional online SDK is unavailable.
     connection.catch(() => {});

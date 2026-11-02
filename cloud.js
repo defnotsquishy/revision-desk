@@ -6,7 +6,7 @@ export function createCloudAdapter(app,auth) {
   const db=initializeFirestore(app,{localCache:memoryLocalCache()});
   const guard=uid=>{if(auth.currentUser?.uid!==uid){const error=Error('Session changed');error.code='permission-denied';throw error;}};
   const conflict=card=>{const error=Error('Version conflict');error.code='revision-conflict';error.card=card;return error;};
-  const updateIds=['home-real-reactions','home-cloud-flashcards','home-maths-resources','home-study-only'];
+  const updateIds=['home-navigation-dock','home-real-reactions','home-cloud-flashcards','home-maths-resources','home-study-only'];
   const reactions=['helpful','like','more'];
   const reactionRef=(uid,id)=>doc(db,'users',uid,'updateVotes',id);
   const countsRef=id=>doc(db,'publicUpdates',id,'counts','summary');

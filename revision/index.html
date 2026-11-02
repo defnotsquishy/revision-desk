@@ -7,18 +7,32 @@
     <meta name="theme-color" content="#202124" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101936'/%3E%3Cpath d='M15 17h24a8 8 0 0 1 8 8v25H23a8 8 0 0 1-8-8V17Z' fill='%23f4c95d'/%3E%3Cpath d='M23 17v33M29 27h11M29 35h11' stroke='%23101936' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
     <title>Revision Deck — GCSE Flashcards</title>
-    <link rel="stylesheet" href="../styles.css?v=updates-reactions-20261102" />
+    <link rel="stylesheet" href="../styles.css?v=navigation-dock-20261102" />
     <script src="../theme.js"></script>
   </head>
   <body>
     <a id="skip-target" class="skip-link" href="#home-title">Skip to content</a>
     <header class="topbar">
       <a class="brand" href="#home" data-view="home" aria-label="Revision Deck home">
-        <span><strong>Revision Deck</strong><small>GCSE flashcards</small></span>
+        <span><strong>Revision <span class="brand-gradient">Deck</span></strong><small>GCSE flashcards</small></span>
       </a>
       <div class="header-actions"><div class="streak" aria-label="Study progress"><span id="mastered-total">0</span> marked Know</div><button id="library-button" class="button button-quiet" type="button">Papers & files</button><button id="profile-button" class="button button-quiet" type="button"><span id="header-avatar" class="mini-avatar" aria-hidden="true">RD</span>Profile</button><button id="theme-toggle" class="button button-quiet" type="button" aria-label="Switch to light mode">Light mode</button><button id="account-button" class="button button-quiet" type="button">Sign in</button></div>
     </header>
-    <nav class="desk-nav" aria-label="Main navigation"><p class="nav-caption">Study workspace</p><a class="button button-quiet" href="#home" data-view="home">Home</a><a class="button button-quiet" href="#flashcards" data-view="flashcards">Flashcards</a><a class="button button-quiet" href="#maths" data-view="maths">Maths resources</a><a class="button button-quiet" href="#maker" data-view="maker">Flashcard maker</a><button id="nav-papers" class="button button-quiet" type="button">Past papers</button><a id="nav-whiteboard" class="button button-quiet" href="#whiteboard" data-view="practice">Whiteboard</a><p class="nav-caption nav-divider">Make it yours</p><a class="button button-quiet" href="#customise" data-view="customise">Customise Desk</a><a class="button button-quiet" href="#profile" data-view="profile">Your profile</a><p class="nav-footnote">Small steps.<br/>Steady progress.</p></nav>
+    <nav class="desk-nav" aria-label="Main navigation">
+      <div class="dock-group" aria-label="Study tools">
+        <a class="button button-quiet dock-link" href="#home" data-view="home" data-tooltip="Home" aria-label="Home"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span class="sr-only">Home</span></a>
+        <a class="button button-quiet dock-link" href="#flashcards" data-view="flashcards" data-tooltip="Flashcards" aria-label="Flashcards"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="16" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/><path d="M3 7v13a2 2 0 0 0 2 2h11"/></svg><span class="sr-only">Flashcards</span></a>
+        <a class="button button-quiet dock-link" href="#maths" data-view="maths" data-tooltip="Maths resources" aria-label="Maths resources"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M18 4H6l7 8-7 8h12"/><path d="M16 8h4M16 16h4"/></svg><span class="sr-only">Maths resources</span></a>
+        <a class="button button-quiet dock-link" href="#maker" data-view="maker" data-tooltip="Flashcard maker" aria-label="Flashcard maker"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z"/><path d="M8 10h8M8 14h5"/><path d="M17 3v5h5M18.5 13.5l2 2M19.5 12.5l-4.8 4.8-.7 2.2 2.2-.7z"/></svg><span class="sr-only">Flashcard maker</span></a>
+        <button id="nav-papers" class="button button-quiet dock-link" type="button" data-tooltip="Past papers" aria-label="Past papers"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v5h5M9 12h7M9 16h7"/><path d="M9 9h2"/></svg><span class="sr-only">Past papers</span></button>
+        <a id="nav-whiteboard" class="button button-quiet dock-link" href="#whiteboard" data-view="practice" data-tooltip="Whiteboard" aria-label="Whiteboard"><svg aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M8 9h7M8 13h4"/><path d="m17 12 3-3"/></svg><span class="sr-only">Whiteboard</span></a>
+      </div>
+      <span class="nav-divider" aria-hidden="true"></span>
+      <div class="dock-group" aria-label="Personalise">
+        <a class="button button-quiet dock-link" href="#customise" data-view="customise" data-tooltip="Customise Desk" aria-label="Customise Desk"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><path d="M13 4v6M7 14v6"/></svg><span class="sr-only">Customise Desk</span></a>
+        <a class="button button-quiet dock-link" href="#profile" data-view="profile" data-tooltip="Your profile" aria-label="Your profile"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 21a7.5 7.5 0 0 1 15 0M19 5v5M16.5 7.5h5"/></svg><span class="sr-only">Your profile</span></a>
+      </div>
+    </nav>
 
     <section class="cloud-strip" aria-label="Account saving"><p id="cloud-status" role="status" aria-live="polite">Guest · saved on this device only.</p><div class="account-actions"><button id="cloud-retry" class="button button-quiet" type="button" hidden>Retry cloud connection</button><button id="cloud-use-account" class="button button-quiet" type="button" hidden>Use account ratings</button><button id="cloud-keep-mine" class="button button-quiet" type="button" hidden>Keep my changed ratings</button></div></section>
 
@@ -439,7 +453,7 @@
     <script src="../papers-complete.js"></script>
     <script src="../papers-english-further.js"></script>
     <script src="../resources-data.js"></script>
-    <script src="../store.js?v=updates-reactions-20261102"></script>
+    <script src="../store.js?v=navigation-dock-20261102"></script>
     <script src="../history.js"></script>
     <script src="../app.js?v=medicine-print-20261010"></script>
     <script src="../auth.js?v=cloud-maker-20261005"></script>
@@ -454,8 +468,8 @@
     <script src="../maker-storage.js?v=cloud-maker-20261005"></script>
     <script src="../maker-richtext.js?v=cloud-maker-20261005"></script>
     <script src="../maker.js?v=cloud-maker-20261005"></script>
-    <script src="../home.js?v=updates-reactions-20261102"></script>
-    <script src="../updates.js?v=updates-reactions-20261102"></script>
+    <script src="../home.js?v=navigation-dock-20261102"></script>
+    <script src="../updates.js?v=navigation-dock-20261102"></script>
     <script src="../maths-resources.js"></script>
     <script src="../customise.js"></script>
   </body>

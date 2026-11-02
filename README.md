@@ -8,7 +8,7 @@ A matte-black GCSE revision desk with 2,460 flashcards and 1,230 multiple-choice
 
 Sign in with the same account on another supported device to open your saved profile, built-in study progress, personal flashcard decks, highlights and personal-card confidence ratings. Wait for a confirmed save. Guest work, PDFs, whiteboards, drawings, appearance preferences stay on the device where they were made; this release does not enable paid file storage.
 
-The Home page shows the actual number of topic decks and flashcards in the library, not a visitor or online-user estimate. Its updates section has real account reactions. Signed-in users can choose one reaction per update; their choice is private and only combined totals are visible to other signed-in accounts. Totals start at zero and grow only after a confirmed choice.
+The Home page shows the actual number of topic decks and flashcards in the library, not a visitor or online-user estimate. A compact icon dock keeps Home, study, papers, whiteboard and profile navigation nearby; the newest update describes its restrained violet gradient. The updates section has real account reactions. Signed-in users can choose one reaction per update; their choice is private and only combined totals are visible to other signed-in accounts. Totals start at zero and grow only after a confirmed choice.
 
 ## Science, profile and paper library
 
