@@ -4,6 +4,33 @@ service cloud.firestore {
     function owner(uid) { return request.auth != null && request.auth.uid == uid; }
     function id(value) { return value is string && value.matches('[A-Za-z0-9_-]{1,120}'); }
     function rating(value) { return value == null || value in ['know', 'learn', 'unsure']; }
+    function updateAllowed(value) { return value in ['home-real-reactions','home-cloud-flashcards','home-maths-resources','home-study-only']; }
+    function reaction(value) { return value in ['helpful','like','more']; }
+    function votePath(uid, updateId) { return /databases/$(database)/documents/users/$(uid)/updateVotes/$(updateId); }
+    function countsPath(updateId) { return /databases/$(database)/documents/publicUpdates/$(updateId)/counts/summary; }
+    function voteBefore(updateId) {
+      let path = votePath(request.auth.uid, updateId);
+      return exists(path) ? get(path).data.reaction : '';
+    }
+    function voteAfter(updateId) {
+      let path = votePath(request.auth.uid, updateId);
+      return existsAfter(path) ? getAfter(path).data.reaction : '';
+    }
+    function countBefore(updateId, field) {
+      let path = countsPath(updateId);
+      return exists(path) ? get(path).data[field] : 0;
+    }
+    function countDelta(updateId, field) {
+      return (voteAfter(updateId) == field ? 1 : 0) - (voteBefore(updateId) == field ? 1 : 0);
+    }
+    function summaryMatchesVote(updateId) {
+      let path = countsPath(updateId);
+      return existsAfter(path)
+        && getAfter(path).data.updatedAt == request.time
+        && getAfter(path).data.helpful == countBefore(updateId, 'helpful') + countDelta(updateId, 'helpful')
+        && getAfter(path).data.like == countBefore(updateId, 'like') + countDelta(updateId, 'like')
+        && getAfter(path).data.more == countBefore(updateId, 'more') + countDelta(updateId, 'more');
+    }
     match /users/{uid}/settings/profile {
       allow read: if owner(uid);
       allow create, update: if owner(uid)
@@ -19,6 +46,24 @@ service cloud.firestore {
           || (exists(/databases/$(database)/documents/users/$(uid)/settings/profile) && request.resource.data.version == resource.data.version + 1))
         && request.resource.data.operation is string && request.resource.data.operation.size() <= 80
         && request.resource.data.updatedAt == request.time;
+    }
+    match /users/{uid}/updateVotes/{updateId} {
+      allow get: if owner(uid) && updateAllowed(updateId);
+      allow list: if false;
+      allow create: if owner(uid) && updateAllowed(updateId)
+        && request.resource.data.keys().hasAll(['reaction','updatedAt'])
+        && request.resource.data.keys().hasOnly(['reaction','updatedAt'])
+        && reaction(request.resource.data.reaction)
+        && request.resource.data.updatedAt == request.time
+        && summaryMatchesVote(updateId);
+      allow update: if owner(uid) && updateAllowed(updateId)
+        && request.resource.data.keys().hasAll(['reaction','updatedAt'])
+        && request.resource.data.keys().hasOnly(['reaction','updatedAt'])
+        && reaction(request.resource.data.reaction)
+        && request.resource.data.reaction != resource.data.reaction
+        && request.resource.data.updatedAt == request.time
+        && summaryMatchesVote(updateId);
+      allow delete: if owner(uid) && updateAllowed(updateId) && summaryMatchesVote(updateId);
     }
     match /users/{uid}/decks/{deck} {
       allow read: if owner(uid);
@@ -137,6 +182,22 @@ service cloud.firestore {
           && !(card in getAfter(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)).data.cardIds)
           && getAfter(/databases/$(database)/documents/users/$(uid)/customDecks/$(deck)).data.updatedAt == request.time;
       }
+    }
+    match /publicUpdates/{updateId}/counts/{countId} {
+      allow get: if request.auth != null && updateAllowed(updateId) && countId == 'summary';
+      allow list: if false;
+      allow create, update: if request.auth != null && updateAllowed(updateId) && countId == 'summary'
+        && request.resource.data.keys().hasAll(['helpful','like','more','updatedAt'])
+        && request.resource.data.keys().hasOnly(['helpful','like','more','updatedAt'])
+        && request.resource.data.helpful is int && request.resource.data.helpful >= 0 && request.resource.data.helpful <= 1000000
+        && request.resource.data.like is int && request.resource.data.like >= 0 && request.resource.data.like <= 1000000
+        && request.resource.data.more is int && request.resource.data.more >= 0 && request.resource.data.more <= 1000000
+        && request.resource.data.updatedAt == request.time
+        && voteBefore(updateId) != voteAfter(updateId)
+        && request.resource.data.helpful == countBefore(updateId, 'helpful') + countDelta(updateId, 'helpful')
+        && request.resource.data.like == countBefore(updateId, 'like') + countDelta(updateId, 'like')
+        && request.resource.data.more == countBefore(updateId, 'more') + countDelta(updateId, 'more');
+      allow delete: if false;
     }
     // No public profiles, cross-user reads, arbitrary collections or arbitrary client deletes.
     match /{document=**} { allow read, write: if false; }

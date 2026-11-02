@@ -12,6 +12,7 @@ Requested outcome: a matte-black profile with a picture, supplied science notes 
 | Scrollbar | styles.css | semantic CSS tokens | page scroll on small screens; native dialog overflow | 390px layout, long lists, focus visibility |
 | Toast | app.js | shared toast and live status text | transient rating toast; durable profile errors/status | Rating, error and successful save announced |
 | Personal decks | maker.js + maker-cloud.js | Firestore for signed-in saves; maker-storage.js IndexedDB for guests/older device decks | explicit Save/confirmed copy, 50 decks including archived, server CAS, no persistent custom offline outbox | Owner-only emulator rules, two-client conflicts, account switch, errors and backup |
+| Home updates/reactions | updates.js + cloud.js | Curated release notes; private per-account Firestore vote and whitelisted aggregate counters | one changeable reaction per update, signed-in only; counts contain no profile or account identifiers | Counter changes must match the same account's vote transaction; guests see a sign-in prompt |
 | Highlighting | native textarea selection + maker-richtext.js | plain text and validated UTF-16 ranges; semantic CSS mark values | select/highlight/clear, safe mark preview, text edits clear that field's marks | Range/Unicode bounds, JSON round trip, injection-safe rendering and keyboard selection |
 
 ## Behaviour and privacy
@@ -88,6 +89,15 @@ Node tests cover data integrity, scope labels, original-file hashes, unique comp
 - RevisionStore is the only profile/built-in ratings owner. Unknown card IDs/invalid ratings do not count. Questions reviewed is rated quiz-capable cards, with ratings shared across modes; no correctness or average quiz score is claimed. Marked Know uses Know divided by reviewed; zero reviewed shows an em dash. Foundation excludes Higher-only full cards, with 30 MCQs retained in each complete topic. Personal-card confidence is the separate Maker contract below.
 - Signed-in loading is explicitly indeterminate, with no stale account name, photo or authoritative zero. Guest ready:false remains valid local data. Offline/error/queued/conflict totals remain current-session data and reuse the persistent canonical cloud status/recovery actions; Home does not independently claim cloud success. Saved profile text uses textContent and committed photo only; modal drafts, email and UID are not displayed.
 - Verifiers: work/verify-dashboard.cjs covers metrics, scopes, loading, committed profile, URL filters and launchers; work/verify-homecopy.cjs permits only the authorised Home, shared count wording, theme metadata, local asset manifest and dependency attribution, while preserving unrelated view markup against e2d6f7e.
+
+## Home updates and reactions
+
+- Authority: the 2 November 2026 request for a homepage updates section and reactions. Do not create a claimed visitor/account/online-user count or a prefilled popularity total. The homepage may show only the actual catalogue size derived from FLASHCARD_DATA.
+- updates.js owns the fixed release-note list and reaction controls. Each authenticated account can select one of Helpful, Like or More like this per whitelisted update, switch it, or select it again to remove it. Guests receive a sign-in message; they do not see invented zeroes or send data.
+- users/{uid}/updateVotes/{updateId} is private to that UID. publicUpdates/{updateId}/counts/summary contains only the three numeric totals and a server timestamp; only signed-in accounts can read these documents. No name, photo, email, UID or profile is included in reaction counts.
+- cloud.js performs one Firestore transaction for each choice. Firestore rules whitelist update IDs and reaction values, deny vote listing and public-user enumeration, and require the matching per-account vote and exact counter delta in the same atomic write. A missing summary is shown as zero only after the server confirms it.
+- Pending, offline, failed, stale-account and server-confirmed states use the Home live region and disable buttons until the current totals and selection are confirmed. Unavailable or cached totals stay hidden rather than appearing current.
+- The Maker remains explicit: a signed-in personal deck is saved only after Save deck succeeds; an unsaved draft remains in the current window. Built-in progress and personal decks retain their existing cloud paths.
 
 ## External video lessons
 

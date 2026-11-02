@@ -10,6 +10,7 @@
     if(!views.includes(view))view='home';
     if(view!=='maker')window.RevisionMaker?.onHide();
     for(const name of views)$('view-'+name).hidden=name!==view;
+    window.dispatchEvent(new CustomEvent('revision-view-change',{detail:{view}}));
     document.querySelectorAll('[data-policy]').forEach(a=>{a.hidden=a.dataset.policy!==policy;});
     document.querySelectorAll('[data-policy-link]').forEach(a=>{if(view==='legal'&&a.dataset.policyLink===policy)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
     $('legal-title').textContent=policies[policy];
@@ -74,6 +75,7 @@
   function node(tag,className,text){const el=document.createElement(tag);if(className)el.className=className;if(text!==undefined)el.textContent=text;return el;}
   function stats(){
     const selected=selection(),data=dashboard(selected.course,selected.tier),profile=window.RevisionStore.profile?.() || {name:'Revision student',photo:''};
+    const library=counts();$('home-library-count').textContent=`${library.topics} topic decks · ${library.cards.toLocaleString('en-GB')} flashcards`;
     $('home-course').value=data.course;$('home-tier').value=data.tier;$('home-tier-control').hidden=data.course==='other';
     $('home-title').textContent=data.loading?'Getting your desk ready…':profile.name==='Revision student'?'Hey, welcome back.':`Hey, ${profile.name}.`;
     $('home-identity').textContent=data.loading?'Loading your private account…':window.RevisionStore.state?.().uid?'Your private revision workspace':'Your revision workspace';

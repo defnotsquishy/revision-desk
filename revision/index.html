@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#202124" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101936'/%3E%3Cpath d='M15 17h24a8 8 0 0 1 8 8v25H23a8 8 0 0 1-8-8V17Z' fill='%23f4c95d'/%3E%3Cpath d='M23 17v33M29 27h11M29 35h11' stroke='%23101936' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
     <title>Revision Deck — GCSE Flashcards</title>
-    <link rel="stylesheet" href="../styles.css?v=study-only-20261101" />
+    <link rel="stylesheet" href="../styles.css?v=updates-reactions-20261102" />
     <script src="../theme.js"></script>
   </head>
   <body>
@@ -30,6 +30,11 @@
       <section class="dashboard-courses" aria-labelledby="home-courses-title"><div class="dashboard-course-heading"><h2 id="home-courses-title"><span id="home-subject-count" class="dashboard-label">Your subjects</span></h2><div class="dashboard-course-filters"><label for="home-course">Course<select id="home-course"><option value="other">Other subjects</option><option value="combined">Combined Science</option><option value="triple">Triple Science</option></select></label><label id="home-tier-control" for="home-tier" hidden>Tier<select id="home-tier"><option value="H">Higher</option><option value="F">Foundation</option></select></label></div></div>
         <div class="dashboard-table-frame"><table class="dashboard-table" aria-describedby="home-summary"><caption class="sr-only">Revision subjects and your saved card ratings</caption><thead><tr><th scope="col">Subject</th><th scope="col">Questions reviewed</th><th scope="col">Flashcards reviewed / marked Know</th><th scope="col"><span class="sr-only">Open topics</span></th></tr></thead><tbody id="home-subjects"></tbody></table></div>
         <p id="home-summary" class="dashboard-explainer">Questions and flashcards share the same card rating. Marked Know is your confidence, not an exam score.</p>
+      </section>
+      <section class="dashboard-updates" aria-labelledby="home-updates-title">
+        <div class="dashboard-updates-heading"><div><p class="eyebrow">From the desk</p><h2 id="home-updates-title">What’s new</h2></div><p id="home-library-count" class="dashboard-label">Study library</p></div>
+        <p id="updates-status" class="dashboard-explainer" role="status" aria-live="polite">Sign in to see real reaction totals and react. Your choice stays private to your account.</p><button id="updates-signin" class="button button-quiet" type="button" hidden>Sign in to react</button>
+        <div id="updates-list" class="updates-list"></div>
       </section>
       <section class="video-lessons" aria-labelledby="home-videos-title">
         <div class="video-lessons-heading"><div><p class="eyebrow">Watch, then give it a go</p><h2 id="home-videos-title">Video lessons</h2></div><label for="home-video-subject">Subject<select id="home-video-subject"><option value="biology">Biology</option><option value="chemistry">Chemistry</option><option value="physics">Physics</option><option value="maths">Maths</option><option value="furtherMaths">Further Maths</option></select></label></div>
@@ -56,7 +61,7 @@
     </main>
     <main id="view-maker" class="maker-view" hidden>
       <header class="maker-heading"><div><p class="eyebrow">Your own questions</p><h1 id="maker-title" tabindex="-1">Flashcard maker</h1><p>Make a deck from your notes, then practise it here.</p></div><button id="maker-new" class="button button-primary" type="button">New deck</button></header>
-      <p id="maker-save-note" class="maker-device-note">Sign in to save your decks, highlights and confidence privately across devices. Guest decks stay on this device and are uploaded only when you choose Copy to account.</p>
+      <p id="maker-save-note" class="maker-device-note">Sign in, then choose Save deck to sync questions, answers, highlights and confidence privately across devices. Wait for “Deck saved to your account.” Guest decks stay on this device and are uploaded only when you choose Copy to account.</p>
       <p id="maker-status" class="maker-status" role="status" aria-live="polite">Loading your device decks…</p>
       <div class="maker-list-heading"><h2 id="maker-list-title" tabindex="-1">Your device decks</h2><button id="maker-refresh" class="button button-quiet" type="button">Refresh list</button></div>
       <p id="maker-limit-note" class="small-copy">Up to 50 decks per account or guest scope, including archived decks. Up to 100 cards per deck.</p>
@@ -262,7 +267,7 @@
     <main id="view-legal" class="legal-workspace" hidden>
       <p class="eyebrow">About your revision desk</p>
       <h1 id="legal-title" tabindex="-1">Privacy & your data</h1>
-      <p class="legal-updated">Technical information checked <time datetime="2026-10-05">5 October 2026</time>.</p>
+      <p class="legal-updated">Technical information checked <time datetime="2026-11-02">2 November 2026</time>.</p>
       <nav class="policy-nav" aria-label="Policies and credits">
         <a href="#privacy" data-policy-link="privacy">Privacy</a>
         <a href="#cookies" data-policy-link="cookies">Cookies & storage</a>
@@ -281,6 +286,7 @@
           <div><dt>Account details</dt><dd>Firebase Authentication handles your email, password credentials, account identifier, verification status and sign-in session. These let you sign in, verify your email and reset your password. The app does not store your password in profile or progress documents.</dd></div>
           <div><dt>Profile</dt><dd>Your chosen display name, small profile picture, badge and accent colour let you personalise the desk. A picture is cropped and re-encoded as a 256px JPEG, removing its original metadata. A guest profile stays locally; saving a signed-in profile sends it to Firestore.</dd></div>
           <div><dt>Study progress</dt><dd>Card ratings, deck identifiers, dated daily “Know” counts and save timestamps let you resume revision and see your graph. Signed-in progress saves to Firestore; guest progress stays locally. Guest ratings are uploaded only if you choose Import guest ratings and confirm.</dd></div>
+          <div><dt>Update reactions</dt><dd>If signed in, your one reaction per update is saved privately in your account so you can change it on another device. Only combined reaction totals are visible to other signed-in accounts; names, profile pictures, emails and account IDs are not shown with reactions.</dd></div>
           <div><dt>Practice files</dt><dd>Imported PDF bytes, ink, whiteboards, typed notes and document identifiers are stored in this device’s IndexedDB database to resume your work. Account-scoped drawings still do not follow you to another device.</dd></div>
           <div><dt>Your own flashcard decks</dt><dd>When signed in, Save deck sends the title, subject, question/answer text, highlighted passages, archive state and save timestamps to your private Firestore account. Explicit confidence ratings save separately against the card’s content version. These are not official grades. Guest and older device decks remain in this device’s database, separated by guest/account ID, until you explicitly confirm Copy to account. The original copy stays unchanged. JSON backups contain card content and highlights, not your account credentials or study progress.</dd></div>
           <div><dt>Preferences and session cache</dt><dd>Browser storage remembers appearance and study mode, and holds a signed-in account’s temporary cache and pending rating changes. Read <a href="#cookies" data-policy-link="cookies">Cookies & storage</a> for the details and appearance storage choice.</dd></div>
@@ -433,7 +439,7 @@
     <script src="../papers-complete.js"></script>
     <script src="../papers-english-further.js"></script>
     <script src="../resources-data.js"></script>
-    <script src="../store.js?v=medicine-print-20261010"></script>
+    <script src="../store.js?v=updates-reactions-20261102"></script>
     <script src="../history.js"></script>
     <script src="../app.js?v=medicine-print-20261010"></script>
     <script src="../auth.js?v=cloud-maker-20261005"></script>
@@ -448,7 +454,8 @@
     <script src="../maker-storage.js?v=cloud-maker-20261005"></script>
     <script src="../maker-richtext.js?v=cloud-maker-20261005"></script>
     <script src="../maker.js?v=cloud-maker-20261005"></script>
-    <script src="../home.js?v=study-only-20261101"></script>
+    <script src="../home.js?v=updates-reactions-20261102"></script>
+    <script src="../updates.js?v=updates-reactions-20261102"></script>
     <script src="../maths-resources.js"></script>
     <script src="../customise.js"></script>
   </body>

@@ -613,8 +613,25 @@ a.dashboard-label:hover { background: var(--accent-dark); }
 .dashboard-shortcuts p { margin: 0 auto 0 0; font-size: .88rem; color: var(--muted); }
 .dashboard-shortcuts .button { font-size: .8rem; }
 .dashboard-storage { font-size: .75rem; margin: 1rem 0 0; }
+.dashboard-updates { margin-top: 2.5rem; }
+.dashboard-updates-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem; margin-bottom: .5rem; }
+.dashboard-updates-heading .eyebrow { margin: 0; font-size: .7rem; }
+.dashboard-updates-heading h2 { margin: .2rem 0 0; font-size: 1.45rem; }
+.dashboard-updates-heading > p { margin: 0; }
+.updates-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: var(--desk-space); margin-top: 1rem; }
+.update-card { min-width: 0; padding: var(--desk-panel-space); border: 2px solid var(--line); border-radius: var(--desk-panel-radius); background: var(--surface); }
+.update-card-heading .eyebrow { margin: 0 0 .35rem; color: var(--muted); font-size: .7rem; }
+.update-card-heading h3 { margin: 0; font-size: 1rem; line-height: 1.4; }
+.update-card-copy { color: var(--muted); margin: .65rem 0 1rem; font-size: .83rem; line-height: 1.6; }
+.update-reactions { display: flex; flex-wrap: wrap; gap: .45rem; }
+.update-reaction { min-height: 40px; padding: .4rem .65rem; display: inline-flex; align-items: center; gap: .4rem; font-size: .76rem; }
+.update-reaction-symbol { line-height: 1; }
+.update-reaction-count { min-width: 1ch; font-variant-numeric: tabular-nums; color: var(--muted); }
+.update-reaction[aria-pressed="true"] { border-color: var(--accent-dark); box-shadow: inset 0 0 0 1px var(--accent-dark); }
+.update-reaction:disabled { cursor: not-allowed; }
 .site-footer { max-width: 1164px; margin: 0 auto; }
 @media (max-width: 900px) {
+  .updates-list { grid-template-columns: minmax(0,1fr); }
   .dashboard-welcome { padding-inline: 1.5rem; gap: 1.5rem; }
   .dashboard-person { gap: 1rem; }
   .dashboard-person .profile-avatar { width: 64px; height: 64px; }

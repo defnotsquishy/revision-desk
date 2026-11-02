@@ -8,6 +8,8 @@ A matte-black GCSE revision desk with 2,460 flashcards and 1,230 multiple-choice
 
 Sign in with the same account on another supported device to open your saved profile, built-in study progress, personal flashcard decks, highlights and personal-card confidence ratings. Wait for a confirmed save. Guest work, PDFs, whiteboards, drawings, appearance preferences stay on the device where they were made; this release does not enable paid file storage.
 
+The Home page shows the actual number of topic decks and flashcards in the library, not a visitor or online-user estimate. Its updates section has real account reactions. Signed-in users can choose one reaction per update; their choice is private and only combined totals are visible to other signed-in accounts. Totals start at zero and grow only after a confirmed choice.
+
 ## Science, profile and paper library
 
 Science has 1,560 course-specific cards across B1–B4, C1–C5 and P1–P4, with separate Combined and Triple decks and Higher-only labels. Choose Foundation to hide Higher-only cards. Every science deck has 60 cards in Higher; Foundation subsets can be smaller. Existing ratings and cards retain their IDs.
@@ -54,7 +56,7 @@ Your science files contains 18 unchanged original school downloads. Two supplied
 
 ## Accounts and cloud saving
 
-Use Sign in to create an email/password account, sign in, request a password reset or verify your email. Firebase manages credentials; choose a fresh unique password privately. Login lasts for the browser session. Private Firestore records in London hold each signed-in person's profile, built-in card ratings and daily graph, plus saved personal decks/highlights/confidence. Guest data stays separate: Import guest ratings copies missing built-in ratings only; personal decks have their own explicit Copy to account action. Wait for **Saved to your account** before closing built-in revision: its offline queued ratings survive only the current browser session. Personal-deck saves instead need a confirmed online transaction; failed or unconfirmed saves keep the draft in this window for retry or backup. Profile errors retain the draft; same-card, deck and profile conflicts are shown explicitly. Guest revision and locally saved paper practice work offline in the Windows app.
+Use Sign in to create an email/password account, sign in, request a password reset or verify your email. Firebase manages credentials; choose a fresh unique password privately. Login lasts for the browser session. Private Firestore records in London hold each signed-in person's profile, built-in card ratings and daily graph, plus saved personal decks/highlights/confidence and private update reactions. Only aggregate reaction totals are visible to other signed-in accounts. Guest data stays separate: Import guest ratings copies missing built-in ratings only; personal decks have their own explicit Copy to account action. Wait for **Saved to your account** before closing built-in revision: its offline queued ratings survive only the current browser session. Personal-deck saves instead need a confirmed online transaction; failed or unconfirmed saves keep the draft in this window for retry or backup. Profile errors retain the draft; same-card, deck and profile conflicts are shown explicitly. Guest revision and locally saved paper practice work offline in the Windows app.
 
 ## Run it
 

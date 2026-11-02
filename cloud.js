@@ -6,8 +6,63 @@ export function createCloudAdapter(app,auth) {
   const db=initializeFirestore(app,{localCache:memoryLocalCache()});
   const guard=uid=>{if(auth.currentUser?.uid!==uid){const error=Error('Session changed');error.code='permission-denied';throw error;}};
   const conflict=card=>{const error=Error('Version conflict');error.code='revision-conflict';error.card=card;return error;};
+  const updateIds=['home-real-reactions','home-cloud-flashcards','home-maths-resources','home-study-only'];
+  const reactions=['helpful','like','more'];
+  const reactionRef=(uid,id)=>doc(db,'users',uid,'updateVotes',id);
+  const countsRef=id=>doc(db,'publicUpdates',id,'counts','summary');
+  const emptyCounts=()=>({helpful:0,like:0,more:0});
+  function cleanCounts(value){
+    const counts={};
+    for(const key of reactions){const count=value?.[key] ?? 0;if(!Number.isSafeInteger(count)||count<0)throw Error('Reaction totals could not be read safely.');counts[key]=count;}
+    return counts;
+  }
+  function createUpdatesAdapter(){
+    return {
+      subscribe(uid,ids,next,error){
+        guard(uid);let active=true;const state=new Map(ids.map(id=>[id,{counts:null,reaction:'',countsConfirmed:false,voteConfirmed:false}]));
+        const publish=id=>{const row=state.get(id);if(active&&row)next(id,row.counts,row.reaction,row.countsConfirmed&&row.voteConfirmed);};
+        const stops=[];
+        for(const id of ids){
+          if(!updateIds.includes(id))throw Error('This update is unavailable.');
+          const row=state.get(id);
+          stops.push(onSnapshot(countsRef(id),{includeMetadataChanges:true},snapshot=>{
+            if(!active||auth.currentUser?.uid!==uid)return;
+            try{row.counts=snapshot.exists()?cleanCounts(snapshot.data()):emptyCounts();row.countsConfirmed=!snapshot.metadata.fromCache&&!snapshot.metadata.hasPendingWrites;publish(id);}catch(failure){error(failure);}
+          },error));
+          stops.push(onSnapshot(reactionRef(uid,id),{includeMetadataChanges:true},snapshot=>{
+            if(!active||auth.currentUser?.uid!==uid)return;
+            const reaction=snapshot.exists()?snapshot.data()?.reaction:'';
+            if(reaction&&!reactions.includes(reaction)){error(Error('Your saved reaction could not be read safely.'));return;}
+            row.reaction=reaction;row.voteConfirmed=!snapshot.metadata.fromCache&&!snapshot.metadata.hasPendingWrites;publish(id);
+          },error));
+        }
+        return ()=>{active=false;stops.forEach(stop=>stop());};
+      },
+      setReaction(uid,id,reaction){
+        guard(uid);
+        if(!updateIds.includes(id)||!reactions.includes(reaction))return Promise.reject(Error('This reaction is unavailable.'));
+        const vote=reactionRef(uid,id),counts=countsRef(id);
+        return runTransaction(db,async transaction=>{
+          guard(uid);const [voteSnapshot,countSnapshot]=await Promise.all([transaction.get(vote),transaction.get(counts)]);
+          const previous=voteSnapshot.exists()?voteSnapshot.data()?.reaction:'';
+          if(previous&&!reactions.includes(previous))throw Error('Your saved reaction could not be read safely.');
+          const next=previous===reaction?'':reaction;
+          if(next===previous)return next;
+          const totals=cleanCounts(countSnapshot.exists()?countSnapshot.data():emptyCounts());
+          if(previous)totals[previous]--;
+          if(next)totals[next]++;
+          if(Object.values(totals).some(value=>value<0))throw Error('Reaction totals changed. Reload the page and try again.');
+          guard(uid);
+          if(next)transaction.set(vote,{reaction:next,updatedAt:serverTimestamp()});else transaction.delete(vote);
+          transaction.set(counts,{...totals,updatedAt:serverTimestamp()});
+          return next;
+        },{maxAttempts:5});
+      }
+    };
+  }
   return {
     maker:createMakerCloudAdapter(db,auth),
+    updates:createUpdatesAdapter(),
     subscribe(uid,next,error) {
       guard(uid);
       const subscriptions=[
