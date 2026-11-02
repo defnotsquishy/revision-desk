@@ -32,7 +32,12 @@
   function renderNav() {
     $("deck-nav").replaceChildren(...data.subjects.filter(subject => (subject.route || 'other') === course).map(subject => {
       const section = document.createElement('section'); section.className = 'subject-group';
-      const title = document.createElement('h3'); title.textContent = subject.name;
+      const title = document.createElement('h3'); title.className = 'subject-folder';
+      const icon = document.createElementNS('http://www.w3.org/2000/svg','svg'); icon.classList.add('subject-folder-icon'); icon.setAttribute('viewBox','0 0 24 24'); icon.setAttribute('aria-hidden','true');
+      const folder = document.createElementNS('http://www.w3.org/2000/svg','path'); folder.setAttribute('d','M3.5 6.5h6l2 2h9v9.8a1.2 1.2 0 0 1-1.2 1.2H4.7a1.2 1.2 0 0 1-1.2-1.2z'); icon.append(folder);
+      const label = document.createElement('span'); label.className = 'subject-folder-label'; label.textContent = subject.name;
+      const folderCount = document.createElement('span'); folderCount.className = 'subject-folder-count'; folderCount.textContent = String(subject.decks.length); folderCount.setAttribute('aria-hidden','true');
+      title.append(icon,label,folderCount);
       const list = document.createElement('div'); list.className = 'deck-list';
       subject.decks.forEach(item => {
         const button = document.createElement('button'); button.type = 'button'; button.dataset.deck = item.id;

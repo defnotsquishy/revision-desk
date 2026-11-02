@@ -1,13 +1,13 @@
 ---
 version: alpha
 name: Revision Deck
-description: A matte-black, compact GCSE study desk with quiet daily progress plotting.
+description: A calm graphite GCSE study desk with compact subject folders and quiet progress plotting.
 colors:
   ink: '#f2f2f3'
-  muted: '#ababaf'
-  paper: '#202124'
-  surface: '#282a2e'
-  line: '#3c3f44'
+  muted: '#b8b9bd'
+  paper: '#26282b'
+  surface: '#2d2f33'
+  line: '#42454a'
   accent: '#e4e4e7'
   dock-gradient-start: '#4d61db'
   dock-gradient-mid: '#7149d1'
@@ -22,8 +22,8 @@ typography:
   chart:
     fontFamily: 'ui-monospace, Consolas, monospace'
 rounded:
-  panel: '0.75rem'
-  card: '0.9rem'
+  panel: '0.15rem'
+  card: '0.15rem'
 spacing:
   compact: '0.75rem'
   panel: '1rem'
@@ -34,10 +34,10 @@ components:
 ---
 
 ## Overview
-Product tool for a GCSE student practising recall on Windows. The Cognito-style reference evolves matte black into flat charcoal with a centred welcome panel and compact subject table. Keep the text-only Revision Deck identity, real private progress, compact library and serif recall prompts; avoid invented XP, upgrade plans and spinning cards. The requested violet gradient is a restrained navigation accent, not a page background.
+Product tool for a GCSE student practising recall on Windows. The Cognito-style reference evolves into layered, mid-charcoal grey with a centred welcome panel and compact subject table. Keep the text-only Revision Deck identity, real private progress, compact library and serif recall prompts; avoid invented XP, upgrade plans and spinning cards. The folder-like deck groups clarify subjects, while the existing icon dock and restrained violet gradient remain in the navigation only.
 
 ## Colors
-Runtime CSS is canonical (Model B): colors.* map directly to same-name --* properties in styles.css under :root[data-theme="dark"]. The app owner maintains both together. The dock gradient maps `dock-gradient-start/mid/end` to `--dock-gradient-start/mid/end`; the shared `--dock-gradient` combines them for the active rail tile, wordmark accent and newest update card. White text remains legible on the gradient. Semantic green, amber and red distinguish named ratings. Light theme retains the existing palette and hierarchy.
+Runtime CSS is canonical (Model B): colors.* map directly to same-name --* properties in styles.css under :root[data-theme="dark"]. The app owner maintains both together. The dock gradient maps `dock-gradient-start/mid/end` to `--dock-gradient-start/mid/end`; the shared `--dock-gradient` combines them for the active rail tile, wordmark accent and newest update card. White text remains legible on the gradient. Semantic green, amber and red distinguish named ratings. Light theme retains the existing palette and hierarchy. The dark desk uses a graphite page (#26282b), raised grey panels (#2d2f33), and clear borders (#42454a), never a near-black sidebar.
 
 ## Typography
 System sans for study controls and explanations, Georgia for recall prompts/quotations and the Home greeting, monospace for chart axes. The screenshot-inspired Home and navigation use locally hosted Nunito with system fallback; its SIL OFL text accompanies the asset. English (UK) is the current locale. No network font requests.
@@ -45,19 +45,19 @@ System sans for study controls and explanations, Georgia for recall prompts/quot
 The optional account layer loads the pinned Firebase SDK online; guest revision remains independent and works offline.
 
 ## Layout
-80px icon dock; the flashcard library keeps its adjacent 244px subject rail; workspace max 980px. At 780px and below the navigation becomes a horizontally scrollable bottom dock with safe-area padding, while the page keeps one document scroll owner. Controls remain at least 44px. Collapsed Progress over time keeps card practice compact. No fixed content height; long answers grow naturally. Graph values have a bounded secondary scroller.
+80px icon dock; the flashcard library keeps its adjacent 244px subject rail; workspace max 980px. Decks sit inside square, folder-like subject groups with a small folder icon/count and a bordered nested list. Below tablet width the groups reflow into readable panels rather than flattening the hierarchy. At 780px and below the navigation becomes a horizontally scrollable bottom dock with safe-area padding, while the page keeps one document scroll owner. Controls remain at least 44px. Collapsed Progress over time keeps card practice compact. No fixed content height; long answers grow naturally. Graph values have a bounded secondary scroller.
 
 ## Elevation & Depth
-Flat dark surfaces with borders. Dark --shadow is none. Modal backdrop isolates reset; no decorative glow. The floating phone dock has only a compact separation shadow, and the active icon tile has a restrained violet edge shadow.
+Flat graphite surfaces with borders. Dark --shadow is none. Modal backdrop isolates reset; no decorative glow. The floating phone dock has only a compact separation shadow, and the active icon tile has a restrained violet edge shadow.
 
 ## Shapes
-Panels default to 0.75rem, cards 0.9rem. Device preferences offer Square (0.15rem for both) and Rounded (1.25rem panels, 1.5rem cards). CSS owns --desk-panel-radius and --desk-card-radius; Home panels, study cards, settings/preview, policy callouts and the paper frame share them. Controls and status chips retain established shapes.
+Panels and cards default to Square (0.15rem). Device preferences retain Soft and Rounded (1.25rem panels, 1.5rem cards) as explicit choices. CSS owns --desk-panel-radius and --desk-card-radius; Home panels, study cards, settings/preview, policy callouts and the paper frame share them. Controls and status chips retain established shapes.
 
 ## Components
 
 profile.js owns the profile draft, image decoding/re-encoding, save/discard confirmation, per-UID scope and practice badges. library.js owns the searchable, paginated past-paper / school-files dialog. updates.js owns curated Home release notes and account reactions; cloud.js and Firestore rules enforce private votes and exact aggregate changes. Both reuse native dialogs, selects, inline statuses and the established semantic palette. Header actions wrap without clipping; library filter columns collapse on narrow screens. UX-CONTRACT.md records their canonical owners and error/privacy behaviour.
 
-science-cards.js and expanded-cards.js supply 1,560 course-specific cards across 13 topics each for Combined and Triple. Higher-only and Triple-only content is labelled; Foundation excludes Higher-only cards. Each complete deck has 60 cards; Foundation flashcard counts can be smaller. sociology-cards.js supplies six 60-card AQA 8192 decks. The three quiz-*.js additions replace earlier small science/sociology quiz sets with exactly 30 authored questions per topic, retaining stable IDs, explanations and course boundaries. Every science quiz has 30 Foundation-eligible questions; broader Higher written work remains in Flashcards. Existing controls and matte-black tokens are reused. papers-data.js records matched official public PDFs; resources-data.js records 18 unchanged user-supplied files. No school login examples are published.
+science-cards.js and expanded-cards.js supply 1,560 course-specific cards across 13 topics each for Combined and Triple. Higher-only and Triple-only content is labelled; Foundation excludes Higher-only cards. Each complete deck has 60 cards; Foundation flashcard counts can be smaller. sociology-cards.js supplies six 60-card AQA 8192 decks. The three quiz-*.js additions replace earlier small science/sociology quiz sets with exactly 30 authored questions per topic, retaining stable IDs, explanations and course boundaries. Every science quiz has 30 Foundation-eligible questions; broader Higher written work remains in Flashcards. Existing controls and graphite tokens are reused. papers-data.js records matched official public PDFs; resources-data.js records 18 unchanged user-supplied files. No school login examples are published.
 index.html owns shared markup; app.js owns deck, filter, ratings and reset behavior. history.js owns local daily snapshots and SVG chart rendering. styles.css owns all themes, scrollbars and control states. Native selects deliberately retain OS-owned option geometry and keyboard support. Native HTML dialog owns focus trapping and Escape; app controls naming, contents, initial cancel focus and confirmation. No browser confirm prompts.
 
 auth.js owns a single account form/dialog for sign-in, signup, password reset and verification. Reuse the existing button and native-dialog primitives, palette, borders and focus styles; no rebrand. Fields use explicit labels, app-owned inline errors and first-error focus. Submission is locked while pending; session persistence is browser-session only. Passwords are masked with a reveal control and cleared after submission/close, never logged or manually stored. Account sign-out restores separate guest ratings. Study shortcuts are suppressed while any modal is open or the flashcard view is hidden.
@@ -66,7 +66,7 @@ Scatter dots are actual daily snapshots, percentage Know of the entire deck at r
 
 ## Account database evolution
 
-The approved account-saving request supersedes the earlier local-only account stage described above. store.js now owns guest/account data scope, session cache, pending ratings, retry and conflict resolution; cloud.js owns private Firestore transactions and subscriptions. profile.js still owns the draft/upload preparation and shared save/discard UI. auth.js owns authentication only. Cloud status uses existing matte-black tokens and a reserved text region, never new decorative colours. See UX-CONTRACT.md and work/CLOUD-STORAGE.md for authoritative storage/permission behaviour. Guest keys and content are preserved. Signed-in saves distinguish loading, pending, offline, failure, conflict and server-confirmed success; passwords remain entirely with Firebase Authentication.
+The approved account-saving request supersedes the earlier local-only account stage described above. store.js now owns guest/account data scope, session cache, pending ratings, retry and conflict resolution; cloud.js owns private Firestore transactions and subscriptions. profile.js still owns the draft/upload preparation and shared save/discard UI. auth.js owns authentication only. Cloud status uses existing graphite tokens and a reserved text region, never new decorative colours. See UX-CONTRACT.md and work/CLOUD-STORAGE.md for authoritative storage/permission behaviour. Guest keys and content are preserved. Signed-in saves distinguish loading, pending, offline, failure, conflict and server-confirmed success; passwords remain entirely with Firebase Authentication.
 
 ## Paper practice and home navigation
 
@@ -78,7 +78,7 @@ Optional profile accents map to existing CSS tokens --accent, --accent-dark and 
 
 ## Workspace and appearance update
 
-The user's October references guide a restrained matte-black settings layout, not a pixel-identical clone. No Aurora gradient, invented score, paid upgrade, billing or non-functional controls are introduced. Existing controls, native dialogs and owner boundaries are retained.
+The user's November prototype references guide a restrained graphite settings layout with square folder groups, not a pixel-identical clone. The page uses clearer mid-grey surfaces rather than near-black; no Aurora background, invented score, paid upgrade, billing or non-functional controls are introduced. Existing controls, native dialogs and owner boundaries are retained.
 
 The latest reference brings back a slim 80px icon dock on desktop and a horizontally scrollable bottom dock on phones; Home remains the first destination. Each icon has a visible keyboard-focus/hover tooltip and a persistent accessible name. Past papers keeps its native dialog action. The existing flashcard deck picker remains a distinct adjacent sidebar and becomes its own horizontal rail below 780px. The document owns content scrolling; no route inherits clipping. Customise Desk is an additional home.js route, not a separate router. Its live reading preview displays real library/review counts and uses actual current CSS tokens.
 
@@ -92,7 +92,7 @@ papers-complete.js extends the existing public catalogue without changing origin
 
 The 1 November decision makes the public site study-only and supersedes all earlier game integration requests. Game navigation, launchers, players and hosted assets are removed rather than disguised. Local archives outside site preserve their files and notices. The existing study palette, typography, components and document scrolling are unchanged; no filter-bypass or classification guarantee is introduced.
 
-Policy pages reuse the existing matte-black/light tokens, system type and document scroll. A compact footer leads to five bookmarkable reading pages; quiet bordered callouts distinguish confirmed operator/contact and technical facts from legal decisions still under review, alongside the explicit appearance-storage choice. Reading copy is capped at 74ch and wraps long storage identifiers. No new brand palette, consent decoration, fixed-height content or separate router is introduced. The approved operator/credit is nathanyu and privacy requests go privately to the confirmed address in the notice; do not imply a compliance certification or invent a deletion deadline.
+Policy pages reuse the existing graphite/light tokens, system type and document scroll. A compact footer leads to five bookmarkable reading pages; quiet bordered callouts distinguish confirmed operator/contact and technical facts from legal decisions still under review, alongside the explicit appearance-storage choice. Reading copy is capped at 74ch and wraps long storage identifiers. No new brand palette, consent decoration, fixed-height content or separate router is introduced. The approved operator/credit is nathanyu and privacy requests go privately to the confirmed address in the notice; do not imply a compliance certification or invent a deletion deadline.
 
 - Multiple choice is the default: 41 decks × 30 questions = 1,230 course-scoped authored questions. Flashcards retains 2,460 cards, 60 in each complete deck. quiz-data.js, quiz-more.js and the three quiz-*.js additions map authored options to stable card IDs; deeper-content.js and expanded-cards.js add English close-reading notes. English reveals separate quotation, meaning, technique and essay use with quiet labels. Choices shuffle on each question visit. One answer locks the question and shows correctness in text plus the explanation; confidence ratings remain explicit and share the existing progress store. Switching mode resets topic and position but preserves search/status. Quiz counts distinguish the 30-question subset from the complete deck and optional topic/status/search filters. Existing palette, serif prompts and control focus styles are reused.
 - Keep ratings text-labelled; never rely on colour alone.
@@ -105,7 +105,7 @@ Policy pages reuse the existing matte-black/light tokens, system type and docume
 
 The visible brand is text-only Revision Deck; no top-left logo mark is displayed. Established filenames, account configuration, public URLs and storage keys remain Revision Desk for compatibility. The latest screenshot request authorises a new Home dashboard while unrelated view markup and data remain unchanged.
 
-Background colour is an additional device preference owned only by theme.js. Matte black uses the accepted flat charcoal default; Slate, Midnight, Forest and Plum change only --paper, keeping flat surfaces, semantic rating colours and white PDF pixels. Dark alternatives are #15191e/#101827/#101c18/#1d1422; light alternatives are #edf0f3/#edf2fc/#edf5f0/#f5eef8. Labelled native radios share the existing preview, reset, opt-out and cross-tab behaviour. They do not override the saved profile accent or upload preferences.
+Background colour is an additional device preference owned only by theme.js. Soft grey is the default; Midnight, Forest and Plum remain optional backgrounds that change only --paper, keeping flat surfaces, semantic rating colours and white PDF pixels. Dark alternatives are #26282b/#101827/#101c18/#2a232e; light alternatives are #edf0f3/#edf2fc/#edf5f0/#f5eef8. Versioned appearance migration moves only the old Black and Soft defaults to grey and square corners; previously chosen Plum/Rounded preferences remain intact, without touching study/account data. Labelled native radios share the existing preview, reset, opt-out and cross-tab behaviour. They do not override the saved profile accent or upload preferences.
 
 The #profile page reuses profile.js committed name/picture and the existing Edit profile & colour modal. Unsaved modal drafts never appear on the page. Account switching uses the existing private UID boundary. Sharing and First Ten community badges are clearly unavailable, not fake controls or awarded previews. The user approved opt-in publishing of nickname/optional picture/bio only; email, study progress and drawings must stay private. The high-risk public-profile branch remains gated on privacy assessment, eligibility and trusted backend decisions. The operator/contact and basic retention criterion are now confirmed; the notice accurately distinguishes those facts from lawful-basis/provider/children's assessment still under review.
 
@@ -113,7 +113,7 @@ The #profile page reuses profile.js committed name/picture and the existing Edit
 
 Latest user reference: Cognito dashboard screenshot codex-clipboard-75a95b1c-45f8-4dfa-a166-c4f173973bd3.png. Adapt structure rather than identity: a centred 1,100px content area, 248px welcome panel, Georgia greeting, inset progress panel, dashed course divider and bordered compact subject table. The retained app routes require a second compact navigation row. No Cognito branding, avatar, Upgrade button, sample name/year, XP or streak is copied.
 
-Runtime --paper/--surface/--line dark defaults are #202124/#282a2e/#3c3f44, reflected above. Existing appearance, profile accent and semantic colours retain their canonical owners; alternate background choices remain unchanged. Home panel radius/density/font size use existing preferences. Nunito is the Home/navigation display family only. Original generated transparent science PNGs and attributed Font Awesome icons are local assets; see assets/dashboard/ASSETS.md.
+Runtime --paper/--surface/--line dark defaults are #26282b/#2d2f33/#42454a, reflected above. Existing appearance, profile accent and semantic colours retain their canonical owners; alternate background choices remain unchanged. Home panel radius/density/font size use existing preferences. Nunito is the Home/navigation display family only. Original generated transparent science PNGs and attributed Font Awesome icons are local assets; see assets/dashboard/ASSETS.md.
 
 home.js derives bounded subject rows from the selected course/tier (three science rows or six Other subject/resource rows), consumes committed RevisionStore profile and ratings, and owns no new data store. Maths and Further Maths resource-only rows say Not tracked rather than inventing card totals. Questions reviewed counts rated quiz-capable cards, not quiz attempts. Flashcard coverage counts any explicit rating; Marked Know is Know/reviewed, not exam performance or mastery. Account loading is indeterminate and never displays another account's metrics. The shared cloud status remains the authoritative save/retry/conflict UI for built-in progress; the Maker has its own truthful save status. Native course/tier filters use deskCourse/deskTier URL parameters without changing paper filters. Topics expands a native button-controlled table row; deck links call the validated existing app.js deck/tier owner. At 680px the same table records stack with visible metric labels, all actions retained. Document scrolling remains natural on all routes.
 

@@ -3,7 +3,7 @@
   'use strict';
   const $=id=>document.getElementById(id);
   const releases=[
-    {id:'home-navigation-dock',date:'2 November 2026 · New',title:'A clearer way around your desk',copy:'A compact icon dock keeps Home, flashcards, maths, papers, the whiteboard and your profile within easy reach. A small violet gradient marks the active section; your study pages stay matte black.',featured:true},
+    {id:'home-navigation-dock',date:'2 November 2026 · New',title:'A calmer desk, with clearer subject folders',copy:'The icon dock keeps Home, flashcards, maths, papers, the whiteboard and your profile within easy reach. A small violet gradient marks the active section; topic decks now sit in clearer folders on softer graphite-grey panels.',featured:true},
     {id:'home-real-reactions',date:'2 November 2026 · New',title:'React to an update',copy:'Choose Helpful, Like or More like this. Totals start at zero and count real signed-in choices; your name and profile stay private.'},
     {id:'home-study-only',date:'1 November 2026',title:'A focused revision desk',copy:'The public site now keeps its homepage, flashcards, papers, maths resources and whiteboard together for GCSE study.'},
     {id:'home-cloud-flashcards',date:'5 October 2026',title:'Save your own flashcards',copy:'Sign in, choose Save deck, and your questions, answers, highlights and personal confidence ratings are saved to your private account.'},

@@ -4,7 +4,7 @@
 
 Created by **nathanyu** — [GitHub: defnotsquishy](https://github.com/defnotsquishy).
 
-A matte-black GCSE revision desk with 2,460 flashcards and 1,230 multiple-choice questions: 60 flashcards and 30 questions in each of 41 topic decks for English Literature, Edexcel History, AQA Geography Paper 1, AQA Sociology, Combined Science Trilogy and Triple Science. The visible brand is Revision Deck; existing Revision Desk URLs, shortcuts and storage keys are retained for compatibility.
+A calm graphite GCSE revision desk with folder-grouped topics, 2,460 flashcards and 1,230 multiple-choice questions: 60 flashcards and 30 questions in each of 41 topic decks for English Literature, Edexcel History, AQA Geography Paper 1, AQA Sociology, Combined Science Trilogy and Triple Science. The visible brand is Revision Deck; existing Revision Desk URLs, shortcuts and storage keys are retained for compatibility.
 
 Sign in with the same account on another supported device to open your saved profile, built-in study progress, personal flashcard decks, highlights and personal-card confidence ratings. Wait for a confirmed save. Guest work, PDFs, whiteboards, drawings, appearance preferences stay on the device where they were made; this release does not enable paid file storage.
 
@@ -42,7 +42,7 @@ Visiting another section keeps an unsaved draft in this window. Refreshing, clos
 
 ## Customise Desk
 
-Use **Customise Desk** in the navigation for Dark/Light/System theme, Matte black/Slate/Midnight/Forest/Plum background, density, text size, Square/Soft/Rounded panel corners, Book/Simple question font, Standard/Roomier reading spacing, stronger interface contrast, reduced motion and optional flashcard shortcuts. The live preview reflects these choices. Changes apply immediately and save on this device, separately from accounts and progress. Your Windows reduced-motion preference is always respected. **Edit profile & colour** opens the existing profile form: choose Neutral, Blue, Violet or Mint and Save profile to apply your accent. Signed-in profile colours follow your account; layout preferences do not. Restore appearance defaults never resets your cards or drawings.
+Use **Customise Desk** in the navigation for Dark/Light/System theme, Soft grey/Midnight/Forest/Plum background, density, text size, Square/Soft/Rounded panel corners, Book/Simple question font, Standard/Roomier reading spacing, stronger interface contrast, reduced motion and optional flashcard shortcuts. The live preview reflects these choices. Changes apply immediately and save on this device, separately from accounts and progress. The graphite palette and square folders are the default; older black and soft-corner defaults migrate once to grey and square, while previously chosen Plum/Rounded preferences remain. Your Windows reduced-motion preference is always respected. **Edit profile & colour** opens the existing profile form: choose Neutral, Blue, Violet or Mint and Save profile to apply your accent. Signed-in profile colours follow your account; layout preferences do not. Restore appearance defaults never resets your cards or drawings.
 
 ## Draw on papers and whiteboard
 
