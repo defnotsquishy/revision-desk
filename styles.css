@@ -884,3 +884,41 @@ body > main { grid-row: 3; }
   .desk-nav .dock-link { scroll-margin-inline: .5rem; }
   body > main h1[id][tabindex="-1"] { scroll-margin-block: 1rem 110px; }
 }
+
+/* A little energy on Home, with the desk's controls and content above the glow. */
+#view-home .dashboard-welcome { position: relative; isolation: isolate; }
+#view-home .dashboard-welcome::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(ellipse at 20% 20%, rgb(112 83 230 / 22%), transparent 48%),
+              radial-gradient(ellipse at 85% 75%, rgb(74 155 240 / 18%), transparent 46%);
+  background-size: 170% 170%; background-position: 0% 50%;
+}
+#view-home .dashboard-welcome::after {
+  content: ''; position: absolute; top: -2px; left: 0; right: 0; height: 3px; border-radius: inherit;
+  background: var(--dock-gradient); background-size: 200% 100%; pointer-events: none;
+}
+#view-home .dashboard-table tbody tr { transition: background-color .22s ease; }
+#view-home .dashboard-subject-art { transition: transform .25s ease; }
+#view-home .update-card { transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
+#view-home .dashboard-table tbody tr:focus-within { background: color-mix(in srgb, var(--accent) 7%, var(--surface)); }
+
+@keyframes home-welcome-glow { from { background-position: 0% 40%; } to { background-position: 100% 60%; } }
+@keyframes home-accent-flow { from { background-position: 0% 50%; } to { background-position: 200% 50%; } }
+@keyframes home-rise-in { from { opacity: .72; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion="reduce"]) #view-home .dashboard-welcome::before { animation: home-welcome-glow 9s ease-in-out infinite alternate; }
+  :root:not([data-motion="reduce"]) #view-home .dashboard-welcome::after { animation: home-accent-flow 8s linear infinite; }
+  :root:not([data-motion="reduce"]) #view-home .dashboard-welcome { animation: home-rise-in .55s ease-out; }
+  :root:not([data-motion="reduce"]) #view-home .dashboard-courses { animation: home-rise-in .7s ease-out; }
+  :root:not([data-motion="reduce"]) #view-home .dashboard-updates { animation: home-rise-in .85s ease-out; }
+  :root:not([data-motion="reduce"]) #view-home .video-lessons { animation: home-rise-in 1s ease-out; }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  :root:not([data-motion="reduce"]) #view-home .dashboard-table tbody tr:hover { background: color-mix(in srgb, var(--accent) 7%, var(--surface)); }
+  :root:not([data-motion="reduce"]) #view-home .dashboard-table tbody tr:hover .dashboard-subject-art { transform: translateY(-3px) rotate(-4deg); }
+  :root:not([data-motion="reduce"]) #view-home .update-card:hover { transform: translateY(-4px); border-color: var(--accent-dark); box-shadow: 0 12px 25px rgb(38 32 76 / 18%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  #view-home .dashboard-table tbody tr, #view-home .dashboard-subject-art, #view-home .update-card { transition: none; }
+}

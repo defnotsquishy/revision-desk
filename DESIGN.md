@@ -48,7 +48,9 @@ The optional account layer loads the pinned Firebase SDK online; guest revision 
 80px icon dock; the flashcard library keeps its adjacent 244px subject rail; workspace max 980px. Decks sit inside square, folder-like subject groups with a small folder icon/count and a bordered nested list. Below tablet width the groups reflow into readable panels rather than flattening the hierarchy. At 780px and below the navigation becomes a horizontally scrollable bottom dock with safe-area padding, while the page keeps one document scroll owner. Controls remain at least 44px. Collapsed Progress over time keeps card practice compact. No fixed content height; long answers grow naturally. Graph values have a bounded secondary scroller.
 
 ## Elevation & Depth
-Flat graphite surfaces with borders. Dark --shadow is none. Modal backdrop isolates reset; no decorative glow. The floating phone dock has only a compact separation shadow, and the active icon tile has a restrained violet edge shadow.
+Flat graphite surfaces with borders. Dark --shadow is none. Modal backdrop isolates reset. The floating phone dock has only a compact separation shadow, and the active icon tile has a restrained violet edge shadow.
+
+The Home welcome panel is the exception: a low-contrast violet and blue glow drifts behind the content, with an animated gradient edge. Home sections enter briefly and subject art and update cards respond on hover. Operating-system or app reduced-motion settings stop the motion; the static layout and controls stay available.
 
 ## Shapes
 Panels and cards default to Square (0.15rem). Device preferences retain Soft and Rounded (1.25rem panels, 1.5rem cards) as explicit choices. CSS owns --desk-panel-radius and --desk-card-radius; Home panels, study cards, settings/preview, policy callouts and the paper frame share them. Controls and status chips retain established shapes.
