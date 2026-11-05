@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#26282b" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101936'/%3E%3Cpath d='M15 17h24a8 8 0 0 1 8 8v25H23a8 8 0 0 1-8-8V17Z' fill='%23f4c95d'/%3E%3Cpath d='M23 17v33M29 27h11M29 35h11' stroke='%23101936' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
     <title>Revision Deck — GCSE Flashcards</title>
-    <link rel="stylesheet" href="styles.css?v=home-motion-20261104" />
+    <link rel="stylesheet" href="styles.css?v=answer-names-20261105" />
     <script src="theme.js?v=graphite-folders-20261102"></script>
   </head>
   <body>
@@ -229,6 +229,7 @@
             <div id="quiz-options" class="quiz-options" role="group" aria-label="Answer choices"></div>
             <p id="quiz-feedback" class="quiz-feedback" role="status" aria-live="polite"></p>
             <div id="quiz-explanation" hidden>
+              <p id="quiz-attribution" class="answer-attribution" hidden></p>
               <blockquote id="quiz-quote" class="card-quote"></blockquote>
               <h4 class="analysis-heading">What it means</h4>
               <p id="quiz-answer"></p>
@@ -246,6 +247,7 @@
             </span>
             <span class="card-face card-back" aria-hidden="true">
               <span class="card-kicker">Answer</span>
+              <span id="card-attribution" class="answer-attribution" hidden></span>
               <span id="card-quote" class="card-quote"></span>
               <span class="analysis-heading">What it means</span>
               <span id="card-answer" class="card-answer"></span>
@@ -454,7 +456,7 @@
     <script src="resources-data.js"></script>
     <script src="store.js?v=navigation-dock-20261102"></script>
     <script src="history.js"></script>
-    <script src="app.js?v=graphite-folders-20261102"></script>
+    <script src="app.js?v=answer-names-20261105"></script>
     <script src="auth.js?v=cloud-maker-20261005"></script>
     <script src="profile.js"></script>
     <script src="library.js?v=resources-20261003"></script>

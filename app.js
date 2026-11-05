@@ -51,6 +51,12 @@
     }));
   }
 
+  function renderAttribution(id,card) {
+    const names = Array.isArray(card.sociologists) ? card.sociologists.filter(name => typeof name === 'string' && name.trim()) : [];
+    const attribution = names.length < 2 ? names[0] || '' : names.slice(0,-1).join(', ') + ' and ' + names[names.length-1];
+    $(id).textContent = attribution;
+    $(id).hidden = !attribution;
+  }
   function renderCard() {
     const currentDeck = deck();
     if (!$('view-flashcards')?.hidden) document.title = `${currentDeck.title} — Revision Deck`;
@@ -83,10 +89,13 @@
     if (!cards.length) return;
     state.index = Math.min(state.index, cards.length - 1);
     const card = cards[state.index];
+    renderAttribution('card-attribution',card);
+    renderAttribution('quiz-attribution',card);
     $("card-number").textContent = `${quizMode ? 'Question' : 'Card'} ${state.index + 1} of ${cards.length}`;
     if (quizMode) renderQuiz(card);
     $("card-question").textContent = card.question;
     $("card-quote").textContent = card.quote || "";
+    $("card-quote").hidden = !card.quote;
     $("card-answer").textContent = card.answer;
     $("card-method").textContent = card.method || '';
     $("card-method-block").hidden = !card.method;
