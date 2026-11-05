@@ -24,7 +24,7 @@
     const ordered = state.order ? state.order.map((id) => cards.find((card) => card.id === id)).filter(Boolean) : cards;
     const query = state.query.trim().toLowerCase();
     return ordered.filter((card) => {
-      const haystack = [card.question, card.quiz?.question, card.quote, card.answer, card.method, card.exam, ...(card.tags || [])].join(" ").toLowerCase();
+      const haystack = [card.question, card.quiz?.question, card.quote, card.answer, card.method, card.exam, ...(card.tags || []), ...(card.sociologists || [])].join(" ").toLowerCase();
       return (!query || haystack.includes(query)) && (state.filter === "all" || statusFor(card.id) === state.filter) && (state.topic === 'all' || (card.tags || []).includes(state.topic));
     });
   };
@@ -51,9 +51,12 @@
     }));
   }
 
-  function renderAttribution(id,card) {
+  function attributionFor(card) {
     const names = Array.isArray(card.sociologists) ? card.sociologists.filter(name => typeof name === 'string' && name.trim()) : [];
-    const attribution = names.length < 2 ? names[0] || '' : names.slice(0,-1).join(', ') + ' and ' + names[names.length-1];
+    return names.length < 2 ? names[0] || '' : names.slice(0,-1).join(', ') + ' and ' + names[names.length-1];
+  }
+  function renderAttribution(id,card) {
+    const attribution = attributionFor(card);
     $(id).textContent = attribution;
     $(id).hidden = !attribution;
   }
@@ -210,6 +213,8 @@
       article.append(printText('p', `${index + 1} · ${(card.tags || []).join(' / ')}`, 'print-card-label'));
       article.append(printText('h2', card.question));
       if (answers) {
+        const attribution = attributionFor(card);
+        if (attribution) article.append(printText('p', attribution, 'print-key-fact'));
         if (card.quote) article.append(printText('p', card.quote, 'print-key-fact'));
         article.append(printText('p', card.answer));
         if (card.method) article.append(printText('p', `Analysis: ${card.method}`));
