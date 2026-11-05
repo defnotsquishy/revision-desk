@@ -70,6 +70,10 @@ The renderer uses locally vendored [PDF.js](https://mozilla.github.io/pdf.js/) 6
 
 The catalogue includes 104 standard/specimen Paper 1 pairs from the public AQA assessment lists for 8464, 8461, 8462, 8463, 8702 and 8035, plus verified public Edexcel Medicine option 11 pairs for June 2023 and 2024. The Medicine question PDFs include the source booklets. Every entry pairs the same component, tier and series; all 212 paper/mark-scheme links returned successful PDF responses when checked on 1 October 2026. They link to the board's published files rather than republishing copyrighted examination PDFs. Official directories are provided for additional years and accessible formats. This is not a claim to include every paper ever issued, locked papers or unreleased assessments.
 
+## Key Sociologists revision deck
+
+The separate AQA Sociology deck covers all 25 named texts in Appendix B, with 32 distinct authors including co-authors. Original explanations develop the student's supplied revision sheets and knowledge organisers, with scope checked against the AQA specification. See [the source and coverage notes](SOCIOLOGISTS-SOURCES.md) for the inventory and boundaries.
+
 ## Personal flashcard maker
 
 The maker stores students' own question/answer decks on this device only; it does not generate, extract or copy content from the linked worksheets or exam PDFs. Custom cards are separate from the source-checked built-in decks, their ratings and cloud history. JSON backup/import moves a chosen custom deck as an unsaved draft, with explicit Save needed to keep it. Keep backups private and use material you have permission to copy; no source accuracy, awarding-body approval, cloud sync or blanket copyright permission is claimed for user-authored cards.

@@ -79,7 +79,7 @@ Node tests cover data integrity, scope labels, original-file hashes, unique comp
 
 ## Thirty-question topic sets
 
-- Every complete deck has exactly 30 multiple-choice questions, 41 × 30 = 1,230, alongside its existing 60 full flashcards. Combined and Triple keep separate IDs and appropriate content; all science question sets include 30 Foundation-eligible cards. Higher-only written skills remain in the full flashcards.
+- Every complete deck has exactly 30 multiple-choice questions, 42 × 30 = 1,260, alongside 60 full flashcards. The separate Key Sociologists deck covers 25 AQA texts and 32 authors using new rating IDs; the existing six Sociology decks remain intact. Combined and Triple keep separate IDs and appropriate content; all science question sets include 30 Foundation-eligible cards. Higher-only written skills remain in the full flashcards.
 - The three new quiz providers load after expanded-cards.js and before app.js. Options and narrowed prompts are independently authored against official specifications/published mark schemes. The full explanation is retained on reveal; answers lock, displayed option order shuffles, and confidence still needs an explicit rating. Topic/search/status filters can intentionally show fewer than 30.
 - Existing card IDs, ratings and historical data are retained. Corrections to a small number of legacy Higher-only tier labels do not rewrite questions, explanations or IDs. The Windows compatibility bundle places new providers in an existing dataset URL before app.js so the already-running server can deliver them without terminating it.
 
