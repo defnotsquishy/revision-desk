@@ -16,14 +16,14 @@
     $('legal-title').textContent=policies[policy];
     document.querySelectorAll('[data-view]').forEach(a=>{if(a.dataset.view===view)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
     document.title=({home:'Home',flashcards:'Flashcards',maths:'Maths resources',maker:'Flashcard maker',practice:'Whiteboard',customise:'Customise Desk',profile:'Your profile',legal:policies[policy]}[view])+' — Revision Deck';
-    $('skip-target').href=({home:'#home-title',flashcards:'#study-area',maths:'#maths-title',maker:'#maker-title',practice:'#practice-title',customise:'#customise-title',profile:'#profile-page-title',legal:'#legal-title'}[view]);
-    if(focus)$({home:'home-title',flashcards:'deck-title',maths:'maths-title',maker:'maker-title',practice:'practice-title',customise:'customise-title',profile:'profile-page-title',legal:'legal-title'}[view]).focus();
+    $('skip-target').href=({home:'#home-focus-title',flashcards:'#study-area',maths:'#maths-title',maker:'#maker-title',practice:'#practice-title',customise:'#customise-title',profile:'#profile-page-title',legal:'#legal-title'}[view]);
+    if(focus)$({home:'home-focus-title',flashcards:'deck-title',maths:'maths-title',maker:'maker-title',practice:'practice-title',customise:'customise-title',profile:'profile-page-title',legal:'legal-title'}[view]).focus();
     if(view==='practice')window.RevisionPractice?.resize();
     if(view==='maker')window.RevisionMaker?.onShow();
     if(view==='maths')window.RevisionMathsResources?.onShow();
   }
   function navigate(view){const hash=view==='practice'?'whiteboard':view;if(location.hash==='#'+hash)show(view);else location.hash=hash;}
-  function route(focus=true){const hash=location.hash.slice(1);const anchors={'home-title':'home','study-area':'flashcards','maths-title':'maths','maker-title':'maker','practice-title':'practice','customise-title':'customise','profile-page-title':'profile','legal-title':'legal'};show(anchors[hash]||hash,anchors[hash]?false:focus);}
+  function route(focus=true){const hash=location.hash.slice(1);const anchors={'home-title':'home','home-focus-title':'home','study-area':'flashcards','maths-title':'maths','maker-title':'maker','practice-title':'practice','customise-title':'customise','profile-page-title':'profile','legal-title':'legal'};show(anchors[hash]||hash,anchors[hash]?false:focus);}
   document.querySelectorAll('[data-view]').forEach(a=>a.addEventListener('click',()=>show(a.dataset.view)));
   document.querySelectorAll('[data-policy-link]').forEach(a=>a.addEventListener('click',()=>show(a.dataset.policyLink)));
   function storageChoice(){

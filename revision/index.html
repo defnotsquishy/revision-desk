@@ -11,7 +11,7 @@
     <script src="../theme.js?v=graphite-folders-20261102"></script>
   </head>
   <body>
-    <a id="skip-target" class="skip-link" href="#home-title">Skip to content</a>
+    <a id="skip-target" class="skip-link" href="#home-focus-title">Skip to content</a>
     <header class="topbar">
       <a class="brand" href="#home" data-view="home" aria-label="Revision Deck home">
         <span><strong>Revision <span class="brand-gradient">Deck</span></strong><small>GCSE flashcards</small></span>
@@ -38,11 +38,11 @@
 
     <main id="view-home" class="home-workspace">
       <section class="home-focus" aria-labelledby="home-focus-title">
-        <div class="home-focus-copy"><h2 id="home-focus-title">Your next session</h2><p id="home-focus-detail">Choose a subject to get started.</p><button id="home-focus-start" class="button button-primary" type="button" disabled>Open a deck</button></div>
+        <div class="home-focus-copy"><h1 id="home-focus-title" tabindex="-1">Your next session</h1><p id="home-focus-detail">Choose a subject to get started.</p><button id="home-focus-start" class="button button-primary" type="button" disabled>Open a deck</button></div>
         <div class="home-focus-actions" aria-label="Quick study tools"><a class="button button-quiet" href="#flashcards" data-view="flashcards">Browse flashcards <span aria-hidden="true">↗</span></a><button id="home-papers" class="button button-quiet" type="button">Find a past paper <span aria-hidden="true">↗</span></button><button id="home-whiteboard" class="button button-quiet" type="button">Start a whiteboard <span aria-hidden="true">↗</span></button></div>
       </section>
       <section class="dashboard-welcome" aria-labelledby="home-title">
-        <div class="dashboard-person"><div id="home-avatar" class="profile-avatar" aria-hidden="true">RD</div><div><h1 id="home-title" tabindex="-1">Hey, welcome back.</h1><p id="home-identity">Your revision workspace</p><a class="dashboard-label" href="#profile" data-view="profile">Your profile</a></div></div>
+        <div class="dashboard-person"><div id="home-avatar" class="profile-avatar" aria-hidden="true">RD</div><div><h2 id="home-title">Hey, welcome back.</h2><p id="home-identity">Your revision workspace</p><a class="dashboard-label" href="#profile" data-view="profile">Your profile</a></div></div>
         <section class="dashboard-progress" aria-labelledby="home-progress-title"><h2 id="home-progress-title" class="dashboard-label">Your progress</h2><div class="dashboard-progress-heading"><p id="home-progress-copy">Ready when you are</p><a href="#customise" data-view="customise">Customise</a></div><progress id="home-progress" max="100" value="0" aria-label="Flashcards reviewed in the selected course"></progress><div class="dashboard-progress-stats"><span id="home-scope">Selected course</span><span id="home-topic-count"></span></div><p id="home-progress-note">Reviewed means you’ve rated a card, not mastered it.</p></section>
       </section>
       <section class="dashboard-courses" aria-labelledby="home-courses-title"><div class="dashboard-course-heading"><h2 id="home-courses-title"><span id="home-subject-count" class="dashboard-label">Your subjects</span></h2><div class="dashboard-course-filters"><label for="home-course">Course<select id="home-course"><option value="other">Other subjects</option><option value="combined">Combined Science</option><option value="triple">Triple Science</option></select></label><label id="home-tier-control" for="home-tier" hidden>Tier<select id="home-tier"><option value="H">Higher</option><option value="F">Foundation</option></select></label></div></div>
