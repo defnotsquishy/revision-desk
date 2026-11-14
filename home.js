@@ -42,6 +42,7 @@
   const courseNames={other:'Other subjects',combined:'Combined Science',triple:'Triple Science'};
   const subjectNames={english:'English Literature',history:'History',geography:'Geography',sociology:'Sociology',biology:'Biology',chemistry:'Chemistry',physics:'Physics'};
   const expanded=new Set();
+  let focusDeck=null;
   function dashboard(selectedCourse='other',selectedTier='H'){
     const course=Object.hasOwn(courseNames,selectedCourse)?selectedCourse:'other',tier=selectedTier==='F'?'F':'H';
     const state=window.RevisionStore.state?.() || {phase:'guest'};
@@ -89,6 +90,32 @@
     if(data.loading)$('home-progress').removeAttribute('value');else $('home-progress').value=data.total?Math.round(100*data.reviewed/data.total):0;
     $('home-progress-note').textContent=data.loading?'Your figures will appear when your account has loaded.':'Reviewed means you’ve rated a card, not mastered it.';
     $('home-summary').textContent='Questions and flashcards share the same card rating. Marked Know is your confidence, not an exam score.';
+    const focusButton=$('home-focus-start');
+    focusDeck=null;focusButton.disabled=true;
+    if(data.loading){
+      $('home-focus-title').textContent='Getting your session ready';
+      $('home-focus-detail').textContent='Your private ratings are loading. You can still browse the subjects below.';
+      focusButton.textContent='Loading your ratings…';
+    }else{
+      const ratings=window.RevisionStore.ratings();
+      const candidates=data.subjects.flatMap(subject=>subject.decks.map(deck=>{
+        const cards=deck.cards.filter(card=>!deck.science||data.tier!=='F'||card.tier!=='H');
+        return {deck,subject,needs:cards.filter(card=>ratings[card.id]==='learn'||ratings[card.id]==='unsure').length,unseen:cards.filter(card=>!ratings[card.id]).length};
+      })).filter(item=>item.needs||item.unseen);
+      candidates.sort((a,b)=>b.needs-a.needs||b.unseen-a.unseen||a.deck.title.localeCompare(b.deck.title));
+      const choice=candidates[0]||data.subjects.flatMap(subject=>subject.decks.map(deck=>({deck,subject,needs:0,unseen:0})))[0];
+      if(choice){
+        focusDeck=choice.deck.id;
+        $('home-focus-title').textContent=choice.needs?'Pick up where you need another look':choice.unseen?'Start with a fresh topic':'Keep your recall fresh';
+        $('home-focus-detail').textContent=`${choice.subject.title} · ${choice.deck.title} — ${choice.needs?`${choice.needs} card${choice.needs===1?'':'s'} marked Learn or Unsure`:choice.unseen?`${choice.unseen} card${choice.unseen===1?'':'s'} not studied`:'all cards rated'}.`;
+        focusButton.textContent=`Study ${choice.deck.title}`;
+        focusButton.disabled=false;
+      }else{
+        $('home-focus-title').textContent='Choose what to study';
+        $('home-focus-detail').textContent='Browse the subjects below or open a past paper.';
+        focusButton.textContent='Open a deck';
+      }
+    }
     const focused=document.activeElement?.dataset?.homeFocusKey;
     const rows=[];
     for(const subject of data.subjects){
@@ -117,6 +144,7 @@
     if(focused)document.querySelector(`[data-home-focus-key="${focused}"]`)?.focus({preventScroll:true});
   }
   $('home-course').addEventListener('change',selectCourse);$('home-tier').addEventListener('change',selectCourse);
+  $('home-focus-start').addEventListener('click',()=>{if(focusDeck&&window.RevisionApp.openDeck(focusDeck,selection().tier))navigate('flashcards');});
   // Public, curated external links only. No players, requests or watch tracking.
   let videoPanels=[];
   function videoSubject(){const selected=new URLSearchParams(location.search||'').get('deskVideoSubject');return Object.hasOwn(window.REVISION_VIDEO_LESSONS||{},selected)?selected:'biology';}

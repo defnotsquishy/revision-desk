@@ -259,7 +259,13 @@
   window.addEventListener('beforeprint', () => { if (printSnapshot) document.body.classList.add('printing-flashcards'); });
   window.addEventListener('afterprint', () => { document.body.classList.remove('printing-flashcards'); });
 
-  $("deck-nav").addEventListener("click", (event) => { const button = event.target.closest("[data-deck]"); if (button) { selectDeck(button.dataset.deck); document.querySelector(`[data-deck="${state.deckId}"]`).focus({preventScroll: true}); } });
+  const mobileDeckToggle=$("mobile-deck-toggle");
+  mobileDeckToggle.addEventListener('click',()=>{
+    const open=mobileDeckToggle.getAttribute('aria-expanded')!=='true';
+    mobileDeckToggle.setAttribute('aria-expanded',String(open));
+    $('deck-browser').classList.toggle('is-open',open);
+  });
+  $("deck-nav").addEventListener("click", (event) => { const button = event.target.closest("[data-deck]"); if (button) { selectDeck(button.dataset.deck); if(matchMedia('(max-width: 1100px)').matches){mobileDeckToggle.setAttribute('aria-expanded','false');$('deck-browser').classList.remove('is-open');$('deck-title').focus({preventScroll:true});}else document.querySelector(`[data-deck="${state.deckId}"]`).focus({preventScroll: true}); } });
   $("study-card").addEventListener("click", flip);
   $("quiz-mode").addEventListener("click", () => setMode('quiz'));
   $("flashcard-mode").addEventListener("click", () => setMode('flashcard'));

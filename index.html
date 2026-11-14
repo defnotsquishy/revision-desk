@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#26282b" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23101936'/%3E%3Cpath d='M15 17h24a8 8 0 0 1 8 8v25H23a8 8 0 0 1-8-8V17Z' fill='%23f4c95d'/%3E%3Cpath d='M23 17v33M29 27h11M29 35h11' stroke='%23101936' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
     <title>Revision Deck — GCSE Flashcards</title>
-    <link rel="stylesheet" href="styles.css?v=answer-names-20261105" />
+    <link rel="stylesheet" href="styles.css?v=focus-desk-20261114" />
     <script src="theme.js?v=graphite-folders-20261102"></script>
   </head>
   <body>
@@ -37,6 +37,10 @@
     <section class="cloud-strip" aria-label="Account saving"><p id="cloud-status" role="status" aria-live="polite">Guest · saved on this device only.</p><div class="account-actions"><button id="cloud-retry" class="button button-quiet" type="button" hidden>Retry cloud connection</button><button id="cloud-use-account" class="button button-quiet" type="button" hidden>Use account ratings</button><button id="cloud-keep-mine" class="button button-quiet" type="button" hidden>Keep my changed ratings</button></div></section>
 
     <main id="view-home" class="home-workspace">
+      <section class="home-focus" aria-labelledby="home-focus-title">
+        <div class="home-focus-copy"><h2 id="home-focus-title">Your next session</h2><p id="home-focus-detail">Choose a subject to get started.</p><button id="home-focus-start" class="button button-primary" type="button" disabled>Open a deck</button></div>
+        <div class="home-focus-actions" aria-label="Quick study tools"><a class="button button-quiet" href="#flashcards" data-view="flashcards">Browse flashcards <span aria-hidden="true">↗</span></a><button id="home-papers" class="button button-quiet" type="button">Find a past paper <span aria-hidden="true">↗</span></button><button id="home-whiteboard" class="button button-quiet" type="button">Start a whiteboard <span aria-hidden="true">↗</span></button></div>
+      </section>
       <section class="dashboard-welcome" aria-labelledby="home-title">
         <div class="dashboard-person"><div id="home-avatar" class="profile-avatar" aria-hidden="true">RD</div><div><h1 id="home-title" tabindex="-1">Hey, welcome back.</h1><p id="home-identity">Your revision workspace</p><a class="dashboard-label" href="#profile" data-view="profile">Your profile</a></div></div>
         <section class="dashboard-progress" aria-labelledby="home-progress-title"><h2 id="home-progress-title" class="dashboard-label">Your progress</h2><div class="dashboard-progress-heading"><p id="home-progress-copy">Ready when you are</p><a href="#customise" data-view="customise">Customise</a></div><progress id="home-progress" max="100" value="0" aria-label="Flashcards reviewed in the selected course"></progress><div class="dashboard-progress-stats"><span id="home-scope">Selected course</span><span id="home-topic-count"></span></div><p id="home-progress-note">Reviewed means you’ve rated a card, not mastered it.</p></section>
@@ -44,6 +48,10 @@
       <section class="dashboard-courses" aria-labelledby="home-courses-title"><div class="dashboard-course-heading"><h2 id="home-courses-title"><span id="home-subject-count" class="dashboard-label">Your subjects</span></h2><div class="dashboard-course-filters"><label for="home-course">Course<select id="home-course"><option value="other">Other subjects</option><option value="combined">Combined Science</option><option value="triple">Triple Science</option></select></label><label id="home-tier-control" for="home-tier" hidden>Tier<select id="home-tier"><option value="H">Higher</option><option value="F">Foundation</option></select></label></div></div>
         <div class="dashboard-table-frame"><table class="dashboard-table" aria-describedby="home-summary"><caption class="sr-only">Revision subjects and your saved card ratings</caption><thead><tr><th scope="col">Subject</th><th scope="col">Questions reviewed</th><th scope="col">Flashcards reviewed / marked Know</th><th scope="col"><span class="sr-only">Open topics</span></th></tr></thead><tbody id="home-subjects"></tbody></table></div>
         <p id="home-summary" class="dashboard-explainer">Questions and flashcards share the same card rating. Marked Know is your confidence, not an exam score.</p>
+      </section>
+      <section class="home-guide" aria-labelledby="home-guide-title">
+        <div><h2 id="home-guide-title">See how a card works</h2><p>Start with the question, check the explanation, then use the exam point to build a stronger answer.</p><div class="home-guide-links"><a class="button button-quiet" href="./guide/demo/">Try the short walkthrough <span aria-hidden="true">↗</span></a><a class="button button-quiet" href="./guide/anatomy/sheet.html" target="_blank" rel="noopener noreferrer">See the card design <span class="sr-only">(opens in a new tab)</span><span aria-hidden="true">↗</span></a></div></div>
+        <details class="home-guide-film"><summary>Watch the card design in motion</summary><video controls preload="none" poster="./guide/anatomy/poster.png" aria-label="Card design motion film"><source src="./guide/anatomy/film.mp4" type="video/mp4"/>Your browser cannot play this video. <a href="./guide/anatomy/film.mp4">Open the film</a>.</video></details>
       </section>
       <section class="dashboard-updates" aria-labelledby="home-updates-title">
         <div class="dashboard-updates-heading"><div><p class="eyebrow">From the desk</p><h2 id="home-updates-title">What’s new</h2></div><p id="home-library-count" class="dashboard-label">Study library</p></div>
@@ -57,7 +65,6 @@
         <div id="home-video-topics" class="video-topic-list"></div>
         <p class="dashboard-explainer">Lessons open on YouTube in a new tab. Watching isn’t tracked here and won’t change your card progress. Science has selected topic links; Maths and Further Maths cover every topic currently listed on the linked provider pages. Videos may include extra Higher or Triple material; check your specification.</p>
       </section>
-      <div class="dashboard-shortcuts"><p>Want space to work things out?</p><button id="home-papers" class="button button-quiet" type="button">Find a past paper</button><button id="home-whiteboard" class="button button-quiet" type="button">Start a whiteboard</button></div>
       <p class="history-help dashboard-storage">Sign in to pick up your profile, saved flashcard decks, highlights and study confidence on another device. PDFs, drawings, whiteboards and appearance settings stay on this device.</p>
     </main>
     <main id="view-maths" class="maths-workspace" hidden>
@@ -138,7 +145,7 @@
       <p id="practice-file-help" class="history-help">PDF up to 20 MB / 200 pages; must open without a password. Some boards block embedded PDFs: open the official file, download it, then choose it above.</p>
       <div id="practice-source" class="resource-actions" hidden><a id="practice-official" class="button button-quiet" target="_blank" rel="noopener noreferrer">Open official question paper ↗</a><a id="practice-mark-scheme" class="button button-quiet" target="_blank" rel="noopener noreferrer">Matching mark scheme ↗</a></div>
       <p id="practice-status" role="status" aria-live="polite">No document loaded.</p><p id="practice-save-status" role="status" aria-live="polite">Drawings are device-only, not cloud-synced.</p>
-      <div class="resource-actions"><button id="practice-save" class="button button-quiet" type="button" disabled>Retry device save</button><button id="practice-reload" class="button button-quiet" type="button" hidden>Reload saved copy</button><button id="practice-backup" class="button button-quiet" type="button" disabled>Export ink & notes backup</button><label for="practice-restore">Restore ink backup<input id="practice-restore" type="file" accept="application/json,.json" disabled/></label><button id="practice-export" class="button button-quiet" type="button" disabled>Download written PDF</button><button id="practice-image" class="button button-quiet" type="button" disabled>Save page image</button></div>
+      <details class="practice-file-tools"><summary>Save, export & restore options</summary><div class="resource-actions"><button id="practice-save" class="button button-quiet" type="button" disabled>Retry device save</button><button id="practice-reload" class="button button-quiet" type="button" hidden>Reload saved copy</button><button id="practice-backup" class="button button-quiet" type="button" disabled>Export ink & notes backup</button><label for="practice-restore">Restore ink backup<input id="practice-restore" type="file" accept="application/json,.json" disabled/></label><button id="practice-export" class="button button-quiet" type="button" disabled>Download written PDF</button><button id="practice-image" class="button button-quiet" type="button" disabled>Save page image</button></div></details>
       <section id="practice-editor" aria-label="Drawing workspace" hidden>
         <div class="ink-toolbar" role="group" aria-label="Drawing tools"><button class="button button-quiet" data-ink-tool="pen" type="button" aria-pressed="true">Pen</button><button class="button button-quiet" data-ink-tool="highlight" type="button" aria-pressed="false">Highlighter</button><button class="button button-quiet" data-ink-tool="erase" type="button" aria-pressed="false">Eraser</button><button class="button button-quiet" data-ink-tool="scroll" type="button" aria-pressed="false">Scroll / read</button><label for="ink-width">Ink width<select id="ink-width"><option value="1">Fine</option><option value="2" selected>Regular</option><option value="4">Thick</option><option value="8">Bold</option></select></label><div id="ink-colors" role="group" aria-label="Ink colour"></div></div>
         <div class="ink-toolbar"><button id="ink-undo" class="button button-quiet" type="button" disabled>Undo</button><button id="ink-redo" class="button button-quiet" type="button" disabled>Redo</button><button id="ink-clear" class="button button-quiet" type="button">Clear page ink</button><button id="practice-prev" class="button button-quiet" type="button">Previous page</button><label for="practice-page">Page<select id="practice-page"></select></label><button id="practice-next" class="button button-quiet" type="button">Next page</button><label for="practice-zoom">Zoom<select id="practice-zoom"><option value="fit">Fit width</option><option value="1">100%</option><option value="1.5">150%</option><option value="2">200%</option></select></label><label id="board-grid-label" for="board-grid" hidden>Board<select id="board-grid"><option value="blank">Blank</option><option value="grid">Squared</option></select></label></div>
@@ -153,9 +160,12 @@
           <p class="eyebrow">Your library</p>
           <h1>Choose a deck</h1>
         </div>
+        <button id="mobile-deck-toggle" class="button button-quiet mobile-deck-toggle" type="button" aria-expanded="false" aria-controls="deck-browser">Choose another deck <span aria-hidden="true">⌄</span></button>
+        <div id="deck-browser" class="deck-browser">
         <label class="library-filter" for="course-filter">Course<select id="course-filter"><option value="other">English, Humanities & Sociology</option><option value="combined">Combined Science · Trilogy</option><option value="triple">Triple Science</option></select></label>
         <label class="library-filter" for="science-tier" id="science-tier-control" hidden>Science tier<select id="science-tier"><option value="H">Higher · all course cards</option><option value="F">Foundation · no Higher-only cards</option></select></label>
         <nav id="deck-nav" class="deck-nav"></nav>
+        </div>
       </aside>
 
       <section class="workspace" aria-labelledby="deck-title">
@@ -168,7 +178,7 @@
           <button id="reset-button" class="button button-quiet" type="button">Reset deck</button>
         </header>
 
-        <div class="toolbar">
+        <div class="study-controls"><div class="toolbar">
           <div class="search-box">
             <span aria-hidden="true">⌕</span>
             <label class="sr-only" for="search-input">Search this deck</label>
@@ -192,34 +202,7 @@
           <button id="quiz-mode" class="button button-quiet" type="button" aria-pressed="true">Multiple choice</button>
           <button id="flashcard-mode" class="button button-quiet" type="button" aria-pressed="false">Flashcards</button>
           <span id="mode-description"></span>
-        </div>
-        <details class="flashcard-print-section">
-          <summary>Print flashcards</summary>
-          <p>Take this deck off-screen. Preview all its flashcards, or use your current study filters, then print or save a PDF.</p>
-          <button id="prepare-print" class="button button-quiet" type="button">Preview printable cards</button>
-        </details>
-
-        <section class="progress-panel" aria-label="Deck progress">
-          <div class="progress-copy"><strong id="progress-count">0 of 0 reviewed</strong><span id="progress-percent">0%</span></div>
-          <div class="progress-track" role="progressbar" aria-label="Cards reviewed" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-bar"></span></div>
-          <div class="status-key" aria-label="Card status totals">
-            <span><i class="dot know"></i><b id="know-count">0</b> know</span>
-            <span><i class="dot unsure"></i><b id="unsure-count">0</b> unsure</span>
-            <span><i class="dot learn"></i><b id="learn-count">0</b> learn</span>
-          </div>
-        </section>
-
-        <details class="history-panel" id="history-panel">
-          <summary>Progress over time <span id="history-current">0% know</span></summary>
-          <p class="history-help">Each dot is your latest saved position on a day you study or reset this deck. “Know” ÷ all cards — not an exam score.</p>
-          <p id="history-warning" role="status" hidden></p>
-          <p id="history-empty">Rate a card to start your graph. Earlier ratings are kept, but their dates weren't recorded.</p>
-          <div id="history-results" hidden>
-            <svg id="history-chart" viewBox="0 0 680 250" role="img" aria-labelledby="chart-title chart-description"></svg>
-            <p id="history-latest" class="history-help"></p>
-            <details class="history-values"><summary>Read graph values</summary><ol id="history-values"></ol></details>
-          </div>
-        </details>
+        </div></div>
 
         <section id="study-area" class="study-area" tabindex="-1">
           <div class="card-position"><span id="card-number">Card 1 of 1</span><span id="current-status" class="status-pill">Not studied</span></div>
@@ -268,6 +251,34 @@
             <p><kbd>←</kbd><kbd>→</kbd> to move</p>
             <button id="next-button" class="button button-primary" type="button">Next card</button>
           </div>
+        </section>
+
+        <section class="study-followup" aria-label="Your progress and study tools">
+          <section class="progress-panel" aria-label="Deck progress">
+            <div class="progress-copy"><strong id="progress-count">0 of 0 reviewed</strong><span id="progress-percent">0%</span></div>
+            <div class="progress-track" role="progressbar" aria-label="Cards reviewed" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progress-bar"></span></div>
+            <div class="status-key" aria-label="Card status totals">
+              <span><i class="dot know"></i><b id="know-count">0</b> know</span>
+              <span><i class="dot unsure"></i><b id="unsure-count">0</b> unsure</span>
+              <span><i class="dot learn"></i><b id="learn-count">0</b> learn</span>
+            </div>
+          </section>
+          <details class="history-panel" id="history-panel">
+            <summary>Progress over time <span id="history-current">0% know</span></summary>
+            <p class="history-help">Each dot is your latest saved position on a day you study or reset this deck. “Know” ÷ all cards — not an exam score.</p>
+            <p id="history-warning" role="status" hidden></p>
+            <p id="history-empty">Rate a card to start your graph. Earlier ratings are kept, but their dates weren't recorded.</p>
+            <div id="history-results" hidden>
+              <svg id="history-chart" viewBox="0 0 680 250" role="img" aria-labelledby="chart-title chart-description"></svg>
+              <p id="history-latest" class="history-help"></p>
+              <details class="history-values"><summary>Read graph values</summary><ol id="history-values"></ol></details>
+            </div>
+          </details>
+          <details class="flashcard-print-section">
+            <summary>Print flashcards</summary>
+            <p>Take this deck off-screen. Preview all its flashcards, or use your current study filters, then print or save a PDF.</p>
+            <button id="prepare-print" class="button button-quiet" type="button">Preview printable cards</button>
+          </details>
         </section>
 
         <section id="empty-state" class="empty-state" hidden>
@@ -384,13 +395,13 @@
     <dialog id="profile-discard-dialog" aria-labelledby="profile-discard-title"><h2 id="profile-discard-title">Discard profile changes?</h2><p>Your saved profile stays unchanged. The new name, picture, badge or accent colour will not be saved.</p><div class="dialog-actions"><button id="profile-keep-editing" class="button button-quiet" type="button" autofocus>Keep editing</button><button id="profile-discard" class="button button-primary" type="button">Discard changes</button></div></dialog>
     <dialog id="library-dialog" class="library-dialog" aria-labelledby="library-title" aria-describedby="library-help">
       <div class="account-heading"><h2 id="library-title">Papers & study files</h2><button id="library-close" class="button button-quiet" type="button">Close</button></div>
-      <p id="library-help">Official public papers with matching mark schemes. Choose Draw on paper to practise here, or open the official PDF. Board links need internet; downloaded PDFs work offline. School files are downloads, not past papers.</p>
+      <p id="library-help">Find an official question paper and its matching mark scheme. Open the PDF, or choose Draw on paper to work here. Board links need internet.</p>
       <div class="account-actions" role="group" aria-label="Library section"><button id="library-papers" class="button button-quiet" type="button" aria-pressed="true">Past papers</button><button id="library-files" class="button button-quiet" type="button" aria-pressed="false">Your science files</button></div>
       <div class="library-controls"><label for="paper-course">Course<select id="paper-course"><option value="combined">Combined Science · Trilogy</option><option value="triple">Triple Science</option><option value="other">Other subjects</option><option value="all">All courses</option></select></label><label for="paper-subject">Subject<select id="paper-subject"><option value="all">All subjects</option><option>Biology</option><option>Chemistry</option><option>Physics</option><option>English Language</option><option>English Literature</option><option>Further Maths</option><option>Geography</option><option>History</option><option>Maths</option><option>Sociology</option></select></label><label for="paper-tier">Tier<select id="paper-tier"><option value="all">All tiers</option><option>Foundation</option><option>Higher</option><option>Untiered</option></select></label><label for="paper-number">Paper<select id="paper-number"><option value="all">All papers</option><option value="1">Paper 1</option><option value="2">Paper 2</option><option value="3">Paper 3</option></select></label></div>
       <div class="search-box"><label class="sr-only" for="paper-search">Search files or exam series</label><input id="paper-search" type="search" placeholder="Search year, exam code or file name…"/><button id="paper-search-clear" class="clear-search" type="button" aria-label="Clear library search" hidden>×</button></div>
-      <p id="library-count" role="status" aria-live="polite"></p><p id="library-coverage" class="history-help"></p><button id="library-reset-filters" class="button button-quiet" type="button">Show all public papers</button><p id="library-empty" hidden>No matches. Try another course, tier or search, or choose Show all public papers.</p><ul id="library-results" class="resource-list"></ul>
+      <div class="library-result-heading"><p id="library-count" role="status" aria-live="polite"></p><button id="library-reset-filters" class="button button-quiet" type="button">Show all public papers</button></div><p id="library-empty" hidden>No matches. Try another course, tier or search, or choose Show all public papers.</p><ul id="library-results" class="resource-list"></ul>
       <div class="library-pagination"><button id="library-prev" class="button button-quiet" type="button">Previous page</button><span id="library-page"></span><button id="library-next" class="button button-quiet" type="button">Next page</button></div>
-      <details><summary>Coverage, original files & study plan</summary><p class="history-help">This catalogue contains standard and specimen pairs found in public official resource lists, not every paper ever issued. No locked or unreleased papers are included. Use the board links below for additional, accessible-format or newly released papers. Organisers may contain Triple or Higher material even when shared with Combined: follow the labelled flashcards and your course.</p><div id="paper-directories"></div><p class="history-help">Two Year 11 revision plans contain school-login examples, so their originals are kept off this public site. Their safe guidance: revise regularly, start with your weakest topics, cover and recall your organiser, then practise a matching paper and mark it. Do not assume exam questions will be repeated.</p><p class="history-help">Energy KO and Energy KO-1 are identical; both original filenames are retained. Uploaded organisers are class notes, not authoritative mark schemes. The flashcards correct known errors in them.</p></details>
+      <details><summary>Coverage, original files & study plan</summary><p id="library-coverage" class="history-help"></p><p class="history-help">This catalogue contains standard and specimen pairs found in public official resource lists, not every paper ever issued. No locked or unreleased papers are included. Use the board links below for additional, accessible-format or newly released papers. Organisers may contain Triple or Higher material even when shared with Combined: follow the labelled flashcards and your course.</p><div id="paper-directories"></div><p class="history-help">Two Year 11 revision plans contain school-login examples, so their originals are kept off this public site. Their safe guidance: revise regularly, start with your weakest topics, cover and recall your organiser, then practise a matching paper and mark it. Do not assume exam questions will be repeated.</p><p class="history-help">Energy KO and Energy KO-1 are identical; both original filenames are retained. Uploaded organisers are class notes, not authoritative mark schemes. The flashcards correct known errors in them.</p></details>
     </dialog>
 
     <dialog id="account-dialog" aria-labelledby="account-title" aria-describedby="account-help">
